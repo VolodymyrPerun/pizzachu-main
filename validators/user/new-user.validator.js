@@ -14,6 +14,7 @@ module.exports = Joi.object().keys({
     city: Joi.string().required(),
     address: Joi.string().required(),
     postOfficeLocation: Joi.string().required(),
+    status_id: Joi.number().integer().min(1).max(2),
     role_id: Joi.number().integer().min(1).max(3).required(),
     created_at: Joi.date(),
 

@@ -1,6 +1,7 @@
+const {DB_TABLE_NAME: {USER}} = require("../../constants");
 module.exports = (sequelize, DataTypes) => {
 
-    const User = sequelize.define('User', {
+    const User = sequelize.define(USER, {
             userId: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
@@ -50,6 +51,11 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: false
             },
+            status_id: {
+                type: DataTypes.INTEGER,
+                foreignKey: true,
+                allowNull: false
+            },
             role_id: {
                 type: DataTypes.INTEGER,
                 allowNull: false
@@ -64,9 +70,16 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         {
-            tableName: 'user',
+            tableName: USER,
             timestamps: false
         })
+
+
+    const UserRole = sequelize.import('./UserRole.js');
+    const UserStatus = sequelize.import('./UserStatus');
+
+    User.belongsTo(UserRole, {foreignKey: 'role_id'});
+    User.belongsTo(UserStatus, {foreignKey: 'status_id'});
 
 
     return User;

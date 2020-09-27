@@ -6,7 +6,9 @@ const fsep = require('fs-extra').promises;
 const {
     responseStatusCodesEnum: {CREATED, NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_CREATED},
-    emailActionEnum: {USER_REGISTER}
+    emailActionEnum: {USER_REGISTER},
+    USER_ROLE: {CLIENT},
+    USER_STATUS: {ACTIVE},
 } = require('../../constants');
 const ErrorHandler = require("../../error/ErrorHandler")
 const {hashPasswordHelpers} = require('../../helpers')
@@ -16,6 +18,10 @@ const {emailService, userService: {createUserService, updateUserService}} = requ
 module.exports = async (req, res, next) => {
     try {
         const user = req.body;
+
+        user.role_id = CLIENT;
+        user.status_is = ACTIVE;
+
         const [profileImage] = req.photos;
         const password = user.password;
 
