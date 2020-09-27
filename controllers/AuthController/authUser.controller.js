@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const {updateUserValidatorSchema} = require("../../validators");
+const {authValidator:{authValidationSchema}} = require("../../validators");
 const {
     responseStatusCodesEnum: {BAD_REQUEST, NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_VALID, NOT_FOUND}
@@ -17,7 +17,10 @@ module.exports = async (req, res, next) => {
     try {
         const {email, password} = req.body;
 
-        const {error} = Joi.validate({email, password}, updateUserValidatorSchema);
+        //todo create compare password service, forgot pass and change pass controller, try to login user,
+        //todo after that create admin controller and auth admin
+
+        const {error} = Joi.validate({email, password}, authValidationSchema);
 
         if (error) return next(new ErrorHandler(error.details[0].message, BAD_REQUEST, NOT_VALID.customCode));
 

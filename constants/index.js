@@ -5,6 +5,7 @@ module.exports.genderEnum = require('./gender.enum');
 module.exports.requestHeadersEnum = require('./requestHeaders.enum');
 module.exports.responseCustomErrorEnum = require('./responseCustomError.enum');
 module.exports.regexpEmailEnum = require('./regexpEmail.enum');
+module.exports.regexpAuthValidatorEnum = require('./regexpAuthValidator.enum')
 module.exports.regexpPasswordEnum = require('./regexpPassword.enum');
 module.exports.regexpPhoneNumberEnum = require('./regexpPhoneNumber.enum');
 module.exports.responseStatusCodesEnum = require('./responseStatusCodes.enum');

@@ -4,5 +4,7 @@ const {DB_TABLE_NAME: {USER}} = require('../../constants')
 module.exports = async user => {
     const UserModel = await db.getModel(USER);
 
-    return UserModel.create(user)
+    return UserModel.create(user, {
+        new: true
+    })
 };

@@ -5,7 +5,7 @@ const {
     responseCustomErrorEnum: {NOT_VALID}
 } = require('../../constants');
 
-const {updateUserValidatorSchema} = require("../../validators");
+const {userValidator: {updateUserValidatorSchema}} = require("../../validators");
 const ErrorHandler = require('../../error/ErrorHandler');
 
 module.exports = (req, res, next) => {

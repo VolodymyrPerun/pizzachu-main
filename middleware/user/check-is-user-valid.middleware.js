@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const {userValidationSchema} = require("../../validators");
+const {userValidator: {userValidationSchema}} = require("../../validators");
 const {
     responseStatusCodesEnum: {BAD_REQUEST},
     responseCustomErrorEnum: {NOT_VALID},
