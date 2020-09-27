@@ -3,7 +3,7 @@ const {
     responseCustomErrorEnum: {NOT_DELETE},
     emailActionEnum: {USER_DELETE}
 } = require('../../constants');
-const ErrorHandler = require("../../error/ErrorHandler")
+const {ErrorHandler} = require("../../error")
 const {emailService, userService: {deleteUserByParamsService, getUserByIdService}} = require("../../service");
 
 
@@ -27,6 +27,6 @@ module.exports = async (req, res, next) => {
 
         res.sendStatus(NO_CONTENT);
     } catch (e) {
-        next(e);
+        next(new ErrorHandler(e.status, e.message, e.code));
     }
 };

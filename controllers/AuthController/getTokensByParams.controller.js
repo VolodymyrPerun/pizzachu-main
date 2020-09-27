@@ -1,3 +1,4 @@
+const {ErrorHandler} = require("../../error");
 module.exports = async (req, res) => {
 
     try {
@@ -5,6 +6,6 @@ module.exports = async (req, res) => {
         res.json(user)
 
     } catch (e) {
-        res.json(e)
+        res.json(new ErrorHandler(e.status, e.message, e.code))
     }
 }

@@ -1,3 +1,4 @@
+const {ErrorHandler} = require("../../error");
 const {checkHashPasswordHelpers} = require("../../helpers");
 const {oauthService:{createTokenPairService}} = require('../../service')
 
@@ -9,7 +10,7 @@ module.exports = async (req, res, next) => {
 
         await createTokenPairService(user);
     } catch (e) {
-        next(e);
+        next(new ErrorHandler(e.status, e.message, e.code));
     }
 
     res.end();

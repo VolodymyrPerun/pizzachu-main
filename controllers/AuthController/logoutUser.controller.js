@@ -1,3 +1,4 @@
+const {ErrorHandler} = require("../../error");
 const {
     requestHeadersEnum: {AUTHORIZATION},
     responseStatusCodesEnum: {OK}
@@ -12,6 +13,6 @@ module.exports = async (req, res, next) => {
 
         res.sendStatus(OK)
     } catch (e) {
-        next(e);
+        next(new ErrorHandler(e.status, e.message, e.code));
     }
 };

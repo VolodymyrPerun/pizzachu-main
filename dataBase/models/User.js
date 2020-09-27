@@ -61,7 +61,8 @@ module.exports = (sequelize, DataTypes) => {
                 allowNull: false
             },
             user_photo: {
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
+                allowNull: true
             },
             create_at: {
                 type: DataTypes.DATE,

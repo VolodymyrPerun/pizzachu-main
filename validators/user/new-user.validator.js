@@ -1,13 +1,13 @@
 const Joi = require('joi')
 
 
-const {regexpEmailEnum, regexpPasswordEnum} = require('../../constants')
+const {regexpEmailEnum, regexpPasswordEnum, regexpPhoneNumberEnum} = require('../../constants')
 
 module.exports = Joi.object().keys({
     name: Joi.string().trim().min(2).max(60).required().allow('X Æ A-12'),
     surname: Joi.string().trim().min(2).max(60).required().allow('X Æ A-12'),
     email: Joi.string().regex(regexpEmailEnum.EMAIL).required(),
-    phone: Joi.string().required(),
+    phone: Joi.string().regex(regexpPhoneNumberEnum.PHONE_NUMBER).required(),
     password: Joi.string().regex(regexpPasswordEnum.PASSWORD).trim().min(8).required(),
     age: Joi.number().integer().min(18).max(120).required(),
     gender_id: Joi.number().integer().min(1).max(2),

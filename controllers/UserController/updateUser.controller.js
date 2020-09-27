@@ -3,7 +3,7 @@ const {
     responseCustomErrorEnum: {NOT_UPDATE},
     emailActionEnum: {USER_UPDATE}
 } = require('../../constants');
-const ErrorHandler = require("../../error/ErrorHandler")
+const {ErrorHandler} = require("../../error")
 const {hashPasswordHelpers} = require('../../helpers')
 const {emailService: {sendMail}, userService: {updateUserService, getUserByIdService}} = require("../../service");
 
@@ -18,17 +18,19 @@ module.exports = async (req, res, next) => {
 
     try {
         const {userId} = req.params;
-        const user = req.body;
+        const updatedUser = req.body;
+
         const userFromDB = await getUserByIdService(userId);
-        user.password = await hashPasswordHelpers(user.password);
-        const [isUpdated] = await updateUserService(userId, user);
+        updatedUser.password = await hashPasswordHelpers(updatedUser.password);
+
+        const [isUpdated] = await updateUserService(userId, updatedUser);
 
         if (!isUpdated) return next(new ErrorHandler(NOT_UPDATE.message, NOT_FOUND_CODE, NOT_UPDATE.customCode));
 
-        await sendMail(userFromDB.email, USER_UPDATE, {user});
+        await sendMail(userFromDB.email, USER_UPDATE, {user: updatedUser});
 
         res.sendStatus(OK);
     } catch (e) {
-        next(e);
+        next(new ErrorHandler(e.status, e.message, e.code));
     }
 };

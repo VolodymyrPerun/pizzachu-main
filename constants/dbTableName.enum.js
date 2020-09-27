@@ -1,7 +1,7 @@
 module.exports = {
     GENDER: 'Gender',
     OAUTH_TOKEN: 'OAuthToken',
-    USER: 'user',
+    USER: 'User',
     USER_ROLE: 'user_role',
     USER_STATUS: 'user_status',
     COMMENT: 'Comment',

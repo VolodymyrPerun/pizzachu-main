@@ -45,6 +45,6 @@ module.exports = async (req, res, next) => {
 
         res.sendStatus(CREATED);
     } catch (e) {
-        next(e);
+        next(new ErrorHandler(e.status, e.message, e.code));
     }
 };

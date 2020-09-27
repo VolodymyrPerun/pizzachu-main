@@ -1,3 +1,4 @@
+const {ErrorHandler} = require("../../error");
 const {OK} = require("../../constants");
 module.exports = async (req, res, next) => {
 
@@ -5,6 +6,6 @@ module.exports = async (req, res, next) => {
         await res.json(req.user).sendStatus(OK)
 
     } catch (e) {
-        next(e);
+        next(new ErrorHandler(e.status, e.message, e.code));
     }
 };

@@ -31,6 +31,6 @@ module.exports = async (req, res, next) => {
 
         res.json(tokens)
     } catch (e) {
-        next(e);
+        next(new ErrorHandler(e.status, e.message, e.code));
     }
 };
