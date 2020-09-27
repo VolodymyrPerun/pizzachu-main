@@ -1,2 +1,2 @@
 # pizzachu-main
- e-commerce project (beckend part)
+ e-commerce project (backend part)
