@@ -1,5 +1,5 @@
 const {checkHashPasswordHelpers} = require("../../helpers");
-const {authService: {authService}} = require('../../service')
+const {oauthService:{createTokenPairService}} = require('../../service')
 
 
 module.exports = async (req, res, next) => {
@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
         const user = req.body;
         user.password = await checkHashPasswordHelpers(user.password);
 
-        await authService.createTokenPairService(user);
+        await createTokenPairService(user);
     } catch (e) {
         next(e);
     }

@@ -1,8 +1,8 @@
 const db = require('../../dataBase').getInstance();
-const {DB_TABLE_NAME: {AUTH_TOKEN}} = require('../../constants');
+const {DB_TABLE_NAME: {OAUTH_TOKEN}} = require('../../constants');
 
 module.exports = async token => {
-    const TokenModel = db.getModel(AUTH_TOKEN);
+    const TokenModel = db.getModel( OAUTH_TOKEN);
 
     return TokenModel.create(token)
 }

@@ -7,7 +7,10 @@ const {
 } = require('../../constants')
 const {tokenGeneratorHelpers, checkHashPasswordHelpers} = require('../../helpers')
 const {ErrorHandler} = require('../../error')
-const {authService: {authService}, userService: {userService}} = require('../../service')
+const {
+    oauthService: {createTokenPairService},
+    userService: {getUserByParamsService}
+} = require('../../service')
 
 
 module.exports = async (req, res, next) => {
@@ -18,7 +21,7 @@ module.exports = async (req, res, next) => {
 
         if (error) return next(new ErrorHandler(error.details[0].message, BAD_REQUEST, NOT_VALID.customCode));
 
-        const user = await userService.getUserByParamsService({email});
+        const user = await getUserByParamsService({email});
 
         if (!user) {
             return next(new ErrorHandler(new ErrorHandler(NOT_FOUND.message, NOT_FOUND_CODE, NOT_FOUND.customCode)));
@@ -28,7 +31,7 @@ module.exports = async (req, res, next) => {
 
         const tokens = tokenGeneratorHelpers();
 
-        await authService.createTokenPairService({...tokens, userId: user.userId});
+        await createTokenPairService({...tokens, userId: user.userId});
 
         res.json(tokens);
     } catch (e) {

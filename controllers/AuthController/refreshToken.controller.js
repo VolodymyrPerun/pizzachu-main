@@ -5,7 +5,10 @@ const {
 } = require('../../constants')
 const {tokenGeneratorHelpers} = require('../../helpers')
 const {ErrorHandler} = require('../../error')
-const {authService: {authService}, userService: {userService}} = require('../../service')
+const {
+    oauthService: {deleteTokenByParamsService, createTokenPairService},
+    userService: {getUserByIdService}
+} = require('../../service')
 
 
 module.exports = async (req, res, next) => {
@@ -15,7 +18,7 @@ module.exports = async (req, res, next) => {
         const refresh_token = req.get(AUTHORIZATION)
         const userId = req.userId
 
-        const user = await userService.getUserByIdService(userId)
+        const user = await getUserByIdService(userId)
 
         if (!user) {
             return next(new ErrorHandler(new ErrorHandler(NOT_FOUND.message, NOT_FOUND_CODE, NOT_FOUND.customCode)))
@@ -23,8 +26,8 @@ module.exports = async (req, res, next) => {
 
         const tokens = tokenGeneratorHelpers()
 
-        await authService.deleteTokenByParamsService({refresh_token})
-        await authService.createTokenPairService({...tokens, userId: user.userId})
+        await deleteTokenByParamsService({refresh_token})
+        await createTokenPairService({...tokens, userId: user.userId})
 
         res.json(tokens)
     } catch (e) {
