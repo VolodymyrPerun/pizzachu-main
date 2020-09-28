@@ -10,7 +10,7 @@ const ErrorHandler = require('../../error/ErrorHandler');
 
 module.exports = (req, res, next) => {
     try {
-        const {name, surname, age, phone, city, address, postOfficeLocation} = req.body;
+        const {name, surname, age, phone, city, address, postOfficeLocation, user_photo} = req.body;
 
         const {error} = Joi.validate({
             name,
@@ -19,7 +19,8 @@ module.exports = (req, res, next) => {
             phone,
             city,
             address,
-            postOfficeLocation
+            postOfficeLocation,
+            user_photo
         }, updateUserValidatorSchema);
 
         if (error) return next(new ErrorHandler(error.details[0].message, BAD_REQUEST, NOT_VALID.customCode));

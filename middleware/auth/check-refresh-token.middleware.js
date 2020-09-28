@@ -8,7 +8,7 @@ const {
 } = require('../../constants');
 
 const {JWT_REFRESH_SECRET} = require('../../config')
-const {authService} = require('../../service');
+const {oauthService:{getTokensByParamsService}} = require('../../service');
 const {ErrorHandler} = require('../../error');
 
 
@@ -30,7 +30,7 @@ module.exports = async (req, res, next) => {
             }
         });
 
-        const tokensFromDB = await authService.getTokensByParams({refresh_token: refreshedToken})
+        const tokensFromDB = await getTokensByParamsService({refresh_token: refreshedToken})
 
         if (!tokensFromDB) {
             return next(new ErrorHandler(

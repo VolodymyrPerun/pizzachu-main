@@ -1,4 +1,4 @@
-const {DB_TABLE_NAME:{OAUTH_TOKEN}} = require('../../constants');
+const {DB_TABLE_NAME: {OAUTH_TOKEN}} = require('../../constants');
 
 module.exports = (sequelize, DataTypes) => {
 
@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
 
     const User = sequelize.import('./User.js')
 
-OAuthToken.belongsTo(User, {foreignKey: 'userId'})
+    OAuthToken.belongsTo(User, {foreignKey: 'userId'})
 
     return OAuthToken;
 };

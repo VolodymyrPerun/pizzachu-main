@@ -1,18 +1,20 @@
 const {
     responseStatusCodesEnum: {NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_GET},
+    USER_STATUS:{ACTIVE}
 } = require('../../constants');
 const {ErrorHandler} = require("../../error")
 const {userService: {getUsersService}} = require("../../service");
 
 
 module.exports = async (req, res, next) => {
+    let activeUsers = [];
     try {
-        const users = await getUsersService();
+        activeUsers = await getUsersService(ACTIVE);
 
-        if (!users) return next(new ErrorHandler(NOT_GET.message, NOT_FOUND_CODE, NOT_GET.customCode));
+        if (!activeUsers) return next(new ErrorHandler(NOT_GET.message, NOT_FOUND_CODE, NOT_GET.customCode));
 
-        res.json(users);
+        res.json(activeUsers);
     } catch (e) {
         next(new ErrorHandler(e.status, e.message, e.code));
     }

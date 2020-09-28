@@ -14,8 +14,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             name: {
                 type: DataTypes.STRING,
-                allowNull: false,
-                required: true
+                allowNull: false
             },
             surname: {
                 type: DataTypes.STRING,
@@ -23,8 +22,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             age: {
                 type: DataTypes.INTEGER,
-                allowNull: false,
-                required: true
+                allowNull: false
             },
             gender_id: {
                 type: DataTypes.STRING,
@@ -77,7 +75,7 @@ module.exports = (sequelize, DataTypes) => {
 
 
     const UserRole = sequelize.import('./UserRole.js');
-    const UserStatus = sequelize.import('./UserStatus');
+    const UserStatus = sequelize.import('./UserStatus.js');
 
     User.belongsTo(UserRole, {foreignKey: 'role_id'});
     User.belongsTo(UserStatus, {foreignKey: 'status_id'});
