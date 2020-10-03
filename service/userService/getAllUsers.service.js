@@ -5,15 +5,18 @@ module.exports = async status_id => {
     const UserModel = await db.getModel(USER);
     const UserStatusModel = await db.getModel(USER_STATUS);
 
+    console.log(UserStatusModel);
+
     return UserModel.findAll({
         where: {
             status_id
         },
         attributes: ['userId', 'name', 'surname'],
-        include: [{
-            model: UserStatusModel,
-            attributes: ['id'],
-        }],
+        //todo dosn`t work:
+        // include: [{
+        //     model: UserStatusModel,
+        //     attributes: ['label']
+        // }],
         raw: true
     });
 };

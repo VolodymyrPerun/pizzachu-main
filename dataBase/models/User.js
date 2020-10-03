@@ -56,6 +56,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             role_id: {
                 type: DataTypes.INTEGER,
+                foreignKey: true,
                 allowNull: false
             },
             user_photo: {

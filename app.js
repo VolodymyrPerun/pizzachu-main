@@ -31,8 +31,9 @@ app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'public'));
 
 
-const {AuthRouter, UserRouter, productRouter} = require('./routes')
+const {AdminRouter, AuthRouter, UserRouter, productRouter} = require('./routes')
 
+app.use('/admin&blablabla', AdminRouter);
 app.use('/auth', AuthRouter);
 app.use('/users', UserRouter);
 // app.use('/products', productRouter);

@@ -1,3 +1,4 @@
+module.exports.AdminRouter=require('./AdminRouter');
 module.exports.UserRouter=require('./UserRouter');
 // module.exports.productRouter=require('./product/product.router');
 module.exports.AuthRouter=require('./AuthRouter');
