@@ -6,7 +6,9 @@ module.exports = async status_id => {
     const UserStatusModel = await db.getModel(USER_STATUS);
 
     return UserModel.findAll({
-        status_id: status_id,
+        where: {
+            status_id
+        },
         attributes: ['userId', 'name', 'surname'],
         include: [{
             model: UserStatusModel,

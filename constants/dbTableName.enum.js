@@ -3,7 +3,7 @@ module.exports = {
     OAUTH_TOKEN: 'oauth_token',
     USER: 'User',
     USER_ROLE: 'user_role',
-    USER_STATUS: 'ser_status',
+    USER_STATUS: 'user_status',
     COMMENT: 'Comment',
     ACTION_TOKEN: 'ActionToken',
     ACTION: 'Action',

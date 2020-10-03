@@ -6,6 +6,6 @@ module.exports = async (req, res, next) => {
         await res.json(req.user).sendStatus(OK)
 
     } catch (e) {
-        next(new ErrorHandler(e.status, e.message, e.code));
+        next(new ErrorHandler(e));
     }
 };

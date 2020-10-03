@@ -18,8 +18,9 @@ const {
     userController: {
         createUser,
         deleteUserByParams,
+        getAllActiveUsers,
+        getAllBlockedUsers,
         getUserById,
-        getUsers,
         updateUser
     }
 } = require('../../controllers');
@@ -29,7 +30,8 @@ router.post('/register',checkUserValidityMiddleware,
     checkFilesMiddleware,
     checkUserPhotoCountMiddleware, createUser);
 
-router.get('/', getUsers);
+router.get('/getAllActiveUsers', getAllActiveUsers);
+router.get('/getAllBlockedUsers', getAllBlockedUsers);
 router.get('/:userId', checkIsUserExistMiddleware, getUserById);
 router.put('/:userId', checkIsUserExistMiddleware, checkUserValidityIfUpdateMiddleware, updateUser);
 router.delete('/:userId', checkIsUserExistMiddleware, deleteUserByParams);
