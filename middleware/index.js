@@ -1,3 +1,3 @@
-module.exports.authMiddleware = require('./auth')
-module.exports.userMiddleware = require('./user')
-module.exports.fileMiddleware = require('./files')
+module.exports.authMiddleware = require('./authMiddleware')
+module.exports.userMiddleware = require('./userMiddleware')
+module.exports.fileMiddleware = require('./filesMiddleware')

@@ -18,6 +18,10 @@ const {
     adminController: {
         createAdmin
     },
+    authController: {
+        loginAdmin,
+        loginSeller
+    },
     userController: {
         deleteUserByParams
     }
@@ -27,6 +31,11 @@ const {
 router.post('/registerAdmin', checkUserValidityMiddleware,
     checkFilesMiddleware,
     checkUserPhotoCountMiddleware, createAdmin);
+
+router.post('/authAdmin', loginAdmin);
+router.post('/authSeller', loginSeller);
+// router.post('/logout', checkAccessTokenMiddleware, logoutUser);
+// router.post('/refresh', checkRefreshTokenMiddleware, refreshToken);
 
 // router.get('/getAllActiveUsers', getAllActiveUsers);
 // router.get('/getAllBlockedUsers', getAllBlockedUsers);

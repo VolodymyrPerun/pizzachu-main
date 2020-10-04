@@ -1,10 +1,10 @@
 const Joi = require('joi');
 
 const {
-    CustomErrorData: {BAD_REQUEST_USER_NOT_PRESENT, FORBIDDEN_USER_IS_BLOCKED}
+    CustomErrorData: {BAD_REQUEST_ADMIN_NOT_PRESENT, FORBIDDEN_USER_IS_BLOCKED}
 } = require("../../error");
 
-const {USER_ROLE: {CLIENT}, USER_STATUS: {BLOCKED}} = require("../../constants");
+const {USER_ROLE: {ADMIN}, USER_STATUS: {BLOCKED}} = require("../../constants");
 
 const {authValidator: {authValidationSchema}} = require("../../validators");
 const {
@@ -26,30 +26,29 @@ module.exports = async (req, res, next) => {
         //todo create compare password service, forgot pass and change pass controller, try to login user,
         //todo after that create admin controller and auth admin
 
-        const {error} = Joi.validate({email, password}, authValidationSchema);
+        const user = await getUserByParamsService({email, role_id: ADMIN});
 
-        if (error) return next(new ErrorHandler(error.details[0].message, BAD_REQUEST, NOT_VALID.customCode));
-
-        const client = await getUserByParamsService({email, role_id: CLIENT});
-
-        if (!client) {
+        if (!user) {
             return next(new ErrorHandler(BAD_REQUEST,
-                BAD_REQUEST_USER_NOT_PRESENT.message,
-                BAD_REQUEST_USER_NOT_PRESENT.code,));
+                BAD_REQUEST_ADMIN_NOT_PRESENT.message,
+                BAD_REQUEST_ADMIN_NOT_PRESENT.code,));
         }
 
-        if (client.status_id === BLOCKED) {
+        if (user.status_id === BLOCKED) {
             return next(new ErrorHandler(FORBIDDEN,
                 FORBIDDEN_USER_IS_BLOCKED.message,
                 FORBIDDEN_USER_IS_BLOCKED.code,));
         }
 
+        const {error} = Joi.validate({email, password}, authValidationSchema);
 
-        await checkHashPasswordHelpers(client.password, password);
+        if (error) return next(new ErrorHandler(error.details[0].message, BAD_REQUEST, NOT_VALID.customCode));
+
+        await checkHashPasswordHelpers(user.password, password);
 
         const tokens = tokenGeneratorHelpers();
 
-        await createTokenPairService({...tokens, userId: client.userId});
+        await createTokenPairService({userId: user.userId, ...tokens});
 
         res.json(tokens).end();
     } catch (e) {

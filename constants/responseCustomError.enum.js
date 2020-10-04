@@ -29,5 +29,9 @@ module.exports = {
     NOT_DELETE: {
         message: 'Record can\'t delete',
         customCode: 4045
+    },
+    NOT_VALID_TOKEN_METHOD: {
+        message: 'Method for token is not valid',
+        customCode: 4046
     }
 };

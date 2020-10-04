@@ -20,7 +20,7 @@ module.exports = async (req, res, next) => {
         const user = req.body;
 
         user.role_id = CLIENT;
-        user.status_is = ACTIVE;
+        user.status_id = ACTIVE;
 
         const [profileImage] = req.photos;
         const password = user.password;
@@ -45,6 +45,6 @@ module.exports = async (req, res, next) => {
 
         res.sendStatus(CREATED);
     } catch (e) {
-        next(new ErrorHandler(e.status, e.message, e.code));
+        next(e);
     }
 };

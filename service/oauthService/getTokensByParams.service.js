@@ -1,10 +1,13 @@
 const db = require('../../dataBase').getInstance();
 const {DB_TABLE_NAME: {OAUTH_TOKEN}} = require('../../constants');
 
-module.exports = async params => {
-    const TokenModel = db.getModel(OAUTH_TOKEN);
+module.exports = async findObject => {
+    const OauthModel = db.getModel(OAUTH_TOKEN);
 
-    return TokenModel.findOne({
-        where: params
-    })
+    const user = await OauthModel.findOne({
+        where: findObject,
+        attributes: ['userId']
+    });
+
+    return user && user.dataValues;
 }

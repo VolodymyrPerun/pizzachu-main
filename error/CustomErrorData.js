@@ -31,13 +31,13 @@ module.exports = {
         code: 4006
     },
     //+
-    BAD_REQUEST_DOCTOR_NOT_PRESENT: {
-        message: 'Doctor is not present',
+    BAD_REQUEST_SELLER_NOT_PRESENT: {
+        message: 'Seller is not present',
         code: 4007
     },
     //+
-    BAD_REQUEST_YOU_ARE_NOT_DOCTOR: {
-        message: 'You are not a doctor',
+    BAD_REQUEST_YOU_ARE_NOT_SELLER: {
+        message: 'You are not a seller',
         code: 4008
     },
     //+
