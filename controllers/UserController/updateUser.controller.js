@@ -4,7 +4,7 @@ const {
     emailActionEnum: {USER_UPDATE}
 } = require('../../constants');
 const {ErrorHandler} = require("../../error")
-const {hashPasswordHelpers} = require('../../helpers')
+const {checkHashPasswordHelpers} = require('../../helpers')
 const {emailService: {sendMail}, userService: {updateUserService, getUserByIdService}} = require("../../service");
 
 
@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
         const updatedUser = req.body;
 
         const userFromDB = await getUserByIdService(userId);
-        updatedUser.password = await hashPasswordHelpers(updatedUser.password);
+        updatedUser.password = await checkHashPasswordHelpers(updatedUser.password);
 
         const [isUpdated] = await updateUserService(userId, updatedUser);
 
@@ -31,6 +31,6 @@ module.exports = async (req, res, next) => {
 
         res.sendStatus(OK);
     } catch (e) {
-        next(new ErrorHandler(e.status, e.message, e.code));
+        next(e);
     }
 };

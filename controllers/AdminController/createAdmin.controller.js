@@ -11,7 +11,7 @@ const {
     USER_STATUS: {ACTIVE},
 } = require('../../constants');
 const ErrorHandler = require("../../error/ErrorHandler")
-const {hashPasswordHelpers} = require('../../helpers')
+const {checkHashPasswordHelpers} = require('../../helpers')
 const {emailService, userService: {createUserService, updateUserService}} = require("../../service");
 
 
@@ -25,7 +25,7 @@ module.exports = async (req, res, next) => {
         const [profileImage] = req.photos;
         const password = user.password;
 
-        user.password = await hashPasswordHelpers(user.password);
+        user.password = await checkHashPasswordHelpers(user.password);
 
         const isUserCreated = await createUserService(user);
 

@@ -13,9 +13,7 @@ db.setModels();
 
 const app = express();
 
-app.use(fileUpload({
-
-}));
+app.use(fileUpload({}));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
@@ -31,13 +29,13 @@ app.set('view engine', '.hbs');
 app.set('views', path.join(__dirname, 'public'));
 
 
-const {AdminRouter, AuthRouter, UserRouter, productRouter} = require('./routes')
+const {AdminRouter, AuthRouter, UserRouter, productRouter, SellerRouter} = require('./routes')
 
 app.use('/admin&blablabla', AdminRouter);
 app.use('/auth', AuthRouter);
+app.use('/sellers', SellerRouter);
 app.use('/users', UserRouter);
 // app.use('/products', productRouter);
-
 
 
 app.use('*', (err, req, res) => {

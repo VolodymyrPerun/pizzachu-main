@@ -6,8 +6,8 @@ const fsep = require('fs-extra').promises;
 const {
     responseStatusCodesEnum: {CREATED, NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_CREATED},
-    emailActionEnum: {USER_REGISTER},
-    USER_ROLE: {CLIENT},
+    emailActionEnum: {SELLER_REGISTER},
+    USER_ROLE: {SELLER},
     USER_STATUS: {ACTIVE},
 } = require('../../constants');
 const ErrorHandler = require("../../error/ErrorHandler")
@@ -19,7 +19,7 @@ module.exports = async (req, res, next) => {
     try {
         const user = req.body;
 
-        user.role_id = CLIENT;
+        user.role_id = SELLER;
         user.status_is = ACTIVE;
 
         const [profileImage] = req.photos;
@@ -41,7 +41,7 @@ module.exports = async (req, res, next) => {
             await updateUserService(isUserCreated.userId, {user_photo: photoDir + photoName});
         }
 
-        await emailService.sendMail(user.email, USER_REGISTER, {user, password});
+        await emailService.sendMail(user.email, SELLER_REGISTER, {user, password});
 
         res.sendStatus(CREATED);
     } catch (e) {

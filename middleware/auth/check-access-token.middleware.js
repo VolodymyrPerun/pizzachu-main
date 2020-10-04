@@ -30,7 +30,7 @@ module.exports = async (req, res, next) => {
             }
         });
 
-        const tokensFromDB = await getTokensByParamsService({access_token: authorizationToken})
+        const tokensFromDB = await getTokensByParamsService({access_token: authorizationToken});
 
         if (!tokensFromDB) {
             return next(new ErrorHandler(
@@ -41,8 +41,8 @@ module.exports = async (req, res, next) => {
         }
 
         req.userId = tokensFromDB.userId
-        next()
+        next();
     } catch (e) {
         next(e)
     }
-}
+};

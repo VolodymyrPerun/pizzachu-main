@@ -15,8 +15,8 @@ const {
     = require('../../middleware')
 
 const {
-    adminController: {
-        createAdmin
+    sellerController: {
+        createSeller
     },
     userController: {
         deleteUserByParams
@@ -24,9 +24,9 @@ const {
 } = require('../../controllers');
 
 
-router.post('/registerAdmin', checkUserValidityMiddleware,
+router.post('/registerSeller', checkUserValidityMiddleware,
     checkFilesMiddleware,
-    checkUserPhotoCountMiddleware, createAdmin);
+    checkUserPhotoCountMiddleware, createSeller);
 
 // router.get('/getAllActiveUsers', getAllActiveUsers);
 // router.get('/getAllBlockedUsers', getAllBlockedUsers);
