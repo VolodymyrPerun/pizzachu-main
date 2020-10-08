@@ -3,8 +3,8 @@ const router = require('express').Router();
 const {
     authMiddleware:
         {
-            checkAccessTokenMiddleware,
-            checkRefreshTokenMiddleware
+            checkUserAccessTokenMiddleware,
+            checkUserRefreshTokenMiddleware
         }
 } = require("../../middleware");
 const {
@@ -17,7 +17,7 @@ const {
 } = require('../../controllers')
 
 router.post('/', loginClient);
-router.post('/logout', checkAccessTokenMiddleware, logoutUser);
-router.post('/refresh', checkRefreshTokenMiddleware, refreshToken);
+router.post('/logout', checkUserAccessTokenMiddleware, logoutUser);
+router.post('/refresh', checkUserRefreshTokenMiddleware, refreshToken);
 
 module.exports = router;

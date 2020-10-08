@@ -5,7 +5,6 @@ module.exports = async status_id => {
     const UserModel = await db.getModel(USER);
     const UserStatusModel = await db.getModel(USER_STATUS);
 
-    console.log(UserStatusModel);
 
     return UserModel.findAll({
         where: {

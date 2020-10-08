@@ -2,7 +2,7 @@ const {
     ErrorHandler,
     CustomErrorData: {BAD_REQUEST_YOU_ARE_NOT_ADMIN, UNAUTHORIZED_BAD_ACCESS_TOKEN}
 } = require("../../error");
-const {tokenVeryficatorHelper} = require('../../helpers');
+const {tokenVerifierHelper} = require('../../helpers');
 const {
     USER_ROLE: {ADMIN},
     requestHeadersEnum: {AUTHORIZATION},
@@ -18,7 +18,7 @@ module.exports = async (req, res, next) => {
             UNAUTHORIZED_BAD_ACCESS_TOKEN))
     }
 
-    tokenVeryficatorHelper(authorizationToken, ADMIN);
+    tokenVerifierHelper(authorizationToken, ADMIN);
 
     next();
 };

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const {responseCustomErrorEnum: {NOT_VALID_TOKEN_METHOD}} = require("../constants");
 const {ErrorHandler} = require("../error");
-const {USER_ROLE: {ADMIN, SELLER, CLIENT}} = require("../constants");
+const {JWT_METHOD: {ADMIN, SELLER, CLIENT}} = require("../constants");
 
 
 const {
@@ -24,44 +24,47 @@ const {
 
 module.exports = method => {
 
-    if (method === ADMIN) {
-        const access_token = jwt.sign({}, ADMIN_ACCESS,
-            {expiresIn: JWT_ADMIN_SECRET_TIME});
-        const refresh_token = jwt.sign({}, ADMIN_REFRESH,
-            {expiresIn: process.env.JWT_ADMIN_REFRESH_SECRET_TIME || JWT_ADMIN_REFRESH_SECRET_TIME});
+    try {
+        if (method === ADMIN) {
+            const access_token = jwt.sign({}, ADMIN_ACCESS,
+                {expiresIn: JWT_ADMIN_SECRET_TIME});
+            const refresh_token = jwt.sign({}, ADMIN_REFRESH,
+                {expiresIn: process.env.JWT_ADMIN_REFRESH_SECRET_TIME || JWT_ADMIN_REFRESH_SECRET_TIME});
 
-        return {
-            access_token,
-            refresh_token
+            return {
+                access_token,
+                refresh_token
+            }
         }
-    }
 
-    if (method === CLIENT) {
-        const access_token = jwt.sign({},
-            JWT_SECRET,
-            {expiresIn: JWT_SECRET_TIME});
-        const refresh_token = jwt.sign({},
-            JWT_REFRESH_SECRET,
-            {expiresIn: process.env.JWT_REFRESH_SECRET_TIME || JWT_REFRESH_SECRET_TIME});
+        if (method === CLIENT) {
+            const access_token = jwt.sign({},
+                JWT_SECRET,
+                {expiresIn: JWT_SECRET_TIME});
+            const refresh_token = jwt.sign({},
+                JWT_REFRESH_SECRET,
+                {expiresIn: process.env.JWT_REFRESH_SECRET_TIME || JWT_REFRESH_SECRET_TIME});
 
-        return {
-            access_token,
-            refresh_token
+            return {
+                access_token,
+                refresh_token
+            }
         }
-    }
 
-    if (method === SELLER) {
-        const access_token = jwt.sign({}, SELLER_ACCESS,
-            {expiresIn: JWT_SELLER_SECRET_TIME});
-        const refresh_token = jwt.sign({}, SELLER_REFRESH,
-            {expiresIn: process.env.JWT_SELLER_REFRESH_SECRET_TIME || JWT_SELLER_REFRESH_SECRET_TIME});
+        if (method === SELLER) {
+            const access_token = jwt.sign({}, SELLER_ACCESS,
+                {expiresIn: JWT_SELLER_SECRET_TIME});
+            const refresh_token = jwt.sign({}, SELLER_REFRESH,
+                {expiresIn: process.env.JWT_SELLER_REFRESH_SECRET_TIME || JWT_SELLER_REFRESH_SECRET_TIME});
 
-        return {
-            access_token,
-            refresh_token
+            return {
+                access_token,
+                refresh_token
+            }
         }
+    } catch (e) {
+        throw new ErrorHandler(NOT_VALID_TOKEN_METHOD,
+            NOT_VALID_TOKEN_METHOD.message,
+            NOT_VALID_TOKEN_METHOD.code)
     }
-    throw new ErrorHandler(NOT_VALID_TOKEN_METHOD,
-        NOT_VALID_TOKEN_METHOD.message,
-        NOT_VALID_TOKEN_METHOD.code)
 };

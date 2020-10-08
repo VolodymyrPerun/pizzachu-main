@@ -1,7 +1,18 @@
 const router = require('express').Router();
 const {
+    authMiddleware: {
+        checkAdminTokenMiddleware,
+        checkSellerTokenMiddleware,
+        checkUserAccessTokenMiddleware,
+        checkAdminRefreshTokenMiddleware,
+        checkSellerRefreshTokenMiddleware,
+        checkUserRefreshTokenMiddleware,
+        getUserFromRefreshToken,
+        getUserFromToken
+    },
     userMiddleware:
         {
+
             checkIsUserExistMiddleware,
             checkUserValidityMiddleware,
             checkUserValidityIfUpdateMiddleware
@@ -20,7 +31,9 @@ const {
     },
     authController: {
         loginAdmin,
-        loginSeller
+        loginSeller,
+        logoutUser,
+        refreshToken
     },
     userController: {
         deleteUserByParams
@@ -33,7 +46,16 @@ router.post('/registerAdmin', checkUserValidityMiddleware,
     checkUserPhotoCountMiddleware, createAdmin);
 
 router.post('/authAdmin', loginAdmin);
+router.post('/authAdmin/logout', logoutUser);
+router.post('/authAdmin/refresh', checkAdminRefreshTokenMiddleware, refreshToken);
+
 router.post('/authSeller', loginSeller);
+router.post('/authSeller/logout', logoutUser);
+router.post('/authSeller/refresh', checkSellerRefreshTokenMiddleware, refreshToken);
+
+router.use(checkAdminTokenMiddleware, checkSellerTokenMiddleware, checkUserAccessTokenMiddleware);
+
+router.use('/users/:user_id', checkUserValidityMiddleware);
 // router.post('/logout', checkAccessTokenMiddleware, logoutUser);
 // router.post('/refresh', checkRefreshTokenMiddleware, refreshToken);
 

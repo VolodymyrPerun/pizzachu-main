@@ -1,5 +1,5 @@
 const {ErrorHandler, CustomErrorData: {UNAUTHORIZED_BAD_REFRESH_TOKEN}} = require('../../error');
-const {refreshTokenVeryficatorHelper} = require('../../helpers');
+const {refreshTokenVerifierHelper} = require('../../helpers');
 const {
     requestHeadersEnum: {AUTHORIZATION},
     USER_ROLE: {CLIENT},
@@ -15,7 +15,7 @@ module.exports = async (req, res, next) => {
             UNAUTHORIZED_BAD_REFRESH_TOKEN.customCode));
     }
 
-    refreshTokenVeryficatorHelper(authorizationToken, CLIENT);
+    refreshTokenVerifierHelper(authorizationToken, CLIENT);
 
     next();
 };

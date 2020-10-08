@@ -1,5 +1,5 @@
 const {ErrorHandler, CustomErrorData: {BAD_REQUEST_YOU_ARE_NOT_SELLER, UNAUTHORIZED_BAD_REFRESH_TOKEN}} = require('../../error');
-const {refreshTokenVeryficatorHelper} = require('../../helpers');
+const {refreshTokenVerifierHelper} = require('../../helpers');
 const {
     requestHeadersEnum: {AUTHORIZATION},
     USER_ROLE: {SELLER},
@@ -16,7 +16,7 @@ module.exports = async (req, res, next) => {
         ));
     }
 
-    refreshTokenVeryficatorHelper(authorizationToken, SELLER);
+    refreshTokenVerifierHelper(authorizationToken, SELLER);
 
     next();
 };

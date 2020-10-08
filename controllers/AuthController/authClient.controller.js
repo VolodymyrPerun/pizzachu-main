@@ -4,14 +4,14 @@ const {
     CustomErrorData: {BAD_REQUEST_USER_NOT_PRESENT, FORBIDDEN_USER_IS_BLOCKED}
 } = require("../../error");
 
-const {USER_ROLE: {CLIENT}, USER_STATUS: {BLOCKED}} = require("../../constants");
+const {USER_ROLE: {CLIENT}, USER_STATUS: {BLOCKED}, JWT_METHOD} = require("../../constants");
 
 const {authValidator: {authValidationSchema}} = require("../../validators");
 const {
     responseStatusCodesEnum: {BAD_REQUEST, FORBIDDEN},
     responseCustomErrorEnum: {NOT_VALID}
 } = require('../../constants')
-const {tokenGeneratorHelpers, checkHashPasswordHelpers} = require('../../helpers')
+const {tokenGeneratorHelper, checkHashPasswordHelper} = require('../../helpers')
 const {ErrorHandler} = require('../../error')
 const {
     oauthService: {createTokenPairService},
@@ -45,14 +45,14 @@ module.exports = async (req, res, next) => {
         }
 
 
-        await checkHashPasswordHelpers(user.password, password);
+        await checkHashPasswordHelper(user.password, password);
 
-        const tokens = tokenGeneratorHelpers();
+        const tokens = tokenGeneratorHelper(JWT_METHOD.CLIENT);
 
         await createTokenPairService({...tokens, userId: user.userId});
 
         res.json(tokens).end();
     } catch (e) {
-        next(new ErrorHandler(e.status, e.message, e.code));
+        next(e);
     }
 };

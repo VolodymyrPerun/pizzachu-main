@@ -4,7 +4,7 @@ const {
     emailActionEnum: {USER_UPDATE}
 } = require('../../constants');
 const {ErrorHandler} = require("../../error")
-const {checkHashPasswordHelpers} = require('../../helpers')
+const {checkHashPasswordHelper} = require('../../helpers')
 const {emailService: {sendMail}, userService: {updateUserService, getUserByIdService}} = require("../../service");
 
 
@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
         const updatedUser = req.body;
 
         const userFromDB = await getUserByIdService(userId);
-        updatedUser.password = await checkHashPasswordHelpers(updatedUser.password);
+        updatedUser.password = await checkHashPasswordHelper(updatedUser.password);
 
         const [isUpdated] = await updateUserService(userId, updatedUser);
 

@@ -9,5 +9,6 @@ module.exports.regexpAuthValidatorEnum = require('./regexpAuthValidator.enum')
 module.exports.regexpPasswordEnum = require('./regexpPassword.enum');
 module.exports.regexpPhoneNumberEnum = require('./regexpPhoneNumber.enum');
 module.exports.responseStatusCodesEnum = require('./responseStatusCodes.enum');
+module.exports.JWT_METHOD = require('./jwt_method.enum');
 module.exports.USER_ROLE = require('./userRole.enum');
 module.exports.USER_STATUS = require('./userStatus.enum');

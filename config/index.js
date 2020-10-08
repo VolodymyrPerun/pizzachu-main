@@ -1,18 +1,18 @@
 module.exports = {
     PORT: process.env.PORT || 5000,
 
-    ADMIN_ACCESS: process.env.ADMIN_ACCESS || '$2b$10$I6qMyyKzvgRI3myiLUbVNeAuwblySlalAtAm4Sbxh3.8QIohj6qKG',
+    ADMIN_ACCESS: process.env.ADMIN_ACCESS || '$2b$10$I6qMyyKzvgRI3myiLUbVNeAuwblySlalAtAm4Sbxh38QIohj6qKG',
     ADMIN_REFRESH: process.env.ADMIN_REFRESH || '$2b$10$fPeg26ShoEa7bVTjn1x2EuMZTDfEPDivAUxxs81WLowPRbItaMNLm',
     JWT_ADMIN_SECRET_TIME: process.env.JWT_ADMIN_SECRET_TIME || '1110d',
     JWT_ADMIN_REFRESH_SECRET_TIME: process.env.JWT_ADMIN_REFRESH_SECRET_TIME || '1110d',
 
     JWT_SECRET: process.env.JWT_SECRET || '$2b$10$Gg91pyMdkpIwT2MRMl7xxObPSOAQpS2Gnt29indH8Q4jxpiSfPup2',
-    JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET || '$2b$10$m6z7akGidsLTGt5hFcIKJuPIaseru7aQNnsZ1rDdw.OMtHkHXNjFq',
+    JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET || '$2b$10$m6z7akGidsLTGt5hFcIKJuPIaseru7aQNnsZ1rDdwOMtHkHXNjFq',
     JWT_SECRET_TIME: process.env.JWT_SECRET_TIME || '1110d',
     JWT_REFRESH_SECRET_TIME: process.env.JWT_REFRESH_SECRET_TIME || '1110d',
 
     SELLER_ACCESS: process.env.SELLER_ACCESS || '$2b$10$IET7MrgAhz3qFuWTNV9JJeCX4WQluOlNsqN1jIxjbZMrZtne5cX5i',
-    SELLER_REFRESH: process.env.SELLER_REFRESH || '$2b$10$W1lTBOd/geN9X3LKLxmYHeZun9Kx.IpE5Q3m4mkgzkzwkKOPUQ15u',
+    SELLER_REFRESH: process.env.SELLER_REFRESH || '$2b$10$W1lTBOd/geN9X3LKLxmYHeZun9KxIpE5Q3m4mkgzkzwkKOPUQ15u',
     JWT_SELLER_SECRET_TIME: process.env.JWT_SELLER_SECRET_TIME || '1110d',
     JWT_SELLER_REFRESH_SECRET_TIME: process.env.JWT_SELLER_REFRESH_SECRET_TIME || '1110d',
 
