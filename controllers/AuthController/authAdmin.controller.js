@@ -3,9 +3,7 @@ const Joi = require('joi');
 const {
     CustomErrorData: {BAD_REQUEST_ADMIN_NOT_PRESENT, FORBIDDEN_USER_IS_BLOCKED}
 } = require("../../error");
-
 const {USER_ROLE: {ADMIN}, USER_STATUS: {BLOCKED}, JWT_METHOD} = require("../../constants");
-
 const {authValidator: {authValidationSchema}} = require("../../validators");
 const {
     responseStatusCodesEnum: {BAD_REQUEST, FORBIDDEN},
@@ -28,6 +26,7 @@ module.exports = async (req, res, next) => {
 
         const admin = await getUserByParamsService({email, role_id: ADMIN});
 
+
         if (!admin) {
             return next(new ErrorHandler(BAD_REQUEST,
                 BAD_REQUEST_ADMIN_NOT_PRESENT.message,
@@ -47,6 +46,7 @@ module.exports = async (req, res, next) => {
         await checkHashPasswordHelper(password, admin.password);
 
         const tokens = tokenGeneratorHelper(JWT_METHOD.ADMIN);
+        console.log(tokens);
 
         await createTokenPairService({userId: admin.userId, ...tokens});
 

@@ -11,11 +11,10 @@ module.exports = async status_id => {
             status_id
         },
         attributes: ['userId', 'name', 'surname'],
-        //todo dosn`t work:
-        // include: [{
-        //     model: UserStatusModel,
-        //     attributes: ['label']
-        // }],
+        include: [{
+            model: UserStatusModel,
+            attributes: ['id', 'label']
+        }],
         raw: true
     });
 };

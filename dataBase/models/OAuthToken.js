@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             userId: {
                 type: DataTypes.INTEGER,
+                foreignKey: true,
                 allowNull: false
             },
             access_token: {
