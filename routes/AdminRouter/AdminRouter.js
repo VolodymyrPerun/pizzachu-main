@@ -30,8 +30,8 @@ const {
         createAdmin
     },
     authController: {
-        loginAdmin,
-        loginSeller,
+        authAdmin,
+        authSeller,
         logoutUser,
         refreshToken
     },
@@ -45,11 +45,11 @@ router.post('/registerAdmin', checkUserValidityMiddleware,
     checkFilesMiddleware,
     checkUserPhotoCountMiddleware, createAdmin);
 
-router.post('/authAdmin', loginAdmin);
+router.post('/authAdmin', authAdmin);
 router.post('/authAdmin/logout', logoutUser);
 router.post('/authAdmin/refresh', checkAdminRefreshTokenMiddleware, refreshToken);
 
-router.post('/authSeller', loginSeller);
+router.post('/authSeller', authSeller);
 router.post('/authSeller/logout', logoutUser);
 router.post('/authSeller/refresh', checkSellerRefreshTokenMiddleware, refreshToken);
 

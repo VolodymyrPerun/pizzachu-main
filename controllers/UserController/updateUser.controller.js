@@ -1,9 +1,8 @@
 const Joi = require('joi');
-const {getUserByIdService} = require("../../service/userService");
 
+const {getUserByIdService} = require("../../service/userService");
 const {
-    userValidator: {updateUserValidatorSchema},
-    authValidator: {authValidationSchema}
+    userValidator: {updateUserValidatorSchema}
 } = require("../../validators");
 const {
     responseStatusCodesEnum: {OK, BAD_REQUEST, NOT_FOUND: NOT_FOUND_CODE},
@@ -11,10 +10,9 @@ const {
     emailActionEnum: {USER_UPDATE}
 } = require('../../constants');
 const {ErrorHandler} = require("../../error");
-const {HashPasswordHelper} = require('../../helpers');
 const {
     emailService: {sendMail},
-    userService: {updateUserService, getUserByParamsService}
+    userService: {updateUserService}
 } = require("../../service");
 
 
@@ -30,7 +28,7 @@ module.exports = async (req, res, next) => {
         const updatedUser = req.body;
 
         const {userId} = req.user;
-        
+
         const userFromDB = await getUserByIdService(userId);
 
         const {error} = Joi.validate(updatedUser, updateUserValidatorSchema);
@@ -42,12 +40,10 @@ module.exports = async (req, res, next) => {
             email: updatedUser.email,
             phone: updatedUser.phone,
             age: updatedUser.age,
-            gender_id: updatedUser.gender_id,
             city: updatedUser.city,
             address: updatedUser.address,
             postOfficeLocation: updatedUser.postOfficeLocation
         }, userId);
-
 
         if (!isUpdated) return next(new ErrorHandler(NOT_UPDATE.message, NOT_FOUND_CODE, NOT_UPDATE.customCode));
 

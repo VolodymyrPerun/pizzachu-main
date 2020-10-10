@@ -75,9 +75,11 @@ module.exports = (sequelize, DataTypes) => {
         })
 
 
+    const Gender = sequelize.import('./Gender.js')
     const UserRole = sequelize.import('./UserRole.js');
     const UserStatus = sequelize.import('./UserStatus.js');
 
+    User.belongsTo(Gender, {foreignKey: 'gender_id'})
     User.belongsTo(UserRole, {foreignKey: 'role_id'});
     User.belongsTo(UserStatus, {foreignKey: 'status_id'});
 

@@ -10,14 +10,21 @@ const {
 const {
     authController:
         {
-            loginClient,
+            authClient,
             logoutUser,
-            refreshToken
+            refreshToken,
+            changePassword
         }
 } = require('../../controllers')
 
-router.post('/', loginClient);
+router.post('/', authClient);
 router.post('/logout', checkUserAccessTokenMiddleware, logoutUser);
 router.post('/refresh', checkUserRefreshTokenMiddleware, refreshToken);
+router.put(
+    '/password-change',
+    // accessTokenChecker,
+    // getUserFromAccessToken,
+    changePassword
+);
 
 module.exports = router;
