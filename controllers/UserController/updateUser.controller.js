@@ -1,11 +1,21 @@
+const Joi = require('joi');
+const {getUserByIdService} = require("../../service/userService");
+
 const {
-    responseStatusCodesEnum: {OK, NOT_FOUND: NOT_FOUND_CODE},
-    responseCustomErrorEnum: {NOT_UPDATE},
+    userValidator: {updateUserValidatorSchema},
+    authValidator: {authValidationSchema}
+} = require("../../validators");
+const {
+    responseStatusCodesEnum: {OK, BAD_REQUEST, NOT_FOUND: NOT_FOUND_CODE},
+    responseCustomErrorEnum: {NOT_VALID, NOT_UPDATE},
     emailActionEnum: {USER_UPDATE}
 } = require('../../constants');
-const {ErrorHandler} = require("../../error")
-const {checkHashPasswordHelper} = require('../../helpers')
-const {emailService: {sendMail}, userService: {updateUserService, getUserByIdService}} = require("../../service");
+const {ErrorHandler} = require("../../error");
+const {HashPasswordHelper} = require('../../helpers');
+const {
+    emailService: {sendMail},
+    userService: {updateUserService, getUserByParamsService}
+} = require("../../service");
 
 
 module.exports = async (req, res, next) => {
@@ -17,13 +27,27 @@ module.exports = async (req, res, next) => {
     // res.sendStatus(200);
 
     try {
-        const {userId} = req.params;
         const updatedUser = req.body;
 
+        const {userId} = req.user;
+        
         const userFromDB = await getUserByIdService(userId);
-        updatedUser.password = await checkHashPasswordHelper(updatedUser.password);
 
-        const [isUpdated] = await updateUserService(userId, updatedUser);
+        const {error} = Joi.validate(updatedUser, updateUserValidatorSchema);
+        if (error) return next(new ErrorHandler(error.details[0].message, BAD_REQUEST, NOT_VALID.customCode));
+
+        const isUpdated = await updateUserService({
+            name: updatedUser.name,
+            surname: updatedUser.surname,
+            email: updatedUser.email,
+            phone: updatedUser.phone,
+            age: updatedUser.age,
+            gender_id: updatedUser.gender_id,
+            city: updatedUser.city,
+            address: updatedUser.address,
+            postOfficeLocation: updatedUser.postOfficeLocation
+        }, userId);
+
 
         if (!isUpdated) return next(new ErrorHandler(NOT_UPDATE.message, NOT_FOUND_CODE, NOT_UPDATE.customCode));
 

@@ -3,15 +3,13 @@ const Joi = require('joi');
 const {
     CustomErrorData: {BAD_REQUEST_USER_NOT_PRESENT, FORBIDDEN_USER_IS_BLOCKED}
 } = require("../../error");
-
 const {USER_ROLE: {CLIENT}, USER_STATUS: {BLOCKED}, JWT_METHOD} = require("../../constants");
-
 const {authValidator: {authValidationSchema}} = require("../../validators");
 const {
     responseStatusCodesEnum: {BAD_REQUEST, FORBIDDEN},
     responseCustomErrorEnum: {NOT_VALID}
 } = require('../../constants')
-const {tokenGeneratorHelper, checkHashPasswordHelper} = require('../../helpers')
+const {tokenGeneratorHelper, HashPasswordCheckHelper} = require('../../helpers')
 const {ErrorHandler} = require('../../error')
 const {
     oauthService: {createTokenPairService},
@@ -45,7 +43,7 @@ module.exports = async (req, res, next) => {
         }
 
 
-        await checkHashPasswordHelper(user.password, password);
+        await HashPasswordCheckHelper(user.password, password);
 
         const tokens = tokenGeneratorHelper(JWT_METHOD.CLIENT);
 

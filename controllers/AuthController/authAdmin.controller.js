@@ -6,10 +6,10 @@ const {
 const {USER_ROLE: {ADMIN}, USER_STATUS: {BLOCKED}, JWT_METHOD} = require("../../constants");
 const {authValidator: {authValidationSchema}} = require("../../validators");
 const {
-    responseStatusCodesEnum: {BAD_REQUEST, FORBIDDEN},
+    responseStatusCodesEnum: {OK, BAD_REQUEST, FORBIDDEN},
     responseCustomErrorEnum: {NOT_VALID}
 } = require('../../constants');
-const {tokenGeneratorHelper, checkHashPasswordHelper} = require('../../helpers');
+const {tokenGeneratorHelper, HashPasswordCheckHelper} = require('../../helpers');
 const {ErrorHandler} = require('../../error');
 const {
     oauthService: {createTokenPairService},
@@ -43,14 +43,13 @@ module.exports = async (req, res, next) => {
 
         if (error) return next(new ErrorHandler(error.details[0].message, BAD_REQUEST, NOT_VALID.customCode));
 
-        await checkHashPasswordHelper(password, admin.password);
+        await HashPasswordCheckHelper(password, admin.password);
 
         const tokens = tokenGeneratorHelper(JWT_METHOD.ADMIN);
-        console.log(tokens);
 
         await createTokenPairService({userId: admin.userId, ...tokens});
 
-        res.json(tokens);
+        res.json(tokens).sendStatus(OK);
     } catch (e) {
         next(e)
     }

@@ -11,7 +11,7 @@ const {
     responseStatusCodesEnum: {BAD_REQUEST, FORBIDDEN},
     responseCustomErrorEnum: {NOT_VALID}
 } = require('../../constants')
-const {tokenGeneratorHelper, checkHashPasswordHelper} = require('../../helpers')
+const {tokenGeneratorHelper, HashPasswordCheckHelper} = require('../../helpers')
 const {ErrorHandler} = require('../../error')
 const {
     oauthService: {createTokenPairService},
@@ -44,8 +44,7 @@ module.exports = async (req, res, next) => {
                 FORBIDDEN_USER_IS_BLOCKED.code,));
         }
 
-
-        await checkHashPasswordHelper(user.password, password);
+        await HashPasswordCheckHelper(user.password, password);
 
         const tokens = tokenGeneratorHelper(JWT_METHOD.SELLER);
 
