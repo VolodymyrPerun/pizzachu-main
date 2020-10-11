@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
         const user = await getUserByIdService(userId)
 
         if (!user) {
-            return next(new ErrorHandler(new ErrorHandler(NOT_FOUND.message, NOT_FOUND_CODE, NOT_FOUND.customCode)))
+            return next(new ErrorHandler(new ErrorHandler(NOT_FOUND_CODE, NOT_FOUND.message, NOT_FOUND.customCode)))
         }
 
         const tokens = tokenGeneratorHelpers()

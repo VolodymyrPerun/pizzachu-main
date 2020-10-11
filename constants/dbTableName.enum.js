@@ -7,5 +7,10 @@ module.exports = {
     COMMENT: 'Comment',
     ACTION_TOKEN: 'ActionToken',
     ACTION: 'Action',
-    PRODUCT_RATING: 'ProductRating'
+    PRODUCT: 'Product',
+    PRODUCT_TYPE: 'ProductType',
+    PRODUCT_SIZE: 'ProductSize',
+    PRODUCT_WEIGHT: 'ProductWeight',
+    PRODUCT_STATUS: 'ProductStatus',
+    PRODUCT_SECTION: 'ProductSection'
 };

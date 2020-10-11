@@ -18,7 +18,7 @@ module.exports = async (req, res, next) => {
         const user = await getUserByIdService(userId);
         const isDeleted = await deleteUserByParamsService({userId})
 
-        if (!isDeleted) return next(new ErrorHandler(NOT_DELETE.message, NOT_FOUND_CODE, NOT_DELETE.customCode));
+        if (!isDeleted) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_DELETE.message, NOT_DELETE.customCode));
 
         await emailService.sendMail(user.email, USER_DELETE, {
             userName: user.name,

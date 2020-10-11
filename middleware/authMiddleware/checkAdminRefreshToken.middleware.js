@@ -10,8 +10,8 @@ module.exports = async (req, res, next) => {
 
     if (!authorizationToken) {
         return next(new ErrorHandler(
-            BAD_REQUEST_YOU_ARE_NOT_ADMIN.message,
             UNAUTHORIZED_BAD_REFRESH_TOKEN,
+            BAD_REQUEST_YOU_ARE_NOT_ADMIN.message,
             BAD_REQUEST_YOU_ARE_NOT_ADMIN.customCode
         ));
     }

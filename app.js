@@ -38,7 +38,7 @@ app.use('/users', UserRouter);
 // app.use('/products', productRouter);
 
 
-app.use('*', (err, req, res) => {
+app.use((err, req, res, next) => {
     res
         .status(err.status || SERVER_ERROR)
         .json({
@@ -58,13 +58,13 @@ app.listen(PORT || 5000, (err) => {
 })
 
 
-const unhandledRejections = new Map();
-process.on('unhandledRejection', (reason, p) => {
-    unhandledRejections.set(p, reason);
-});
-process.on('rejectionHandled', (p) => {
-    unhandledRejections.delete(p);
-});
+// const unhandledRejections = new Map();
+// process.on('unhandledRejection', (reason, p) => {
+//     unhandledRejections.set(p, reason);
+// });
+// process.on('rejectionHandled', (p) => {
+//     unhandledRejections.delete(p);
+// });
 
 const {cronRun} = require('./cron');
 cronRun();

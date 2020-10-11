@@ -43,18 +43,18 @@ module.exports = async (req, res, next) => {
 
         const {error} = Joi.validate({password, newPassword, repeatNewPassword}, changePasswordValidationSchema);
 
-        if (error) return next(new ErrorHandler(error.details[0].message, BAD_REQUEST, NOT_VALID.customCode));
+        if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
 
         if (newPassword !== repeatNewPassword) {
-            return next(new ErrorHandler(error.details[0].message, BAD_REQUEST_WRONG_PASSWORD, FORBIDDEN.customCode));
+            return next(new ErrorHandler(BAD_REQUEST_WRONG_PASSWORD, error.details[0].message, FORBIDDEN.customCode));
         }
 
         const hashPassword = await HashPasswordHelper(newPassword);
 
         await updateUserService({password: hashPassword}, userId);
 
-        res.status(OK).end()
+        res.end();
     } catch (e) {
-        next(e)
+        next(new ErrorHandler(e.status, e.message, e.code));
     }
 };

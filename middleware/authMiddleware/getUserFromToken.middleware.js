@@ -19,8 +19,8 @@ module.exports = async (req, res, next) => {
 
     if (!userFromAccessToken) {
         return next(new ErrorHandler(
-            NOT_VALID_TOKEN.message,
             UNAUTHORIZED,
+            NOT_VALID_TOKEN.message,
             NOT_VALID_TOKEN.code))
     }
 

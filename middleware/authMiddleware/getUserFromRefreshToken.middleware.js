@@ -9,13 +9,13 @@ const {
 } = require('../../constants');
 
 module.exports = async (req, res, next) => {
-    const authorizationToken = req.get(AUTHORIZATION);
+    const refresh_token = req.get(AUTHORIZATION);
 
-    if (!authorizationToken) {
+    if (!refresh_token) {
         return next(new ErrorHandler(NOT_VALID.message, BAD_REQUEST, NOT_VALID.customCode));
     }
 
-    const userFromRefreshToken = await getTokensByParamsService({refresh_token: authorizationToken});
+    const userFromRefreshToken = await getTokensByParamsService({refresh_token});
 
     if (!userFromRefreshToken) {
         return next(new ErrorHandler(

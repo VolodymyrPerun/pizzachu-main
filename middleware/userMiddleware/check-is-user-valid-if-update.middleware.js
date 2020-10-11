@@ -8,7 +8,7 @@ const {
 const {userValidator: {updateUserValidatorSchema}} = require("../../validators");
 const ErrorHandler = require('../../error/ErrorHandler');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
     try {
         const {name, surname, age, phone, city, address, postOfficeLocation, user_photo} = req.body;
 
@@ -23,10 +23,12 @@ module.exports = (req, res, next) => {
             user_photo
         }, updateUserValidatorSchema);
 
-        if (error) return next(new ErrorHandler(error.details[0].message, BAD_REQUEST, NOT_VALID.customCode));
+        if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
 
         next();
+
+        res.end();
     } catch (e) {
-        next(new ErrorHandler(e.status, e.message, e.code));
+        next(new ErrorHandler(e.status, e.message, e.customCode));
     }
 };

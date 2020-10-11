@@ -1,4 +1,7 @@
 const Joi = require('joi');
+const chalk = require('chalk')
+
+const {transactionInstance} = require('../../dataBase').getInstance();
 
 const {
     CustomErrorData: {BAD_REQUEST_ADMIN_NOT_PRESENT, FORBIDDEN_USER_IS_BLOCKED}
@@ -18,13 +21,14 @@ const {
 
 
 module.exports = async (req, res, next) => {
+    const transaction = await transactionInstance();
     try {
         const {email, password} = req.body;
 
         //todo create compare password service, forgot pass and change pass controller, try to login user,
         //todo after that create admin controller and auth admin
 
-        const admin = await getUserByParamsService({email, role_id: ADMIN});
+        const admin = await getUserByParamsService({email, role_id: ADMIN}, transaction);
 
 
         if (!admin) {
@@ -41,16 +45,22 @@ module.exports = async (req, res, next) => {
 
         const {error} = Joi.validate({email, password}, authValidationSchema);
 
-        if (error) return next(new ErrorHandler(error.details[0].message, BAD_REQUEST, NOT_VALID.customCode));
+        if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
 
-        await HashPasswordCheckHelper(password, admin.password);
+        await HashPasswordCheckHelper(admin.password, password);
 
         const tokens = tokenGeneratorHelper(JWT_METHOD.ADMIN);
 
-        await createTokenPairService({userId: admin.userId, ...tokens});
+        await createTokenPairService({userId: admin.userId, ...tokens}, transaction);
 
-        res.json(tokens).sendStatus(OK);
+        await transaction.commit();
+        console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'))
+
+        res.json(tokens);
     } catch (e) {
-        next(new ErrorHandler(e.message, e.status, e.customCode));
+        console.log(chalk.bgGreen.bold.red(e.status, e.message, e.customCode));
+        console.log(chalk.red('TRANSACTION ROLLBACK'));
+        await transaction.rollback();
+        next(new ErrorHandler(e.status, e.message, e.customCode));
     }
 };

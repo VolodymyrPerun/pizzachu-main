@@ -7,7 +7,7 @@ const {
     userValidator: {updateUserValidatorSchema}
 } = require("../../validators");
 const {
-    responseStatusCodesEnum: {OK, BAD_REQUEST, NOT_FOUND: NOT_FOUND_CODE},
+    responseStatusCodesEnum: {BAD_REQUEST, NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_VALID, NOT_UPDATE},
     emailActionEnum: {USER_UPDATE}
 } = require('../../constants');
@@ -35,7 +35,7 @@ module.exports = async (req, res, next) => {
         const userFromDB = await getUserByIdService(userId, transaction);
 
         const {error} = Joi.validate(updatedUser, updateUserValidatorSchema);
-        if (error) return next(new ErrorHandler(error.details[0].message, BAD_REQUEST, NOT_VALID.customCode));
+        if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
 
         const isUpdated = await updateUserService({
             name: updatedUser.name,
@@ -48,18 +48,18 @@ module.exports = async (req, res, next) => {
             postOfficeLocation: updatedUser.postOfficeLocation
         }, userId, transaction);
 
-        if (!isUpdated) return next(new ErrorHandler(NOT_UPDATE.message, NOT_FOUND_CODE, NOT_UPDATE.customCode));
+        if (!isUpdated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_UPDATE.message, NOT_UPDATE.customCode));
 
         await sendMail(userFromDB.email, USER_UPDATE, {user: updatedUser});
 
         await transaction.commit();
         console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'))
 
-        res.sendStatus(OK);
+        res.end();
     } catch (e) {
-        console.log(chalk.bgMagentaBright(e.status, e.message, e.code));
-        console.log(chalk.magenta('TRANSACTION ROLLBACK'));
+        console.log(chalk.bgGreen.bold.red(e.status, e.message, e.customCode));
+        console.log(chalk.red('TRANSACTION ROLLBACK'));
         await transaction.rollback();
-        next(e);
+        next(new ErrorHandler(e.status, e.message, e.customCode));
     }
 };
