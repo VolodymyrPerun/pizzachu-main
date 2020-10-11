@@ -1,7 +1,6 @@
-const Sequelize = require('sequelize');
+const {Sequelize, DataTypes} = require('sequelize');
 const fs = require('fs');
 const path = require('path');
-const {resolve} = require('path');
 
 module.exports = (() => {
     let instance;
@@ -22,7 +21,7 @@ module.exports = (() => {
             fs.readdir(path.join(process.cwd(), 'dataBase', 'models'), (err, files) => {
                 files.forEach(file => {
                     const [modelName] = file.split('.');
-                    models[modelName] = client.import(resolve(`./dataBase/models/${modelName}`))
+                    models[modelName] = (require(path.join(process.cwd(), 'dataBase', 'models', modelName)))(client, DataTypes)
                 })
             })
         }
@@ -30,7 +29,8 @@ module.exports = (() => {
 
         return {
             setModels: () => getModels(),
-            getModel: (modelName) => models[modelName]
+            getModel: (modelName) => models[modelName],
+            transactionInstance: () => client.transaction()
         }
 
     }
@@ -40,7 +40,6 @@ module.exports = (() => {
             if (!instance) {
                 instance = initConnection();
             }
-
             return instance;
         }
     }

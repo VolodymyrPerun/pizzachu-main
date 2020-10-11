@@ -51,6 +51,6 @@ module.exports = async (req, res, next) => {
 
         res.json(tokens).sendStatus(OK);
     } catch (e) {
-        next(e)
+        next(new ErrorHandler(e.message, e.status, e.customCode));
     }
 };

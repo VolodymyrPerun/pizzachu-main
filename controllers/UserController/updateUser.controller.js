@@ -1,5 +1,7 @@
 const Joi = require('joi');
+const chalk = require('chalk')
 
+const {transactionInstance} = require('../../dataBase').getInstance();
 const {getUserByIdService} = require("../../service/userService");
 const {
     userValidator: {updateUserValidatorSchema}
@@ -17,6 +19,7 @@ const {
 
 
 module.exports = async (req, res, next) => {
+    const transaction = await transactionInstance();
     // ! Sequalize method
     // const user = req.body;
     // user.password = await hashUserPassword(user.password);
@@ -29,7 +32,7 @@ module.exports = async (req, res, next) => {
 
         const {userId} = req.user;
 
-        const userFromDB = await getUserByIdService(userId);
+        const userFromDB = await getUserByIdService(userId, transaction);
 
         const {error} = Joi.validate(updatedUser, updateUserValidatorSchema);
         if (error) return next(new ErrorHandler(error.details[0].message, BAD_REQUEST, NOT_VALID.customCode));
@@ -43,14 +46,20 @@ module.exports = async (req, res, next) => {
             city: updatedUser.city,
             address: updatedUser.address,
             postOfficeLocation: updatedUser.postOfficeLocation
-        }, userId);
+        }, userId, transaction);
 
         if (!isUpdated) return next(new ErrorHandler(NOT_UPDATE.message, NOT_FOUND_CODE, NOT_UPDATE.customCode));
 
         await sendMail(userFromDB.email, USER_UPDATE, {user: updatedUser});
 
+        await transaction.commit();
+        console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'))
+
         res.sendStatus(OK);
     } catch (e) {
+        console.log(chalk.bgMagentaBright(e.status, e.message, e.code));
+        console.log(chalk.magenta('TRANSACTION ROLLBACK'));
+        await transaction.rollback();
         next(e);
     }
 };
