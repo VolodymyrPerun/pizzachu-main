@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     const UserStatus = sequelize.define(USER_STATUS, {
         id: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             primaryKey: true,
             autoIncrement: true
         },

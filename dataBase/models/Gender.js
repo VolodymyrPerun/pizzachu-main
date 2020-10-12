@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     const Gender = sequelize.define(GENDER, {
         id: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             primaryKey: true,
             autoIncrement: true
         },

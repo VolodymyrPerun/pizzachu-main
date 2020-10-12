@@ -1,10 +1,12 @@
 const db = require('../../dataBase').getInstance();
-const {DB_TABLE_NAME: {USER}} = require('../../constants')
+const {DB_TABLE_NAME: {USER}, USER_STATUS: {DELETED}} = require('../../constants')
 
-module.exports = async params => {
-    const UserModel = await db.getModel(USER);
+module.exports = async userId => {
+    const UserModel = db.getModel(USER);
 
-    return UserModel.destroy({
-        where: params
-    })
+    await UserModel.update({
+        status_id: DELETED
+    }, {
+        where: userId
+    });
 };

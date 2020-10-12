@@ -1,9 +1,10 @@
-const {DB_TABLE_NAME: {PRODUCT_SECTION}} = require('../../constants/');
+const {DB_TABLE_NAME: {PRODUCT_SECTION}} = require('../../constants');
 
 module.exports = (sequelize, DataTypes) => {
     const ProductSection = sequelize.define(PRODUCT_SECTION, {
         id: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             primaryKey: true,
             autoIncrement: true
         },

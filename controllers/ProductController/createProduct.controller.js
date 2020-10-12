@@ -7,7 +7,7 @@ const {transactionInstance} = require('../../dataBase').getInstance();
 const {
     responseStatusCodesEnum: {NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_CREATED},
-    emailActionEnum: {USER_REGISTER},
+    emailActionEnum: {PRODUCT_CREATE},
     USER_ROLE: {CLIENT},
     USER_STATUS: {ACTIVE},
 } = require('../../constants');
@@ -43,7 +43,7 @@ module.exports = async (req, res, next) => {
             await updateUserService(isUserCreated.userId, {user_photo: photoDir + photoName});
         }
 
-        await emailService.sendMail(user.email, USER_REGISTER, {user, password});
+        await emailService.sendMail(user.email,  PRODUCT_CREATE, {user, password});
 
         await transaction.commit();
         console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'))

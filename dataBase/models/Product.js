@@ -2,15 +2,16 @@ const {DB_TABLE_NAME: {PRODUCT}} = require('../../constants');
 
 module.exports = (sequelize, DataTypes) => {
     const Product = sequelize.define(PRODUCT, {
-        id: {
+        productId: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             primaryKey: true,
-            autoIncrement: true,
+            autoIncrement: true
         },
         type_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            foreignKey: true,
+            foreignKey: true
         },
         name: {
             type: DataTypes.STRING,
@@ -23,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         status_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            foreignKey: true,
+            foreignKey: true
         },
         price: {
             type: DataTypes.INTEGER,
@@ -32,17 +33,24 @@ module.exports = (sequelize, DataTypes) => {
         size_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            foreignKey: true,
+            foreignKey: true
         },
-        weight_id: {
+        weight: {
             type: DataTypes.INTEGER,
-            allowNull: false,
-            foreignKey: true,
+            allowNull: false
         },
         section_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             foreignKey: true,
+        },
+        withDoubleCheese: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        product_photo: {
+            type: DataTypes.STRING,
+            allowNull: true
         },
         create_at: {
             type: DataTypes.DATE,
@@ -57,13 +65,11 @@ module.exports = (sequelize, DataTypes) => {
     const ProductType = sequelize.import('./ProductType');
     const ProductStatus = sequelize.import('./ProductStatus');
     const ProductSize = sequelize.import('./ProductSize');
-    const ProductWeight = sequelize.import('./ProductWeight');
     const ProductSection = sequelize.import('./ProductSection');
 
     Product.belongsTo(ProductType, {foreignKey: 'type_id'});
     Product.belongsTo(ProductStatus, {foreignKey: 'status_id'});
     Product.belongsTo(ProductSize, {foreignKey: 'size_id'});
-    Product.belongsTo(ProductWeight, {foreignKey: 'weight_id'});
     Product.belongsTo(ProductSection, {foreignKey: 'section_id'});
 
     return Product
