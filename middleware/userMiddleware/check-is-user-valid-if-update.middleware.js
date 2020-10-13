@@ -25,6 +25,8 @@ module.exports = async (req, res, next) => {
 
         if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
 
+        req.user = {name, surname, age, phone, city, address, postOfficeLocation, user_photo};
+
         next();
 
         res.end();

@@ -9,7 +9,7 @@ const {
 const {USER_ROLE: {ADMIN}, USER_STATUS: {BLOCKED}, JWT_METHOD} = require("../../constants");
 const {authValidator: {authValidationSchema}} = require("../../validators");
 const {
-    responseStatusCodesEnum: {OK, BAD_REQUEST, FORBIDDEN},
+    responseStatusCodesEnum: {BAD_REQUEST, FORBIDDEN},
     responseCustomErrorEnum: {NOT_VALID}
 } = require('../../constants');
 const {tokenGeneratorHelper, HashPasswordCheckHelper} = require('../../helpers');
@@ -43,7 +43,7 @@ module.exports = async (req, res, next) => {
                 FORBIDDEN_USER_IS_BLOCKED.code,));
         }
 
-        const {error} = Joi.validate({email, password}, authValidationSchema);
+        const {error} = Joi.validate({email, password}, authValidationSchema);//todo authValidateSchema
 
         if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
 
@@ -56,7 +56,7 @@ module.exports = async (req, res, next) => {
         await transaction.commit();
         console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'))
 
-        res.json(tokens);
+        res.json(tokens).end();
     } catch (e) {
         console.log(chalk.bgGreen.bold.red(e.status, e.message, e.customCode));
         console.log(chalk.red('TRANSACTION ROLLBACK'));

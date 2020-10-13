@@ -34,8 +34,8 @@ module.exports = async (req, res, next) => {
 
         const userFromDB = await getUserByIdService(userId, transaction);
 
-        const {error} = Joi.validate(updatedUser, updateUserValidatorSchema);
-        if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
+        // const {error} = Joi.validate(updatedUser, updateUserValidatorSchema);
+        // if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
 
         const isUpdated = await updateUserService({
             name: updatedUser.name,
@@ -50,7 +50,7 @@ module.exports = async (req, res, next) => {
 
         if (!isUpdated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_UPDATE.message, NOT_UPDATE.customCode));
 
-        await sendMail(userFromDB.email, USER_UPDATE, {user: updatedUser});
+        await sendMail(userFromDB.email, USER_UPDATE, {updatedUser});
 
         await transaction.commit();
         console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'))

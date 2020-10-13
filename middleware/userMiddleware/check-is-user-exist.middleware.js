@@ -1,21 +1,33 @@
-const {userService} = require("../../service");
+const {ErrorHandler, CustomErrorData: {BAD_REQUEST_USER_NOT_PRESENT}} = require('../../error');
+const {userService: {getUserByIdService}} = require("../../service");
+const {responseStatusCodesEnum: {BAD_REQUEST}} = require("../../constants");
+
 module.exports = async (req, res, next) => {
     try {
-        const {userId} = req.params
+        const {userId} = req.params;
+
         if (isNaN(userId) || +userId < 0) {
-            return res.status(400).json({message: 'auth id is not valid'})
+            return next(new ErrorHandler(
+                BAD_REQUEST,
+                BAD_REQUEST_USER_NOT_PRESENT.message,
+                BAD_REQUEST_USER_NOT_PRESENT.code,
+            ));
         }
 
-        const user = await userService.getUserByIdService(userId)
+        const user = await getUserByIdService(userId);
 
         if (!user) {
-            return req.status(404).json({message: 'auth not found'})
+            return next(new ErrorHandler(
+                BAD_REQUEST,
+                BAD_REQUEST_USER_NOT_PRESENT.message,
+                BAD_REQUEST_USER_NOT_PRESENT.code,
+            ));
         }
 
-        req.user = user
+        req.user = user;
 
-        next()
+        next();
     } catch (e) {
-        res.json({error: e.message})
+        next(new ErrorHandler(e.status, e.message, e.customCode));
     }
 }

@@ -5,50 +5,47 @@ const chalk = require('chalk')
 
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {
-    responseStatusCodesEnum: {NOT_FOUND: NOT_FOUND_CODE},
+    responseStatusCodesEnum: {CREATED, NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_CREATED},
     emailActionEnum: {PRODUCT_CREATE},
-    USER_ROLE: {CLIENT},
+    USER_ROLE: {ADMIN},
     USER_STATUS: {ACTIVE},
 } = require('../../constants');
-const ErrorHandler = require("../../error/ErrorHandler")
-const {HashPasswordHelper} = require('../../helpers')
-const {emailService, userService: {createUserService, updateUserService}} = require("../../service");
+const ErrorHandler = require("../../error/ErrorHandler");
+const {emailService, productService: {createProductService, updateProductService}} = require("../../service");
 
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
-        const user = req.body;
+        const admin = req.user;
+        const product = req.body;
 
-        user.role_id = CLIENT;
-        user.status_id = ACTIVE;
+        admin.role_id = ADMIN;
+        admin.status_id = ACTIVE;
 
         const [profileImage] = req.photos;
-        const password = user.password;
 
-        user.password = await HashPasswordHelper(user.password);
+        const isProductCreated = await createProductService(product);
 
-        const isUserCreated = await createUserService(user);
-
-        if (!isUserCreated) return next(new ErrorHandler(NOT_CREATED.message, NOT_FOUND_CODE, NOT_CREATED.customCode));
+        if (!isProductCreated) return next(new ErrorHandler(NOT_CREATED.message, NOT_FOUND_CODE, NOT_CREATED.customCode));
 
         if (profileImage) {
-            const photoDir = `users/${isUserCreated.userId}/photos/`;
+            const photoDir = `products/${isProductCreated.productId}/photos/`;
             const fileExtension = path.extname(profileImage.name);
             const photoName = uuid + fileExtension;
 
             await fsep.mkdir(path.resolve(process.cwd(), 'public', photoDir), {recursive: true});
             await profileImage.mv(path.resolve(process.cwd(), 'public', photoDir, photoName));
-            await updateUserService(isUserCreated.userId, {user_photo: photoDir + photoName});
+            await updateProductService(isProductCreated.productId, {product_photo: photoDir + photoName});
         }
 
-        await emailService.sendMail(user.email,  PRODUCT_CREATE, {user, password});
+        await emailService.sendMail(admin.email, PRODUCT_CREATE, {admin, product});
 
         await transaction.commit();
         console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'))
 
-        res.end();
+        res.status(CREATED).end();
     } catch (e) {
         console.log(chalk.bgGreen.bold.red(e.status, e.message, e.customCode));
         console.log(chalk.red('TRANSACTION ROLLBACK'));
