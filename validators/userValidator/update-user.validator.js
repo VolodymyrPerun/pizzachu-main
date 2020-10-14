@@ -12,5 +12,5 @@ module.exports = Joi.object().keys({
     city: Joi.string().required(),
     address: Joi.string().required(),
     postOfficeLocation: Joi.string().required(),
-    user_photo: Joi.string()
+    user_photo: Joi.string().required()
 });

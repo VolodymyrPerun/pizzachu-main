@@ -12,10 +12,13 @@ const {
         {
             authClient,
             logoutUser,
-            refreshToken,
             changePassword
+        },
+    oAuthController:
+        {
+            refreshToken
         }
-} = require('../../controllers')
+} = require('../../controllers');
 
 router.post('/', authClient);
 router.post('/logout', checkUserAccessTokenMiddleware, logoutUser);

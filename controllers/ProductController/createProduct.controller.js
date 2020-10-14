@@ -8,6 +8,7 @@ const {
     responseStatusCodesEnum: {CREATED, NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_CREATED},
     emailActionEnum: {PRODUCT_CREATE},
+    PRODUCT_STATUS: {IN_STOCK},
     USER_ROLE: {ADMIN},
     USER_STATUS: {ACTIVE},
 } = require('../../constants');
@@ -23,20 +24,21 @@ module.exports = async (req, res, next) => {
 
         admin.role_id = ADMIN;
         admin.status_id = ACTIVE;
+        product.status_id = IN_STOCK;
 
-        const [profileImage] = req.photos;
+        const [productImage] = req.photos;
 
         const isProductCreated = await createProductService(product);
 
         if (!isProductCreated) return next(new ErrorHandler(NOT_CREATED.message, NOT_FOUND_CODE, NOT_CREATED.customCode));
 
-        if (profileImage) {
+        if (productImage) {
             const photoDir = `products/${isProductCreated.productId}/photos/`;
             const fileExtension = path.extname(profileImage.name);
             const photoName = uuid + fileExtension;
 
             await fsep.mkdir(path.resolve(process.cwd(), 'public', photoDir), {recursive: true});
-            await profileImage.mv(path.resolve(process.cwd(), 'public', photoDir, photoName));
+            await productImage.mv(path.resolve(process.cwd(), 'public', photoDir, photoName));
             await updateProductService(isProductCreated.productId, {product_photo: photoDir + photoName});
         }
 

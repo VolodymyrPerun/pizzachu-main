@@ -5,10 +5,10 @@ const {
     responseCustomErrorEnum: {NOT_VALID}
 } = require('../../constants');
 
-const {userValidator: {updateUserValidatorSchema}} = require("../../validators");
+const {userValidator: {updateUserValidationSchema}} = require("../../validators");
 const ErrorHandler = require('../../error/ErrorHandler');
 
-module.exports = async (req, res, next) => {
+module.exports = (req, res, next) => {
     try {
         const {name, surname, age, phone, city, address, postOfficeLocation, user_photo} = req.body;
 
@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
             address,
             postOfficeLocation,
             user_photo
-        }, updateUserValidatorSchema);
+        }, updateUserValidationSchema);
 
         if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
 

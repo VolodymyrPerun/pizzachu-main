@@ -88,6 +88,11 @@ module.exports = {
         message: 'Action token is not valid',
         code: 4014
     },
+    //+
+    BAD_REQUEST_PRODUCT_NOT_PRESENT: {
+        message: 'Product is not present',
+        code: 40015
+    },
 
 
     //403 error code

@@ -4,7 +4,7 @@ const chalk = require('chalk')
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {getUserByIdService} = require("../../service/userService");
 const {
-    userValidator: {updateUserValidatorSchema}
+    userValidator: {updateUserValidationSchema}
 } = require("../../validators");
 const {
     responseStatusCodesEnum: {BAD_REQUEST, NOT_FOUND: NOT_FOUND_CODE},
@@ -34,8 +34,8 @@ module.exports = async (req, res, next) => {
 
         const userFromDB = await getUserByIdService(userId, transaction);
 
-        // const {error} = Joi.validate(updatedUser, updateUserValidatorSchema);
-        // if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
+        const {error} = Joi.validate(updatedUser, updateUserValidationSchema);
+        if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
 
         const isUpdated = await updateUserService({
             name: updatedUser.name,
@@ -45,7 +45,8 @@ module.exports = async (req, res, next) => {
             age: updatedUser.age,
             city: updatedUser.city,
             address: updatedUser.address,
-            postOfficeLocation: updatedUser.postOfficeLocation
+            postOfficeLocation: updatedUser.postOfficeLocation,
+            user_photo: updatedUser.user_photo
         }, userId, transaction);
 
         if (!isUpdated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_UPDATE.message, NOT_UPDATE.customCode));

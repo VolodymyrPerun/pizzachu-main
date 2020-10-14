@@ -32,7 +32,8 @@
     "sequelize": "^5.21.11",
     "uuid": "^8.1.0",
     "winston": "^3.2.1",
-    "chalk": "^4.1.0"
+    "chalk": "^4.1.0",
+    "cors": "^2.8.5"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",

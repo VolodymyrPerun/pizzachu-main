@@ -7,8 +7,8 @@ module.exports = async (updatedProduct, productId, transaction) => {
 
     return UserModel.update(updatedProduct, {
         where: {productId},
-        returning: true,
-        plain: true,
+        // returning: true,
+        // plain: true,
         transaction
     })
 };

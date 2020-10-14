@@ -10,8 +10,6 @@ module.exports = {
     PRODUCT: 'Product',
     PRODUCT_TYPE: 'ProductType',
     PRODUCT_SIZE: 'ProductSize',
-    PRODUCT_WEIGHT: 'ProductWeight',
     PRODUCT_STATUS: 'ProductStatus',
-    PRODUCT_SECTION: 'ProductSection',
-    WITH_DOUBLE_CHEESE: 'WithDoubleCheese'
+    PRODUCT_SECTION: 'ProductSection'
 };

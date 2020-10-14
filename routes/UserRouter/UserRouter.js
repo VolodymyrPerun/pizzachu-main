@@ -28,7 +28,8 @@ const {
 
 router.post('/register',checkUserValidityMiddleware,
     checkFilesMiddleware,
-    checkUserPhotoCountMiddleware, createUser);
+    checkUserPhotoCountMiddleware,
+    createUser);
 
 router.get('/getAllActiveUsers', getAllActiveUsers);
 router.get('/getAllBlockedUsers', getAllBlockedUsers);

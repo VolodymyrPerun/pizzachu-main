@@ -41,12 +41,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         section_id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             foreignKey: true,
-        },
-        withDoubleCheese: {
-            type: DataTypes.INTEGER,
-            allowNull: false
         },
         product_photo: {
             type: DataTypes.STRING,

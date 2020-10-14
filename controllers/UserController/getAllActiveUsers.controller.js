@@ -3,7 +3,7 @@ const {
     responseCustomErrorEnum: {NOT_GET},
     USER_STATUS: {ACTIVE}
 } = require('../../constants');
-const {ErrorHandler} = require("../../error")
+const {ErrorHandler} = require("../../error");
 const {userService: {getUsersService}} = require("../../service");
 
 
