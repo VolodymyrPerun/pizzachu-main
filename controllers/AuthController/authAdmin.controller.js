@@ -34,13 +34,13 @@ module.exports = async (req, res, next) => {
         if (!admin) {
             return next(new ErrorHandler(BAD_REQUEST,
                 BAD_REQUEST_ADMIN_NOT_PRESENT.message,
-                BAD_REQUEST_ADMIN_NOT_PRESENT.code,));
+                BAD_REQUEST_ADMIN_NOT_PRESENT.code));
         }
 
         if (admin.status_id === BLOCKED) {
             return next(new ErrorHandler(FORBIDDEN,
                 FORBIDDEN_USER_IS_BLOCKED.message,
-                FORBIDDEN_USER_IS_BLOCKED.code,));
+                FORBIDDEN_USER_IS_BLOCKED.code));
         }
 
         const {error} = Joi.validate({email, password}, authValidationSchema);//todo authValidateSchema

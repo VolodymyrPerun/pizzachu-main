@@ -20,6 +20,8 @@ module.exports = async (req, res, next) => {
     try {
         const {userId} = req.params;
         const user = await getUserByIdService(userId);
+
+        console.log(user);
         await deleteUserByParamsService({userId});
         await deleteTokenByParamsService({userId});
 

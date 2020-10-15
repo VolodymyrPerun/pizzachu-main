@@ -9,7 +9,10 @@ const {
 const {
     responseStatusCodesEnum: {BAD_REQUEST, NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_VALID, NOT_UPDATE},
-    emailActionEnum: {USER_UPDATE}
+    emailActionEnum: {USER_UPDATE},
+    USER_ROLE: {ADMIN},
+    USER_STATUS: {ACTIVE},
+    PRODUCT_STATUS: {DELETED}
 } = require('../../constants');
 const {ErrorHandler} = require("../../error");
 const {
@@ -28,6 +31,12 @@ module.exports = async (req, res, next) => {
     // res.sendStatus(200);
 
     try {
+
+        const user = req.user;
+
+        user.role_id = ADMIN;
+        user.status_id = ACTIVE;
+
         const updatedUser = req.body;
 
         const {userId} = req.user;

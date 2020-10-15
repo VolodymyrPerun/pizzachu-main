@@ -1,8 +1,8 @@
 const nodemailer = require('nodemailer');
-const EmailTemplates = require('email-templates')
+const EmailTemplates = require('email-templates');
 const path = require('path');
 
-const {ROOT_EMAIL_LOGIN, ROOT_EMAIL_PASSWORD, ROOT_EMAIL_SERVICE, SITE} = require('../../config')
+const {ROOT_EMAIL_LOGIN, ROOT_EMAIL_PASSWORD, ROOT_EMAIL_SERVICE, SITE} = require('../../config');
 const htmlTemplates = require('../../email-templates')
 
 const mailTransport = nodemailer.createTransport({

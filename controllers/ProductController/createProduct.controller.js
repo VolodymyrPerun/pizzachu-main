@@ -7,34 +7,34 @@ const {transactionInstance} = require('../../dataBase').getInstance();
 const {
     responseStatusCodesEnum: {CREATED, NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_CREATED},
-    emailActionEnum: {PRODUCT_CREATE},
     PRODUCT_STATUS: {IN_STOCK},
     USER_ROLE: {ADMIN},
     USER_STATUS: {ACTIVE},
 } = require('../../constants');
 const ErrorHandler = require("../../error/ErrorHandler");
-const {emailService, productService: {createProductService, updateProductService}} = require("../../service");
+const {productService: {createProductService, updateProductService}} = require("../../service");
 
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
-        const admin = req.user;
+        const user = req.user;
         const product = req.body;
 
-        admin.role_id = ADMIN;
-        admin.status_id = ACTIVE;
+        user.role_id = ADMIN;
+        user.status_id = ACTIVE;
         product.status_id = IN_STOCK;
+
 
         const [productImage] = req.photos;
 
         const isProductCreated = await createProductService(product);
 
-        if (!isProductCreated) return next(new ErrorHandler(NOT_CREATED.message, NOT_FOUND_CODE, NOT_CREATED.customCode));
+        if (!isProductCreated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_CREATED.message, NOT_CREATED.customCode));
 
         if (productImage) {
             const photoDir = `products/${isProductCreated.productId}/photos/`;
-            const fileExtension = path.extname(profileImage.name);
+            const fileExtension = path.extname(productImage.name);
             const photoName = uuid + fileExtension;
 
             await fsep.mkdir(path.resolve(process.cwd(), 'public', photoDir), {recursive: true});
@@ -42,10 +42,8 @@ module.exports = async (req, res, next) => {
             await updateProductService(isProductCreated.productId, {product_photo: photoDir + photoName});
         }
 
-        await emailService.sendMail(admin.email, PRODUCT_CREATE, {admin, product});
-
         await transaction.commit();
-        console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'))
+        console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'));
 
         res.status(CREATED).end();
     } catch (e) {

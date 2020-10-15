@@ -2,8 +2,8 @@ const productRouter = require('express').Router();
 const {
     productController: {
         createProduct,
+        deleteProductByParams,
         updateProduct,
-        deleteProduct,
         getAllTopClothes,
         getAllBottomClothes,
         getAllUnderwearClothes,
@@ -11,6 +11,7 @@ const {
     }
 } = require('../../controllers');
 const {
+    adminMiddleware: {getAdminFromAccessTokenMiddleware},
     authMiddleware: {checkAdminAccessTokenMiddleware, getUserFromAccessToken},
     fileMiddleware: {checkFilesMiddleware, checkUserPhotoCountMiddleware},
     productMiddleware: {checkIsProductExistMiddleware, checkProductValidityMiddleware}
@@ -18,15 +19,17 @@ const {
 
 productRouter.post('/createProduct',
     checkAdminAccessTokenMiddleware,
-    getUserFromAccessToken,
+    getAdminFromAccessTokenMiddleware,
     checkProductValidityMiddleware,
     checkFilesMiddleware,
     checkUserPhotoCountMiddleware,
     createProduct);
 // productRouter.put('/:product_id', checkAccessToken, getUserFromAccessToken, checkIsAdmin, getProductByParams,
 //     updateProduct);
-// productRouter.delete('/:product_id', checkAccessToken, getUserFromAccessToken, checkIsAdmin, getProductByParams,
-//     deleteProduct);
+productRouter.delete('/:productId',
+    checkAdminAccessTokenMiddleware,
+    getAdminFromAccessTokenMiddleware,
+    deleteProductByParams);
 // productRouter.get('/topClothes', getAllTopClothes)
 // productRouter.get('/bottomClothes', getAllBottomClothes)
 // productRouter.get('/underwearClothes', getAllUnderwearClothes);

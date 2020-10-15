@@ -31,7 +31,7 @@ module.exports = async (req, res, next) => {
 
         const isUserCreated = await createUserService(user,);
 
-        if (!isUserCreated) return next(new ErrorHandler(NOT_CREATED.message, NOT_FOUND_CODE, NOT_CREATED.customCode));
+        if (!isUserCreated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_CREATED.message, NOT_CREATED.customCode));
 
         if (profileImage) {
             const photoDir = `users/${isUserCreated.userId}/photos/`;

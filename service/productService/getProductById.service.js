@@ -6,6 +6,7 @@ module.exports = async (productId, transaction) => {
     const UserModel = await db.getModel(PRODUCT);
 
     return UserModel.findByPk(productId, {
+        raw: true,
         transaction
     });
 };

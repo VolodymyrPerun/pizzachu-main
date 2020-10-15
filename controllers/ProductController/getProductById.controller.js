@@ -8,6 +8,9 @@ const {productService: {getProductByIdService}} = require("../../service");
 module.exports = async (req, res, next) => {
 
     try {
+
+
+
         const {productId} = req.params;
 
         const product = await getProductByIdService(productId);

@@ -43,17 +43,5 @@ module.exports = {
     [USER_UPDATE]: {
         subject: '[PIZZACHU] АКАУНТ ОНОВЛЕНО!',
         templateFileName: 'updateUser'
-    },
-    [PRODUCT_CREATE]: {
-        subject: '[PIZZACHU] СТВОРЕНО ПРОДУКТ!',
-        templateFileName: 'createProduct'
-    },
-    [PRODUCT_DELETE]: {
-        subject: '[PIZZACHU] ВИДАЛЕНО ПРОДУКТ!',
-        templateFileName: 'deleteProduct'
-    },
-    [PRODUCT_UPDATE]: {
-        subject: '[PIZZACHU] ПРОДУКТ ОНОВЛЕНО!',
-        templateFileName: 'updateProduct'
     }
 };
