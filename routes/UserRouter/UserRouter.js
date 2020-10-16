@@ -1,5 +1,9 @@
 const router = require('express').Router();
 const {
+    authMiddleware: {
+        checkUserAccessTokenMiddleware,
+        getUserFromAccessToken
+    },
     userMiddleware:
         {
             checkIsUserExistMiddleware,
@@ -26,7 +30,7 @@ const {
 } = require('../../controllers');
 
 
-router.post('/register',checkUserValidityMiddleware,
+router.post('/register', checkUserValidityMiddleware,
     checkFilesMiddleware,
     checkUserPhotoCountMiddleware,
     createUser);
@@ -34,7 +38,11 @@ router.post('/register',checkUserValidityMiddleware,
 router.get('/getAllActiveUsers', getAllActiveUsers);
 router.get('/getAllBlockedUsers', getAllBlockedUsers);
 router.get('/:userId', checkIsUserExistMiddleware, getUserById);
-router.put('/:userId', checkIsUserExistMiddleware, checkUserValidityIfUpdateMiddleware, updateUser);
+router.put('/:userId',
+    checkUserAccessTokenMiddleware,
+    getUserFromAccessToken,
+    checkUserValidityIfUpdateMiddleware,
+    updateUser);
 router.delete('/:userId', checkIsUserExistMiddleware, deleteUserByParams);
 
 module.exports = router;

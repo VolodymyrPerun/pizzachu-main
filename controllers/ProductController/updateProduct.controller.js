@@ -2,7 +2,7 @@ const Joi = require('joi');
 const chalk = require('chalk')
 
 const {transactionInstance} = require('../../dataBase').getInstance();
-const {getUserByIdService} = require("../../service/userService");
+const {productService:{getProductByIdService}} = require('../../service');
 const {
     userValidator: {updateUserValidationSchema}
 } = require("../../validators");
@@ -37,29 +37,22 @@ module.exports = async (req, res, next) => {
         user.role_id = ADMIN;
         user.status_id = ACTIVE;
 
-        const updatedUser = req.body;
+        const product = req.body;
 
-        const {userId} = req.user;
+        const {productId} = req.product;
 
-        const userFromDB = await getUserByIdService(userId, transaction);
+        await getProductByIdService(productId, transaction);
 
         // const {error} = Joi.validate(updatedUser, updateUserValidatorSchema);
         // if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
 
         const isUpdated = await updateUserService({
-            name: updatedUser.name,
-            surname: updatedUser.surname,
-            email: updatedUser.email,
-            phone: updatedUser.phone,
-            age: updatedUser.age,
-            city: updatedUser.city,
-            address: updatedUser.address,
-            postOfficeLocation: updatedUser.postOfficeLocation
-        }, userId, transaction);
+            product
+        }, productId, transaction);
 
         if (!isUpdated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_UPDATE.message, NOT_UPDATE.customCode));
 
-        await sendMail(userFromDB.email, USER_UPDATE, {user: updatedUser});
+        // await sendMail(userFromDB.email, USER_UPDATE, {user: updatedUser});
 
         await transaction.commit();
         console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'))

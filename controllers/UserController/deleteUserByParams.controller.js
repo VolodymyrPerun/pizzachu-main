@@ -12,21 +12,13 @@ const {
 
 
 module.exports = async (req, res, next) => {
-    // ! Sequalize method
-    // const isDeleted = await req.user.destroy();
-    // if (!isDeleted) return next(new ErrorHandler('Cannot delete user', 400, 4001));
-    // res.sendStatus(204);
 
     try {
         const {userId} = req.params;
         const user = await getUserByIdService(userId);
 
-        console.log(user);
         await deleteUserByParamsService({userId});
         await deleteTokenByParamsService({userId});
-
-
-
         await emailService.sendMail(user.email, USER_DELETE, {
             userName: user.name,
             userSurname: user.surname

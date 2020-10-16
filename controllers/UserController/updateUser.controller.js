@@ -1,14 +1,10 @@
-const Joi = require('joi');
-const chalk = require('chalk')
+const chalk = require('chalk');
 
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {getUserByIdService} = require("../../service/userService");
 const {
-    userValidator: {updateUserValidationSchema}
-} = require("../../validators");
-const {
-    responseStatusCodesEnum: {BAD_REQUEST, NOT_FOUND: NOT_FOUND_CODE},
-    responseCustomErrorEnum: {NOT_VALID, NOT_UPDATE},
+    responseStatusCodesEnum: {NOT_FOUND: NOT_FOUND_CODE},
+    responseCustomErrorEnum: {NOT_UPDATE},
     emailActionEnum: {USER_UPDATE}
 } = require('../../constants');
 const {ErrorHandler} = require("../../error");
@@ -20,41 +16,22 @@ const {
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
-    // ! Sequalize method
-    // const user = req.body;
-    // user.password = await hashUserPassword(user.password);
-    // const isUpdated = await userService.update(req.user, user);
-    // if (!isUpdated) return next(new ErrorHandler('Cannot update user', 400, 4001));
-    // res.sendStatus(200);
 
     try {
-        const updatedUser = req.body;
+        const user = req.body;
 
         const {userId} = req.user;
 
-        const userFromDB = await getUserByIdService(userId, transaction);
+        const userFromDB = await getUserByIdService(userId);
 
-        const {error} = Joi.validate(updatedUser, updateUserValidationSchema);
-        if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
-
-        const isUpdated = await updateUserService({
-            name: updatedUser.name,
-            surname: updatedUser.surname,
-            email: updatedUser.email,
-            phone: updatedUser.phone,
-            age: updatedUser.age,
-            city: updatedUser.city,
-            address: updatedUser.address,
-            postOfficeLocation: updatedUser.postOfficeLocation,
-            user_photo: updatedUser.user_photo
-        }, userId, transaction);
+        const isUpdated = await updateUserService(userId, user, transaction);
 
         if (!isUpdated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_UPDATE.message, NOT_UPDATE.customCode));
 
-        await sendMail(userFromDB.email, USER_UPDATE, {updatedUser});
+        await sendMail(userFromDB.email, USER_UPDATE, {user});
 
         await transaction.commit();
-        console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'))
+        console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'));
 
         res.end();
     } catch (e) {
