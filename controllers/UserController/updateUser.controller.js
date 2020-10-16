@@ -16,7 +16,6 @@ const {
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
-
     try {
         const user = req.body;
 
@@ -29,7 +28,6 @@ module.exports = async (req, res, next) => {
         if (!isUpdated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_UPDATE.message, NOT_UPDATE.customCode));
 
         await sendMail(userFromDB.email, USER_UPDATE, {user});
-
         await transaction.commit();
         console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'));
 

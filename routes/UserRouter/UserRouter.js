@@ -38,7 +38,7 @@ router.post('/register', checkUserValidityMiddleware,
 router.get('/getAllActiveUsers', getAllActiveUsers);
 router.get('/getAllBlockedUsers', getAllBlockedUsers);
 router.get('/:userId', checkIsUserExistMiddleware, getUserById);
-router.put('/:userId',
+router.put('/update-profile/:userId',
     checkUserAccessTokenMiddleware,
     getUserFromAccessToken,
     checkUserValidityIfUpdateMiddleware,
