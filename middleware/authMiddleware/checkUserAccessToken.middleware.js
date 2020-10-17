@@ -18,6 +18,5 @@ module.exports = async (req, res, next) => {
 
         tokenVerifierHelper(authorizationToken, CLIENT);
 
-
         next();
 };

@@ -43,6 +43,9 @@ router.put('/update-profile/:userId',
     getUserFromAccessToken,
     checkUserValidityIfUpdateMiddleware,
     updateUser);
-router.delete('/:userId', checkIsUserExistMiddleware, deleteUserByParams);
+router.delete('/:userId',
+    checkUserAccessTokenMiddleware,
+    getUserFromAccessToken,
+    deleteUserByParams);
 
 module.exports = router;
