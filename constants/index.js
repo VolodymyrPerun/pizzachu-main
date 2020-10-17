@@ -11,6 +11,7 @@ module.exports.regexpPhoneNumberEnum = require('./regexpPhoneNumber.enum');
 module.exports.responseStatusCodesEnum = require('./responseStatusCodes.enum');
 module.exports.PRODUCT_STATUS = require('./productStatus.enum');
 module.exports.PRODUCT_TYPE = require('./productType.enum');
+module.exports.transactionEnum = require('./transaction.enum');
 module.exports.JWT_METHOD = require('./jwt_method.enum');
 module.exports.USER_GENDER = require('./userGender.enum');
 module.exports.USER_ROLE = require('./userRole.enum');

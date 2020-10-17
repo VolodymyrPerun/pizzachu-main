@@ -2,10 +2,11 @@ const chalk = require('chalk');
 
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {
+    emailActionEnum: {USER_DELETE},
     responseStatusCodesEnum: {NO_CONTENT},
-    emailActionEnum: {USER_DELETE}
+    transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK}
 } = require('../../constants');
-const {ErrorHandler} = require("../../error")
+const {ErrorHandler} = require("../../error");
 const {
     emailService,
     userService: {deleteUserByParamsService, getUserByIdService},
@@ -17,6 +18,7 @@ module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
         const {userId} = req.params;
+
         const user = await getUserByIdService(userId, transaction);
 
         await deleteUserByParamsService({userId}, transaction);
@@ -26,12 +28,12 @@ module.exports = async (req, res, next) => {
             userSurname: user.surname
         });
         await transaction.commit();
-        console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'));
+        console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 
-        res.sendStatus(NO_CONTENT);
+        res.sendStatus(NO_CONTENT).end();
     } catch (e) {
         console.log(chalk.bgGreen.bold.red(e.status, e.message, e.customCode));
-        console.log(chalk.red('TRANSACTION ROLLBACK'));
+        console.log(chalk.red(TRANSACTION_ROLLBACK));
         await transaction.rollback();
         next(new ErrorHandler(e.status, e.message, e.customCode));
     }

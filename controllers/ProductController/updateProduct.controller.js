@@ -59,7 +59,7 @@ module.exports = async (req, res, next) => {
 
         res.end();
     } catch (e) {
-        console.log(chalk.bgGreen.bold.red(e.status, e.message, e.customCode));
+        console.log(chalk.bgGray.bold.red(e.status, e.message, e.customCode));
         console.log(chalk.red('TRANSACTION ROLLBACK'));
         await transaction.rollback();
         next(new ErrorHandler(e.status, e.message, e.customCode));

@@ -43,7 +43,7 @@ router.put('/update-profile/:userId',
     getUserFromAccessToken,
     checkUserValidityIfUpdateMiddleware,
     updateUser);
-router.delete('/:userId',
+router.delete('/delete-profile/:userId',
     checkUserAccessTokenMiddleware,
     getUserFromAccessToken,
     deleteUserByParams);

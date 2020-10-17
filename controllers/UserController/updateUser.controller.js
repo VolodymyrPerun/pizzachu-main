@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
 
         const {userId} = req.user;
 
-        const userFromDB = await getUserByIdService(userId);
+        const userFromDB = await getUserByIdService(userId, transaction);
 
         const isUpdated = await updateUserService(userId, user, transaction);
 
@@ -29,11 +29,11 @@ module.exports = async (req, res, next) => {
 
         await sendMail(userFromDB.email, USER_UPDATE, {user});
         await transaction.commit();
-        console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'));
+        console.log(chalk.bgBlue('TRANSACTION COMMIT'));
 
         res.end();
     } catch (e) {
-        console.log(chalk.bgGreen.bold.red(e.status, e.message, e.customCode));
+        console.log(chalk.bgWhiteBright.bold.red(e.status, e.message, e.customCode));
         console.log(chalk.red('TRANSACTION ROLLBACK'));
         await transaction.rollback();
         next(new ErrorHandler(e.status, e.message, e.customCode));

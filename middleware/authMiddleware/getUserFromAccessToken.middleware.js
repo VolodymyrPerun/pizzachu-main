@@ -6,7 +6,8 @@ const {oauthService: {getTokensByParamsService}} = require('../../service');
 const {
     requestHeadersEnum: {AUTHORIZATION},
     responseStatusCodesEnum: {UNAUTHORIZED, BAD_REQUEST},
-    responseCustomErrorEnum: {NOT_VALID, NOT_VALID_TOKEN}
+    responseCustomErrorEnum: {NOT_VALID, NOT_VALID_TOKEN},
+    transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK}
 
 } = require('../../constants');
 
@@ -31,12 +32,12 @@ module.exports = async (req, res, next) => {
         req.user = userFromAccessToken;
 
         await transaction.commit();
-        console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'));
+        console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 
         next();
     } catch (e) {
         console.log(chalk.bgGreen.bold.red(e.status, e.message, e.customCode));
-        console.log(chalk.red('TRANSACTION ROLLBACK'));
+        console.log(chalk.red(TRANSACTION_ROLLBACK));
         await transaction.rollback();
         next(new ErrorHandler(e.status, e.message, e.customCode));
     }
