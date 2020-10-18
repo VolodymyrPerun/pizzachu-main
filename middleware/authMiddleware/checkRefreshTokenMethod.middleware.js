@@ -49,7 +49,6 @@ module.exports = (jwtMethod) => async (req, res, next) => {
                 UNAUTHORIZED.code,));
     }
 
-
     if (!authorizationToken) {
         return next(new ErrorHandler(
             [keyMethodErrorData],

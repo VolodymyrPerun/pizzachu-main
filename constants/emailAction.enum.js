@@ -7,7 +7,8 @@ module.exports = {
     // SELLER_UPDATE: 5,
     USER_REGISTER: 6,
     USER_DELETE: 7,
-    USER_UPDATE: 8
+    USER_UPDATE: 8,
+    PASSWORD_UPDATE: 9
 }
 
 //todo ADMIN_DELETE: 1, // ADMIN_UPDATE: 2,

@@ -6,6 +6,7 @@ const {
         {
             checkAccessTokenMethodMiddleware,
             checkRefreshTokenMethodMiddleware,
+            getUserFromAccessToken,
             getUserFromRefreshToken
         }
 } = require("../../middleware");
@@ -39,9 +40,21 @@ router.post('/auth-seller/refresh',
     getUserFromRefreshToken,
     refreshToken(SELLER));
 router.put(
-    '/password-change',
-    // accessTokenChecker,
-    // getUserFromAccessToken,
+    '/auth-admin/password-change',
+    checkAccessTokenMethodMiddleware(ADMIN),
+    getUserFromAccessToken,
+    changePassword
+);
+router.put(
+    '/auth-client/password-change',
+    checkAccessTokenMethodMiddleware(CLIENT),
+    getUserFromAccessToken,
+    changePassword
+);
+router.put(
+    '/auth-seller/password-change',
+    checkAccessTokenMethodMiddleware(SELLER),
+    getUserFromAccessToken,
     changePassword
 );
 

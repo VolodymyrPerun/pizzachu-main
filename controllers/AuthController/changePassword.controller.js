@@ -1,5 +1,7 @@
 const Joi = require('joi');
+const chalk = require('chalk');
 
+const {transactionInstance} = require('../../dataBase').getInstance();
 const {
     CustomErrorData: {
         BAD_REQUEST,
@@ -11,26 +13,27 @@ const {
 const {USER_STATUS: {BLOCKED, DELETED}, responseStatusCodesEnum: {CREATED}} = require("../../constants");
 const {authValidator: {changePasswordValidationSchema}} = require("../../validators");
 const {
+    emailActionEnum: {PASSWORD_UPDATE},
     responseStatusCodesEnum: {FORBIDDEN},
-    responseCustomErrorEnum: {NOT_VALID}
+    responseCustomErrorEnum: {NOT_VALID},
+    transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK}
 } = require('../../constants');
 const {HashPasswordHelper, HashPasswordCheckHelper} = require('../../helpers');
 const {ErrorHandler} = require('../../error');
 const {
+    emailService: {sendMail},
     userService: {getUserByIdService, updateUserService}
 } = require('../../service');
 
 
 module.exports = async (req, res, next) => {
+    const transaction = await transactionInstance();
     try {
-        const {password, newPassword, repeatNewPassword} = req.body;
+        const {password, newPassword, repeatNewPassword, email} = req.body;
+
         const {userId} = req.user;
 
-        //todo create compare password service, forgot pass and change pass controller, try to login user,
-        //todo after that create admin controller and auth admin
-
-        const user = await getUserByIdService(userId);
-
+        const user = await getUserByIdService(userId, transaction);
 
         if (!user) {
             return next(new ErrorHandler(BAD_REQUEST,
@@ -56,10 +59,16 @@ module.exports = async (req, res, next) => {
 
         const hashPassword = await HashPasswordHelper(newPassword);
 
-        await updateUserService({password: hashPassword}, userId);
+        await updateUserService(userId, {password: hashPassword}, transaction);
+        await sendMail(email, PASSWORD_UPDATE, {user, newPassword});
+        await transaction.commit();
+        console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 
         res.status(CREATED).end();
     } catch (e) {
-        next(new ErrorHandler(e.status, e.message, e.code));
+        console.log(chalk.bgGreen.bold.red(e.status, e.message, e.customCode));
+        console.log(chalk.red(TRANSACTION_ROLLBACK));
+        await transaction.rollback();
+        next(new ErrorHandler(e.status, e.message, e.customCode));
     }
 };

@@ -2,7 +2,7 @@ const {
     emailActionEnum: {
         ADMIN_REGISTER, ADMIN_DELETE, ADMIN_UPDATE,
         SELLER_REGISTER, SELLER_DELETE, SELLER_UPDATE,
-        USER_REGISTER, USER_DELETE, USER_UPDATE
+        USER_REGISTER, USER_DELETE, USER_UPDATE, PASSWORD_UPDATE
     }
 } = require('../constants');
 
@@ -42,5 +42,9 @@ module.exports = {
     [USER_UPDATE]: {
         subject: '[PIZZACHU] АКАУНТ ОНОВЛЕНО!',
         templateFileName: 'updateUser'
+    },
+    [PASSWORD_UPDATE]: {
+        subject: '[PIZZACHU] АКАУНТ ОНОВЛЕНО, ВАШ ПАРОЛЬ ЗМІНЕНО!',
+        templateFileName: 'changePassword'
     }
 };
