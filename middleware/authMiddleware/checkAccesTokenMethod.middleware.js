@@ -20,7 +20,6 @@ const {
 
 module.exports = (jwtMethod) => async (req, res, next) => {
     let keyMethod = '';
-    let keyTokenErrorData = '';
     let keyMethodErrorData = '';
     let secretWord = '';
 
@@ -59,9 +58,9 @@ module.exports = (jwtMethod) => async (req, res, next) => {
     jwt.verify(authorizationToken, secretWord, err => {
         if (err) {
             return next(new ErrorHandler(
-                [keyTokenErrorData],
-                [keyTokenErrorData].message,
-                [keyTokenErrorData].customCode));
+                [keyMethodErrorData],
+                [keyMethodErrorData].message,
+                [keyMethodErrorData].customCode));
         }
     });
 

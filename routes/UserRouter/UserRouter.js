@@ -1,9 +1,9 @@
 const router = require('express').Router();
 
-const {USER_STATUS: {ACTIVE, BLOCKED}} = require("../../constants");
+const {USER_STATUS: {ACTIVE, BLOCKED}, JWT_METHOD: {CLIENT}} = require("../../constants");
 const {
     authMiddleware: {
-        checkUserAccessTokenMiddleware,
+        checkAccessTokenMethodMiddleware,
         getUserFromAccessToken
     },
     userMiddleware:
@@ -40,12 +40,12 @@ router.get('/getAllActiveUsers', getAllUsers(ACTIVE));
 router.get('/getAllBlockedUsers', getAllUsers(BLOCKED));
 router.get('/:userId', checkIsUserExistMiddleware, getUserById);
 router.put('/update-profile/:userId',
-    checkUserAccessTokenMiddleware,
+    checkAccessTokenMethodMiddleware(CLIENT),
     getUserFromAccessToken,
     checkUserValidityIfUpdateMiddleware,
     updateUser);
 router.delete('/delete-profile/:userId',
-    checkUserAccessTokenMiddleware,
+    checkAccessTokenMethodMiddleware(CLIENT),
     getUserFromAccessToken,
     deleteUserByParams);
 

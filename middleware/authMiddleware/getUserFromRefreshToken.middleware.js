@@ -26,5 +26,5 @@ module.exports = async (req, res, next) => {
 
     req.user = userFromRefreshToken;
 
-     next();
+    next();
 };

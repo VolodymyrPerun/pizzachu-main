@@ -13,7 +13,6 @@ module.exports.PRODUCT_STATUS = require('./productStatus.enum');
 module.exports.PRODUCT_TYPE = require('./productType.enum');
 module.exports.transactionEnum = require('./transaction.enum');
 module.exports.JWT_METHOD = require('./jwtMethod.enum');
-module.exports.JWT_TOKEN_TYPE = require('./jwtTokenType.enum');
 module.exports.USER_GENDER = require('./userGender.enum');
 module.exports.USER_ROLE = require('./userRole.enum');
 module.exports.USER_STATUS = require('./userStatus.enum');

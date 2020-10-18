@@ -1,4 +1,6 @@
 const productRouter = require('express').Router();
+
+const {JWT_METHOD: {ADMIN}} = require('../../constants')
 const {
     productController: {
         createProduct,
@@ -12,27 +14,28 @@ const {
 } = require('../../controllers');
 const {
     adminMiddleware: {getAdminFromAccessTokenMiddleware},
-    authMiddleware: {checkAdminAccessTokenMiddleware},
+    authMiddleware: {checkAccessTokenMethodMiddleware},
     fileMiddleware: {checkFilesMiddleware, checkUserPhotoCountMiddleware},
     productMiddleware: {
         checkProductValidityMiddleware,
-        checkProductValidityIfUpdateMiddleware}
+        checkProductValidityIfUpdateMiddleware
+    }
 } = require('./../../middleware');
 
 productRouter.post('/createProduct',
-    checkAdminAccessTokenMiddleware,
+    checkAccessTokenMethodMiddleware(ADMIN),
     getAdminFromAccessTokenMiddleware,
     checkProductValidityMiddleware,
     checkFilesMiddleware,
     checkUserPhotoCountMiddleware,
     createProduct);
 productRouter.put('/update-product/:productId',
-    checkAdminAccessTokenMiddleware,
+    checkAccessTokenMethodMiddleware(ADMIN),
     getAdminFromAccessTokenMiddleware,
     checkProductValidityIfUpdateMiddleware,
     updateProduct);
 productRouter.delete('/delete-product/:productId',
-    checkAdminAccessTokenMiddleware,
+    checkAccessTokenMethodMiddleware(ADMIN),
     getAdminFromAccessTokenMiddleware,
     deleteProductByParams);
 // productRouter.get('/topClothes', getAllTopClothes)
