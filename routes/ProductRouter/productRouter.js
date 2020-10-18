@@ -12,10 +12,9 @@ const {
 } = require('../../controllers');
 const {
     adminMiddleware: {getAdminFromAccessTokenMiddleware},
-    authMiddleware: {checkAdminAccessTokenMiddleware, getUserFromAccessToken},
+    authMiddleware: {checkAdminAccessTokenMiddleware},
     fileMiddleware: {checkFilesMiddleware, checkUserPhotoCountMiddleware},
     productMiddleware: {
-        checkIsProductExistMiddleware,
         checkProductValidityMiddleware,
         checkProductValidityIfUpdateMiddleware}
 } = require('./../../middleware');
@@ -40,6 +39,5 @@ productRouter.delete('/delete-product/:productId',
 // productRouter.get('/bottomClothes', getAllBottomClothes)
 // productRouter.get('/underwearClothes', getAllUnderwearClothes);
 // productRouter.get('/generalClothes', getAllGeneralClothes);
-
 
 module.exports = productRouter;

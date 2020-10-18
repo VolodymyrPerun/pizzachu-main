@@ -1,4 +1,6 @@
 const router = require('express').Router();
+
+const {USER_STATUS: {ACTIVE, BLOCKED}} = require("../../constants");
 const {
     authMiddleware: {
         checkUserAccessTokenMiddleware,
@@ -22,8 +24,7 @@ const {
     userController: {
         createUser,
         deleteUserByParams,
-        getAllActiveUsers,
-        getAllBlockedUsers,
+        getAllUsers,
         getUserById,
         updateUser
     }
@@ -35,8 +36,8 @@ router.post('/register', checkUserValidityMiddleware,
     checkUserPhotoCountMiddleware,
     createUser);
 
-router.get('/getAllActiveUsers', getAllActiveUsers);
-router.get('/getAllBlockedUsers', getAllBlockedUsers);
+router.get('/getAllActiveUsers', getAllUsers(ACTIVE));
+router.get('/getAllBlockedUsers', getAllUsers(BLOCKED));
 router.get('/:userId', checkIsUserExistMiddleware, getUserById);
 router.put('/update-profile/:userId',
     checkUserAccessTokenMiddleware,

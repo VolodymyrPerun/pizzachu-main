@@ -10,5 +10,5 @@ module.exports = Joi.object().keys({
     weight: Joi.number().integer().required(),
     section_id: Joi.number().integer().required(),
     product_photo: Joi.string(),
-    created_at: Joi.date(),
+    created_at: Joi.date()
 });
