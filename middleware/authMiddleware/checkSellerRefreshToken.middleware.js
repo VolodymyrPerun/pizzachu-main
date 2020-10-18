@@ -2,7 +2,7 @@ const {ErrorHandler, CustomErrorData: {BAD_REQUEST_YOU_ARE_NOT_SELLER, UNAUTHORI
 const {refreshTokenVerifierHelper} = require('../../helpers');
 const {
     requestHeadersEnum: {AUTHORIZATION},
-    USER_ROLE: {SELLER},
+    JWT_METHOD: {SELLER},
 } = require('../../constants');
 
 module.exports = async (req, res, next) => {

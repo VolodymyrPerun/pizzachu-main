@@ -1,4 +1,6 @@
 const router = require('express').Router();
+
+const {USER_ROLE: {ADMIN, SELLER}} = require('../../constants');
 const {
     authMiddleware: {
         checkAdminAccessTokenMiddleware,
@@ -33,6 +35,7 @@ const {
     authController: {
         authAdmin,
         authSeller,
+        authUser,
         logoutUser
     },
     oAuthController:
@@ -45,28 +48,15 @@ const {
 } = require('../../controllers');
 
 
-router.post('/registerAdmin', checkUserValidityMiddleware,
+router.post('/register-admin', checkUserValidityMiddleware,
     checkFilesMiddleware,
     checkUserPhotoCountMiddleware, createAdmin);
 
-router.post('/authAdmin', authAdmin);
-router.post('/authAdmin/logout', logoutUser);
-router.post('/authAdmin/refresh', checkAdminRefreshTokenMiddleware, refreshToken);
+router.post('/auth/auth-admin', authUser(ADMIN));
+router.post('/auth/auth-seller', authUser(SELLER));
+router.post('/auth/logout-admin',checkAdminAccessTokenMiddleware, logoutUser);
+router.post('/auth/logout-seller', logoutUser);
+router.post('/auth-admin/refresh', checkAdminRefreshTokenMiddleware, refreshToken);
 
-router.post('/authSeller', authSeller);
-router.post('/authSeller/logout', logoutUser);
-router.post('/authSeller/refresh', checkSellerRefreshTokenMiddleware, refreshToken);
-
-router.use(checkAdminAccessTokenMiddleware, checkSellerTokenMiddleware, checkUserAccessTokenMiddleware);
-
-router.use('/users/:user_id', checkUserValidityMiddleware);
-// router.post('/logout', checkAccessTokenMiddleware, logoutUser);
-// router.post('/refresh', checkRefreshTokenMiddleware, refreshToken);
-
-// router.get('/getAllActiveUsers', getAllActiveUsers);
-// router.get('/getAllBlockedUsers', getAllBlockedUsers);
-// router.get('/:userId', checkIsUserExistMiddleware, getUserById);
-// router.put('/:userId', checkIsUserExistMiddleware, checkUserValidityIfUpdateMiddleware, updateUser);
-// router.delete('/:userId', checkIsUserExistMiddleware, deleteUserByParams);
 
 module.exports = router;

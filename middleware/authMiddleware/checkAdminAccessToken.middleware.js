@@ -4,7 +4,8 @@ const {
 } = require("../../error");
 const {tokenVerifierHelper} = require('../../helpers');
 const {
-    USER_ROLE: {ADMIN},
+    JWT_METHOD: {ADMIN},
+
     requestHeadersEnum: {AUTHORIZATION},
 } = require('../../constants');
 

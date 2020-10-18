@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const {ErrorHandler, CustomErrorData: {UNAUTHORIZED_BAD_ACCESS_TOKEN}} = require("../error");
-const {USER_ROLE: {ADMIN, SELLER, CLIENT}} = require("../constants");
+const {JWT_METHOD: {ADMIN, SELLER, CLIENT}} = require("../constants");
 
 const {
     ADMIN_ACCESS,

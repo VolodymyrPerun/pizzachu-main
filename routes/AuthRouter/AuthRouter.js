@@ -1,5 +1,6 @@
 const router = require('express').Router();
 
+const {USER_ROLE: {CLIENT}} = require('../../constants');
 const {
     authMiddleware:
         {
@@ -10,7 +11,7 @@ const {
 const {
     authController:
         {
-            authClient,
+            authUser,
             logoutUser,
             changePassword
         },
@@ -20,8 +21,8 @@ const {
         }
 } = require('../../controllers');
 
-router.post('/', authClient);
-router.post('/logout', checkUserAccessTokenMiddleware, logoutUser);
+router.post('/auth-client', authUser(CLIENT));
+router.post('/logout-client', checkUserAccessTokenMiddleware, logoutUser);
 router.post('/refresh', checkUserRefreshTokenMiddleware, refreshToken);
 router.put(
     '/password-change',

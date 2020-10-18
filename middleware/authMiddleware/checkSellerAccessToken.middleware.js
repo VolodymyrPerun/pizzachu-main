@@ -4,7 +4,7 @@ const {
 } = require("../../error");
 const {tokenVerifierHelper} = require('../../helpers');
 const {
-    USER_ROLE: {SELLER},
+    JWT_METHOD: {SELLER},
     requestHeadersEnum: {AUTHORIZATION},
 } = require('../../constants');
 
