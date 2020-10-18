@@ -1,8 +1,9 @@
 const router = require('express').Router();
 
-const {USER_ROLE: {ADMIN, SELLER}} = require('../../constants');
+const {USER_ROLE: {ADMIN, SELLER}, JWT_TOKEN_TYPE: {ACCESS, REFRESH}} = require('../../constants');
 const {
     authMiddleware: {
+        checkAccessTokenMethodMiddleware,
         checkAdminAccessTokenMiddleware,
         checkSellerTokenMiddleware,
         checkUserAccessTokenMiddleware,
@@ -15,7 +16,6 @@ const {
 
     userMiddleware:
         {
-
             checkIsUserExistMiddleware,
             checkUserValidityMiddleware,
             checkUserValidityIfUpdateMiddleware
@@ -26,7 +26,7 @@ const {
             checkUserPhotoCountMiddleware
         }
 }
-    = require('../../middleware')
+    = require('../../middleware');
 
 const {
     adminController: {
@@ -54,7 +54,8 @@ router.post('/register-admin', checkUserValidityMiddleware,
 
 router.post('/auth/auth-admin', authUser(ADMIN));
 router.post('/auth/auth-seller', authUser(SELLER));
-router.post('/auth/logout-admin',checkAdminAccessTokenMiddleware, logoutUser);
+router.post('/auth/logout-admin', checkAdminAccessTokenMiddleware, logoutUser);
+router.post('/auth/logout-admin1', checkAccessTokenMethodMiddleware(ADMIN), logoutUser);
 router.post('/auth/logout-seller', logoutUser);
 router.post('/auth-admin/refresh', checkAdminRefreshTokenMiddleware, refreshToken);
 
