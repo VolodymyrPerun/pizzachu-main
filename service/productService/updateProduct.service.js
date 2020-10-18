@@ -10,5 +10,5 @@ module.exports = async (productId, updatedProduct, transaction) => {
         returning: true,
         plain: true,
         transaction
-    })
+    });
 };

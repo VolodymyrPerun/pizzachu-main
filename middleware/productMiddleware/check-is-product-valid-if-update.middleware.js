@@ -5,32 +5,20 @@ const {
     responseCustomErrorEnum: {NOT_VALID}
 } = require('../../constants');
 
-const {userValidator: {updateUserValidationSchema}} = require("../../validators");
+const {productValidator: {updateProductValidationSchema}} = require("../../validators");
 const ErrorHandler = require('../../error/ErrorHandler');
 
 module.exports = async (req, res, next) => {
-    try {
-        const {name, surname, age, phone, city, address, postOfficeLocation, user_photo} = req.body;
 
-        const {error} = Joi.validate({
-            name,
-            surname,
-            age,
-            phone,
-            city,
-            address,
-            postOfficeLocation,
-            user_photo
-        }, updateUserValidationSchema);
+    const product = req.body;
 
-        if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
+    const {error} = Joi.validate(product, updateProductValidationSchema);
 
-        req.user = {name, surname, age, phone, city, address, postOfficeLocation, user_photo};
+    if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
 
-        next();
+    req.product = product;
 
-        // res.end();
-    } catch (e) {
-        next(new ErrorHandler(e.status, e.message, e.customCode));
-    }
+    next();
+
+    res.end();
 };

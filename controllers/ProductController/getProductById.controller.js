@@ -8,13 +8,9 @@ const {productService: {getProductByIdService}} = require("../../service");
 module.exports = async (req, res, next) => {
 
     try {
-
-
-
         const {productId} = req.params;
 
         const product = await getProductByIdService(productId);
-
 
         if (!product) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_GET.message, NOT_GET.customCode));
 
