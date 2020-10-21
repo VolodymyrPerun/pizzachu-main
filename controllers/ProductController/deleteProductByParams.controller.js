@@ -2,28 +2,29 @@ const chalk = require('chalk');
 
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {
+    emailActionEnum: {DELETE_PRODUCT},
     responseStatusCodesEnum: {BAD_REQUEST},
-    USER_ROLE: {ADMIN},
-    USER_STATUS: {ACTIVE},
     PRODUCT_STATUS: {DELETED},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK}
 } = require('../../constants');
 const {ErrorHandler, CustomErrorData: {BAD_REQUEST_PRODUCT_NOT_PRESENT}} = require("../../error");
 const {
-    productService: {deleteProductByParamsService, getProductByIdService}
+    emailService: {sendMail},
+    productService: {deleteProductByParamsService, getProductByIdService},
+    userService: {getUserByIdService}
 } = require("../../service");
 
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
-        const user = req.user;
-
-        user.role_id = ADMIN;
-        user.status_id = ACTIVE;
+        const {userId} = req.user;
 
         const {productId} = req.params;
+
+        const userFromDB = await getUserByIdService(userId, transaction);
         const product = await getProductByIdService(productId, transaction);
+
         if (!product || product.status === DELETED) {
             return next(new ErrorHandler(
                 BAD_REQUEST,
@@ -32,6 +33,7 @@ module.exports = async (req, res, next) => {
         }
 
         await deleteProductByParamsService({productId}, transaction);
+        await sendMail(userFromDB.email, DELETE_PRODUCT, {userFromDB, isProductCreated: product});
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

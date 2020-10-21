@@ -3,7 +3,7 @@ const {
         ADMIN_REGISTER, ADMIN_DELETE, ADMIN_UPDATE,
         SELLER_REGISTER, SELLER_DELETE, SELLER_UPDATE,
         USER_REGISTER, USER_DELETE, USER_UPDATE, PASSWORD_UPDATE,
-        CREATE_PRODUCT
+        CREATE_PRODUCT, DELETE_PRODUCT, UPDATE_PRODUCT
     }
 } = require('../constants');
 
@@ -51,5 +51,13 @@ module.exports = {
     [CREATE_PRODUCT]: {
         subject: '[PIZZACHU] СТВОРЕНО НОВИЙ ПРОДУКТ!',
         templateFileName: 'createProduct'
+    },
+    [DELETE_PRODUCT]: {
+        subject: '[PIZZACHU] ПРОДУКТ ВИДАЛЕНО!',
+        templateFileName: 'deleteProduct'
+    },
+    [UPDATE_PRODUCT]: {
+        subject: '[PIZZACHU] ПРОДУКТ ОНОЛЕНО!',
+        templateFileName: 'updateProduct'
     }
 };

@@ -6,6 +6,5 @@ module.exports = async (createdProduct, transaction) => {
 
     return UserModel.create(createdProduct, {
         new: true,
-        transaction
-    })
+    }, transaction)
 };

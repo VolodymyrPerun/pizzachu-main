@@ -1,7 +1,7 @@
 const path = require('path');
 const uuid = require('uuid').v1();
 const fsep = require('fs-extra').promises;
-const chalk = require('chalk')
+const chalk = require('chalk');
 
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {
@@ -28,11 +28,11 @@ module.exports = async (req, res, next) => {
 
         product.status_id = IN_STOCK;
 
-        const userFromDB = await getUserByIdService(userId);
+        const userFromDB = await getUserByIdService(userId, transaction);
 
         const [productImage] = req.photos;
 
-        const isProductCreated = await createProductService(product);
+        const isProductCreated = await createProductService(product, transaction);
 
         if (!isProductCreated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_CREATED.message, NOT_CREATED.customCode));
 
