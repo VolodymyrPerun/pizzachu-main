@@ -1,11 +1,12 @@
 const db = require('../../dataBase').getInstance();
 const {DB_TABLE_NAME: {USER}} = require('../../constants')
 
-module.exports = async object => {
+module.exports = async (object, transaction) => {
     const UserModel = await db.getModel(USER);
 
     return UserModel.findOne({
         where: object,
-        raw: true
+        raw: true,
+        transaction
     })
 };

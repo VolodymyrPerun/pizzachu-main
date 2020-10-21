@@ -1,9 +1,15 @@
 const router = require('express').Router();
 
+const {JWT_METHOD: {ADMIN}} = require("../../constants");
 const {
+    authMiddleware: {
+        checkAccessTokenMethodMiddleware,
+        getUserFromAccessToken
+    },
     userMiddleware:
         {
-            checkUserValidityMiddleware
+            checkUserValidityMiddleware,
+            checkUserValidityIfUpdateMiddleware
         },
     fileMiddleware:
         {
@@ -15,13 +21,21 @@ const {
 
 const {
     adminController: {
-        createAdmin
+
+    },
+    userController: {
+        createUser,
+        updateUser
     }
 } = require('../../controllers');
 
-
 router.post('/register-admin', checkUserValidityMiddleware,
     checkFilesMiddleware,
-    checkUserPhotoCountMiddleware, createAdmin);
+    checkUserPhotoCountMiddleware, createUser(ADMIN));
+router.put('/update-profile/:userId',
+    checkAccessTokenMethodMiddleware(ADMIN),
+    getUserFromAccessToken,
+    checkUserValidityIfUpdateMiddleware,
+    updateUser);
 
 module.exports = router;

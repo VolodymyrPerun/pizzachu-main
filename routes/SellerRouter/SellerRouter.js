@@ -1,10 +1,10 @@
 const router = require('express').Router();
+
+const {USER_ROLE: {SELLER}} = require('../../constants');
 const {
     userMiddleware:
         {
-            checkIsUserExistMiddleware,
             checkUserValidityMiddleware,
-            checkUserValidityIfUpdateMiddleware
         },
     fileMiddleware:
         {
@@ -15,23 +15,15 @@ const {
     = require('../../middleware')
 
 const {
-    sellerController: {
-        createSeller
-    },
     userController: {
-        deleteUserByParams
+        createUser
     }
 } = require('../../controllers');
 
-
-router.post('/registerSeller', checkUserValidityMiddleware,
+router.post('/registerSeller',
+    checkUserValidityMiddleware,
     checkFilesMiddleware,
-    checkUserPhotoCountMiddleware, createSeller);
-
-// router.get('/getAllActiveUsers', getAllActiveUsers);
-// router.get('/getAllBlockedUsers', getAllBlockedUsers);
-// router.get('/:userId', checkIsUserExistMiddleware, getUserById);
-// router.put('/:userId', checkIsUserExistMiddleware, checkUserValidityIfUpdateMiddleware, updateUser);
-// router.delete('/:userId', checkIsUserExistMiddleware, deleteUserByParams);
+    checkUserPhotoCountMiddleware,
+    createUser(SELLER));
 
 module.exports = router;

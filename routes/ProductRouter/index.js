@@ -1,1 +1,1 @@
-module.exports = require('./productRouter');
+module.exports = require('./ProductRouter');

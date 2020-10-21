@@ -68,7 +68,7 @@ module.exports = (userRole) => async (req, res, next) => {
 
         if (error) return next(new ErrorHandler(error.details[0].message, BAD_REQUEST, NOT_VALID.customCode));
 
-        const user = await getUserByParamsService({email, role_id: [keyRole]});
+        const user = await getUserByParamsService({email, role_id: [keyRole]}, transaction);
 
         if (!user) {
             return next(new ErrorHandler(BAD_REQUEST,

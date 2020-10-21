@@ -5,6 +5,7 @@ const chalk = require('chalk')
 
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {
+    emailActionEnum: {CREATE_PRODUCT},
     responseStatusCodesEnum: {CREATED, NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_CREATED},
     PRODUCT_STATUS: {IN_STOCK},
@@ -12,7 +13,10 @@ const {
     USER_STATUS: {ACTIVE},
 } = require('../../constants');
 const ErrorHandler = require("../../error/ErrorHandler");
-const {productService: {createProductService, updateProductService}} = require("../../service");
+const {
+    emailService:{sendMail},
+    productService: {createProductService, updateProductService}
+} = require("../../service");
 
 
 module.exports = async (req, res, next) => {
@@ -39,8 +43,14 @@ module.exports = async (req, res, next) => {
 
             await fsep.mkdir(path.resolve(process.cwd(), 'public', photoDir), {recursive: true});
             await productImage.mv(path.resolve(process.cwd(), 'public', photoDir, photoName));
-            await updateProductService(isProductCreated.productId, {product_photo: photoDir + photoName});
+           const newProduct = await updateProductService(isProductCreated.productId, {product_photo: photoDir + photoName})
+
+            console.log('rrrrrrrrrrrr');
+            console.log(product);
+            console.log('rrrrrrrrrrrr');
         }
+
+        await sendMail(user.email, CREATE_PRODUCT, {user, product});
 
         await transaction.commit();
         console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'));

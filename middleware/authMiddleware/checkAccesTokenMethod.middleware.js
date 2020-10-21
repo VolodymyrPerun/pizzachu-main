@@ -22,7 +22,7 @@ module.exports = (jwtMethod) => async (req, res, next) => {
     let keyMethod = '';
     let keyMethodErrorData = '';
     let secretWord = '';
-
+    try {
     const authorizationToken = req.get(AUTHORIZATION);
 
     switch (jwtMethod) {
@@ -64,4 +64,7 @@ module.exports = (jwtMethod) => async (req, res, next) => {
     });
 
     next();
+    } catch (e) {
+        next(new ErrorHandler(e.status, e.message, e.customCode));
+    }
 };
