@@ -9,26 +9,26 @@ const {
     responseStatusCodesEnum: {CREATED, NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_CREATED},
     PRODUCT_STATUS: {IN_STOCK},
-    USER_ROLE: {ADMIN},
-    USER_STATUS: {ACTIVE},
+    transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK},
 } = require('../../constants');
 const ErrorHandler = require("../../error/ErrorHandler");
 const {
-    emailService:{sendMail},
-    productService: {createProductService, updateProductService}
+    emailService: {sendMail},
+    productService: {createProductService, updateProductService},
+    userService: {getUserByIdService}
 } = require("../../service");
 
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
-        const user = req.user;
+        const {userId} = req.user;
+
         const product = req.body;
 
-        user.role_id = ADMIN;
-        user.status_id = ACTIVE;
         product.status_id = IN_STOCK;
 
+        const userFromDB = await getUserByIdService(userId);
 
         const [productImage] = req.photos;
 
@@ -43,22 +43,18 @@ module.exports = async (req, res, next) => {
 
             await fsep.mkdir(path.resolve(process.cwd(), 'public', photoDir), {recursive: true});
             await productImage.mv(path.resolve(process.cwd(), 'public', photoDir, photoName));
-           const newProduct = await updateProductService(isProductCreated.productId, {product_photo: photoDir + photoName})
-
-            console.log('rrrrrrrrrrrr');
-            console.log(product);
-            console.log('rrrrrrrrrrrr');
+            await updateProductService(isProductCreated.productId, {product_photo: photoDir + photoName})
         }
 
-        await sendMail(user.email, CREATE_PRODUCT, {user, product});
+        await sendMail(userFromDB.email, CREATE_PRODUCT, {userFromDB, isProductCreated});
 
         await transaction.commit();
-        console.log(chalk.bgRedBright.bold.greenBright('TRANSACTION COMMIT'));
+        console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 
         res.status(CREATED).end();
     } catch (e) {
         console.log(chalk.bgGreen.bold.red(e.status, e.message, e.customCode));
-        console.log(chalk.red('TRANSACTION ROLLBACK'));
+        console.log(chalk.red(TRANSACTION_ROLLBACK));
         await transaction.rollback();
         next(new ErrorHandler(e.status, e.message, e.customCode));
     }

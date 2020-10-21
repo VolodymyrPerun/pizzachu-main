@@ -30,7 +30,6 @@ const {
     }
 } = require('../../controllers');
 
-
 router.post('/register',
     checkUserValidityMiddleware,
     checkFilesMiddleware,
@@ -43,6 +42,7 @@ router.get('/:userId', checkIsUserExistMiddleware, getUserById);
 router.put('/update-profile/:userId',
     checkAccessTokenMethodMiddleware(CLIENT),
     getUserFromAccessToken,
+    checkUserValidityIfUpdateMiddleware,
     updateUser);
 router.delete('/delete-profile/:userId',
     checkAccessTokenMethodMiddleware(CLIENT),
