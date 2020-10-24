@@ -14,5 +14,5 @@ module.exports = async params => {
         }]
     });
 
-    return searchObj && searchObj.dataValues
-}
+    return searchObj && searchObj.dataValues;
+};

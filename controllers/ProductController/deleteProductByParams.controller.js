@@ -14,7 +14,6 @@ const {
     userService: {getUserByIdService}
 } = require("../../service");
 
-
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {

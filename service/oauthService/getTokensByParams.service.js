@@ -17,4 +17,4 @@ module.exports = async (token) => {
     });
 
     return user;
-}
+};

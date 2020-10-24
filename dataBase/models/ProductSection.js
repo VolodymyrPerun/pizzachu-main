@@ -4,13 +4,11 @@ module.exports = (sequelize, DataTypes) => {
     const ProductSection = sequelize.define(PRODUCT_SECTION, {
         id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
             primaryKey: true,
             autoIncrement: true
         },
         section: {
             type: DataTypes.STRING,
-            allowNull: false,
             unique: true
         }
     }, {

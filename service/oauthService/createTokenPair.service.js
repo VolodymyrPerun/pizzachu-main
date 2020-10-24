@@ -6,5 +6,5 @@ module.exports = (tokens, transaction) => {
 
     return TokenModel.create(tokens,{
         transaction
-    })
+    });
 };

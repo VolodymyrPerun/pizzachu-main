@@ -11,7 +11,6 @@ const {
 const {emailService: {sendMail}, userService: {getUserByIdService}} = require('../../service');
 const {ErrorHandler} = require("../../error");
 
-
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {

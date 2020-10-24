@@ -8,6 +8,6 @@ module.exports = Joi.object().keys({
     status_id: Joi.number().integer().required(),
     size_id: Joi.number().integer().required(),
     weight: Joi.number().integer().required(),
-    section_id: Joi.number().integer().required(),
+    section_id: Joi.number().integer(),
     product_photo: Joi.string()
 });

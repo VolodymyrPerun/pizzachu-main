@@ -35,7 +35,7 @@ module.exports = (userStatus) => async (req, res, next) => {
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 
-        res.json(users);
+        res.json(users).end();
     } catch (e) {
         console.log(chalk.bgGreen.bold.red(e.status, e.message, e.customCode));
         console.log(chalk.red(TRANSACTION_ROLLBACK));

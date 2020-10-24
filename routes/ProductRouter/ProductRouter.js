@@ -1,16 +1,16 @@
 const productRouter = require('express').Router();
 
-const {JWT_METHOD: {ADMIN}} = require('../../constants')
+const {
+    PRODUCT_TYPE: {CHAINS, DESSERTS, DRINKS, MISO_SOUPS, PIZZA, ROLES, SALADS, SUPPLEMENTS, SUSHI},
+    JWT_METHOD: {ADMIN}
+} = require('../../constants');
 const {
     productController: {
         createProduct,
         deleteProductByParams,
         updateProduct,
-        getAllTopClothes,
-        getAllBottomClothes,
-        getAllUnderwearClothes,
-        getAllGeneralClothes,
-    }
+        getAllProductsByType
+    },
 } = require('../../controllers');
 const {
     adminMiddleware: {getAdminFromAccessTokenMiddleware},
@@ -22,7 +22,7 @@ const {
     }
 } = require('./../../middleware');
 
-productRouter.post('/createProduct',
+productRouter.post('/create-product',
     checkAccessTokenMethodMiddleware(ADMIN),
     getAdminFromAccessTokenMiddleware,
     checkProductValidityMiddleware,
@@ -38,9 +38,14 @@ productRouter.delete('/delete-product/:productId',
     checkAccessTokenMethodMiddleware(ADMIN),
     getAdminFromAccessTokenMiddleware,
     deleteProductByParams);
-// productRouter.get('/topClothes', getAllTopClothes)
-// productRouter.get('/bottomClothes', getAllBottomClothes)
-// productRouter.get('/underwearClothes', getAllUnderwearClothes);
-// productRouter.get('/generalClothes', getAllGeneralClothes);
+productRouter.get('/chains', getAllProductsByType(CHAINS));
+productRouter.get('/desserts', getAllProductsByType(DESSERTS));
+productRouter.get('/drinks',getAllProductsByType(DRINKS));
+productRouter.get('/miso-soups', getAllProductsByType(MISO_SOUPS));
+productRouter.get('/pizza', getAllProductsByType(PIZZA));
+productRouter.get('/roles',getAllProductsByType(ROLES));
+productRouter.get('/salads', getAllProductsByType(SALADS));
+productRouter.get('/supplements', getAllProductsByType(SUPPLEMENTS));
+productRouter.get('/sushi', getAllProductsByType(SUSHI));
 
 module.exports = productRouter;

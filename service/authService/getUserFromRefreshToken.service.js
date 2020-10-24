@@ -15,5 +15,5 @@ module.exports = async refresh_token => {
         }],
         attributes: [],
         raw: true
-    })
+    });
 };

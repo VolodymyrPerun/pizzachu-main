@@ -7,6 +7,5 @@ module.exports = {
     SALADS: 6,
     DESSERTS: 7,
     DRINKS: 8,
-    SUPPLEMENTS: 9,
-    WITH_DOUBLE_CHEESE: 10,
+    SUPPLEMENTS: 9
 }

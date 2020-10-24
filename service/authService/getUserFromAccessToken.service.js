@@ -15,5 +15,5 @@ module.exports = async access_token => {
         }],
         attributes: [],
         raw: true
-    })
+    });
 };

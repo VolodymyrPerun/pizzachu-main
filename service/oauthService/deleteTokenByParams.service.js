@@ -7,5 +7,5 @@ module.exports = async (userId, transaction) => {
     return TokenModel.destroy({
         where: userId,
         transaction
-    })
-}
+    });
+};
