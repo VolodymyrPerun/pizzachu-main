@@ -1,16 +1,14 @@
 const db = require('../../dataBase').getInstance();
 const {DB_TABLE_NAME: {GENDER, USER, USER_ROLE, USER_STATUS}} = require('../../constants');
 
-module.exports = async userId => {
+module.exports = async params => {
     const UserModel = await db.getModel(USER);
     const GenderModel = await db.getModel(GENDER);
     const StatusModel = await db.getModel(USER_STATUS);
     const RoleModel = await db.getModel(USER_ROLE);
 
     return UserModel.findOne({
-        where: {
-            userId
-        },
+        where: params,
         attributes: ['userId', 'email', 'name', 'surname', 'age', 'phone', 'city', 'address', 'user_photo'],
         include: [
             {

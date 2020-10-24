@@ -4,10 +4,11 @@ const {JWT_METHOD: {ADMIN}} = require("../../constants");
 const {
     authMiddleware: {
         checkAccessTokenMethodMiddleware,
-        getUserFromAccessToken
+        getUserFromAccessTokenMiddleware
     },
     userMiddleware:
         {
+            checkIsUserExistMiddleware,
             checkUserValidityMiddleware,
             checkUserValidityIfUpdateMiddleware
         },
@@ -21,7 +22,8 @@ const {
 
 const {
     adminController: {
-
+        blockUser,
+        unBlockUser
     },
     userController: {
         createUser,
@@ -29,13 +31,26 @@ const {
     }
 } = require('../../controllers');
 
-router.post('/register-admin', checkUserValidityMiddleware,
+router.post('/register-admin',
+    checkUserValidityMiddleware,
     checkFilesMiddleware,
-    checkUserPhotoCountMiddleware, createUser(ADMIN));
+    checkUserPhotoCountMiddleware,
+    createUser(ADMIN));
 router.put('/update-profile/:userId',
     checkAccessTokenMethodMiddleware(ADMIN),
-    getUserFromAccessToken,
+    getUserFromAccessTokenMiddleware,
     checkUserValidityIfUpdateMiddleware,
     updateUser);
+router.put('/users/:userId/block-user',
+    checkAccessTokenMethodMiddleware(ADMIN),
+    getUserFromAccessTokenMiddleware,
+    checkIsUserExistMiddleware,
+    blockUser);
+router.put('/users/:userId/unblock-user',
+    checkAccessTokenMethodMiddleware(ADMIN),
+    getUserFromAccessTokenMiddleware,
+    checkIsUserExistMiddleware,
+    unBlockUser);
+
 
 module.exports = router;
