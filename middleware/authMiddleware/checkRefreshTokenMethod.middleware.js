@@ -44,14 +44,15 @@ module.exports = (jwtMethod) => async (req, res, next) => {
             keyMethodErrorData = BAD_REQUEST_YOU_ARE_NOT_SELLER;
             break;
         default:
-            return next(new ErrorHandler(BAD_REQUEST,
+            return next(new ErrorHandler(
+                BAD_REQUEST,
                 UNAUTHORIZED.message,
-                UNAUTHORIZED.code,));
+                UNAUTHORIZED.customCode));
     }
 
     if (!authorizationToken) {
         return next(new ErrorHandler(
-            [keyMethodErrorData],
+            keyMethodErrorData,
             [keyMethodErrorData].message,
             [keyMethodErrorData].customCode));
     }
@@ -59,7 +60,7 @@ module.exports = (jwtMethod) => async (req, res, next) => {
     jwt.verify(authorizationToken, secretWord, err => {
         if (err) {
             return next(new ErrorHandler(
-                [keyMethodErrorData],
+                keyMethodErrorData,
                 [keyMethodErrorData].message,
                 [keyMethodErrorData].customCode));
         }

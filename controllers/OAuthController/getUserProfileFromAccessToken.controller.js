@@ -4,7 +4,7 @@ const {
 } = require('../../constants');
 const {ErrorHandler} = require('../../error');
 const {
-    authService:{getUserProfileFromAccessTokenService}
+    authService: {getUserProfileFromAccessTokenService}
 } = require('../../service');
 
 
@@ -16,11 +16,14 @@ module.exports = async (req, res, next) => {
         const user = await getUserProfileFromAccessTokenService(userId);
 
         if (!user) {
-            return next(new ErrorHandler(NOT_FOUND_CODE, NOT_FOUND.message, NOT_FOUND.customCode));
+            return next(new ErrorHandler(
+                NOT_FOUND_CODE,
+                NOT_FOUND.message,
+                NOT_FOUND.customCode));
         }
 
         res.json(user);
     } catch (e) {
-        next(new ErrorHandler(e.status, e.message, e.code));
+        next(new ErrorHandler(e.status, e.message, e.customCode));
     }
 };

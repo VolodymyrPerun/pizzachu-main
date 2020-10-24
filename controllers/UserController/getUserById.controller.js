@@ -18,7 +18,7 @@ module.exports = async (req, res, next) => {
         await res.json(user).end();
 
     } catch (e) {
-        next(new ErrorHandler(e.status, e.message, e.code));
+        next(new ErrorHandler(e.status, e.message, e.customCode));
     }
 
 };

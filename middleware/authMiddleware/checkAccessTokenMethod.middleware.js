@@ -44,12 +44,12 @@ module.exports = (jwtMethod) => async (req, res, next) => {
         default:
             return next(new ErrorHandler(BAD_REQUEST,
                 UNAUTHORIZED.message,
-                UNAUTHORIZED.code,));
+                UNAUTHORIZED.customCode));
     }
 
     if (!authorizationToken) {
         return next(new ErrorHandler(
-            [keyMethodErrorData],
+            keyMethodErrorData,
             [keyMethodErrorData].message,
             [keyMethodErrorData].customCode));
     }
@@ -57,7 +57,7 @@ module.exports = (jwtMethod) => async (req, res, next) => {
     jwt.verify(authorizationToken, secretWord, err => {
         if (err) {
             return next(new ErrorHandler(
-                [keyMethodErrorData],
+                keyMethodErrorData,
                 [keyMethodErrorData].message,
                 [keyMethodErrorData].customCode));
         }

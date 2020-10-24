@@ -16,6 +16,9 @@ module.exports = {
     JWT_SELLER_SECRET_TIME: process.env.JWT_SELLER_SECRET_TIME || '1110d',
     JWT_SELLER_REFRESH_SECRET_TIME: process.env.JWT_SELLER_REFRESH_SECRET_TIME || '1110d',
 
+    JWT_SECRET_CHANGE_PASSWORD: process.env.JWT_SECRET_CHANGE_PASSWORD || 'laksfklaf124124214_@!1_1424nkfalkklwegngwlll3weewf',
+    TOKEN_FOR_RESET_PASSWORD_LIFE: process.env.TOKEN_FOR_RESET_PASSWORD_LIFE || '1110d',
+
     DB_NAME: process.env.DB_NAME || 'shop',
     DB_HOST: process.env.DB_HOST || 'localhost',
     DB_USER: process.env.DB_USER || 'root',

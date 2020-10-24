@@ -63,8 +63,9 @@ module.exports = method => {
             }
         }
     } catch (e) {
-        throw new ErrorHandler(NOT_VALID_TOKEN_METHOD,
+        throw new ErrorHandler(
+            NOT_VALID_TOKEN_METHOD,
             NOT_VALID_TOKEN_METHOD.message,
-            NOT_VALID_TOKEN_METHOD.customCode)
+            NOT_VALID_TOKEN_METHOD.customCode);
     }
 };

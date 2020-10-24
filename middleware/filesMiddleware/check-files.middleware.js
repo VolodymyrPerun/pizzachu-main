@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
         return next(new ErrorHandler(
             FORBIDDEN,
             FORBIDDEN_PHOTO_NOT_PRESENT.message,
-            FORBIDDEN_PHOTO_NOT_PRESENT.code,
+            FORBIDDEN_PHOTO_NOT_PRESENT.customCode
         ));
     }
 

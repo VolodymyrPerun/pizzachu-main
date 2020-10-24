@@ -66,20 +66,22 @@ module.exports = (userRole) => async (req, res, next) => {
 
         const {error} = Joi.validate({email, password}, authValidationSchema);
 
-        if (error) return next(new ErrorHandler(error.details[0].message, BAD_REQUEST, NOT_VALID.customCode));
+        if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
 
         const user = await getUserByParamsService({email, role_id: [keyRole]}, transaction);
 
         if (!user) {
-            return next(new ErrorHandler(BAD_REQUEST,
+            return next(new ErrorHandler(
+                BAD_REQUEST,
                 [keyErrorData].message,
-                [keyErrorData].code,));
+                [keyErrorData].customCode));
         }
 
         if (user.status_id === BLOCKED) {
-            return next(new ErrorHandler(FORBIDDEN,
+            return next(new ErrorHandler(
+                FORBIDDEN,
                 FORBIDDEN_USER_IS_BLOCKED.message,
-                FORBIDDEN_USER_IS_BLOCKED.code,));
+                FORBIDDEN_USER_IS_BLOCKED.customCode));
         }
 
         await HashPasswordCheckHelper(user.password, password);

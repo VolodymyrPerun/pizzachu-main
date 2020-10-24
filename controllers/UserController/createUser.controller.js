@@ -36,9 +36,10 @@ module.exports = (userRole) => async (req, res, next) => {
                 emailAction = SELLER_REGISTER;
                 break;
             default:
-                return next(new ErrorHandler(NOT_FOUND_CODE,
+                return next(new ErrorHandler(
+                    NOT_FOUND_CODE,
                     NOT_CREATED.message,
-                    NOT_CREATED.code,));
+                    NOT_CREATED.customCode));
         }
 
         const user = req.body;

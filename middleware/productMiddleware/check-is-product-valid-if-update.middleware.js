@@ -14,7 +14,10 @@ module.exports = async (req, res, next) => {
 
     const {error} = Joi.validate(product, updateProductValidationSchema);
 
-    if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
+    if (error) return next(new ErrorHandler(
+        BAD_REQUEST,
+        error.details[0].message,
+        NOT_VALID.customCode));
 
     req.product = product;
 

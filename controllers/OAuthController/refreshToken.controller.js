@@ -32,9 +32,10 @@ module.exports = (jwtMethod) => async (req, res, next) => {
                 keyMethod = SELLER;
                 break;
             default:
-                return next(new ErrorHandler(BAD_REQUEST,
+                return next(new ErrorHandler(
+                    BAD_REQUEST,
                     UNAUTHORIZED.message,
-                    UNAUTHORIZED.code,));
+                    UNAUTHORIZED.customCode));
         }
 
         const tokens = tokenGeneratorHelper(keyMethod);

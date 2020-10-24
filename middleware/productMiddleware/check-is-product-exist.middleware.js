@@ -10,7 +10,7 @@ module.exports = async (req, res, next) => {
             return next(new ErrorHandler(
                 BAD_REQUEST,
                 BAD_REQUEST_PRODUCT_NOT_PRESENT.message,
-                BAD_REQUEST_PRODUCT_NOT_PRESENT.code,
+                BAD_REQUEST_PRODUCT_NOT_PRESENT.customCode
             ));
         }
 
@@ -20,7 +20,7 @@ module.exports = async (req, res, next) => {
             return next(new ErrorHandler(
                 BAD_REQUEST,
                 BAD_REQUEST_PRODUCT_NOT_PRESENT.message,
-                BAD_REQUEST_PRODUCT_NOT_PRESENT.code,
+                BAD_REQUEST_PRODUCT_NOT_PRESENT.customCode
             ));
         }
 
@@ -30,4 +30,4 @@ module.exports = async (req, res, next) => {
     } catch (e) {
         next(new ErrorHandler(e.status, e.message, e.customCode));
     }
-}
+};

@@ -33,18 +33,20 @@ module.exports = async (req, res, next) => {
 
         const {userId} = req.user;
 
-        const user = await getUserByIdService(userId, transaction);
+        const user = await getUserByIdService(userId);
 
         if (!user) {
-            return next(new ErrorHandler(BAD_REQUEST,
+            return next(new ErrorHandler(
+                BAD_REQUEST,
                 BAD_REQUEST_USER_NOT_PRESENT.message,
-                BAD_REQUEST_USER_NOT_PRESENT.code,));
+                BAD_REQUEST_USER_NOT_PRESENT.customCode));
         }
 
         if (user.status_id === BLOCKED || user.status_id === DELETED) {
-            return next(new ErrorHandler(FORBIDDEN,
+            return next(new ErrorHandler(
+                FORBIDDEN,
                 FORBIDDEN_USER_IS_BLOCKED.message,
-                FORBIDDEN_USER_IS_BLOCKED.code,));
+                FORBIDDEN_USER_IS_BLOCKED.customCode));
         }
 
         await HashPasswordCheckHelper(user.password, password);

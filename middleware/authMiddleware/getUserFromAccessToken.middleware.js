@@ -11,7 +11,10 @@ module.exports = async (req, res, next) => {
         const authorizationToken = req.get(AUTHORIZATION);
 
         if (!authorizationToken) {
-            return next(new ErrorHandler(NOT_VALID.message, BAD_REQUEST, NOT_VALID.customCode));
+            return next(new ErrorHandler(
+                BAD_REQUEST,
+                NOT_VALID.message,
+                NOT_VALID.customCode));
         }
 
         const userFromAccessToken = await getTokensByParamsService({access_token: authorizationToken});
@@ -20,7 +23,7 @@ module.exports = async (req, res, next) => {
             return next(new ErrorHandler(
                 UNAUTHORIZED,
                 NOT_VALID_TOKEN.message,
-                NOT_VALID_TOKEN.code))
+                NOT_VALID_TOKEN.customCode));
         }
 
         req.user = userFromAccessToken;

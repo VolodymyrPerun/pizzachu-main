@@ -28,7 +28,7 @@ module.exports = async (req, res, next) => {
             return next(new ErrorHandler(
                 BAD_REQUEST,
                 BAD_REQUEST_PRODUCT_NOT_PRESENT.message,
-                BAD_REQUEST_PRODUCT_NOT_PRESENT.code));
+                BAD_REQUEST_PRODUCT_NOT_PRESENT.customCode));
         }
 
         await deleteProductByParamsService({productId}, transaction);
@@ -41,6 +41,6 @@ module.exports = async (req, res, next) => {
         console.log(chalk.bgGreen.bold.red(e.status, e.message, e.customCode));
         console.log(chalk.red(TRANSACTION_ROLLBACK));
         await transaction.rollback();
-        next(new ErrorHandler(e.status, e.message, e.code));
+        next(new ErrorHandler(e.status, e.message, e.customCode));
     }
 };

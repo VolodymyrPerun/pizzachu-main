@@ -29,6 +29,6 @@ module.exports = (userStatus) => async (req, res, next) => {
 
         res.json(users).end();
     } catch (e) {
-        next(new ErrorHandler(e.status, e.message, e.code));
+        next(new ErrorHandler(e.status, e.message, e.customCode));
     }
 };

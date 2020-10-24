@@ -25,7 +25,7 @@ module.exports = async (req, res, next) => {
             return next (new ErrorHandler(
                 BAD_REQUEST,
                 BAD_REQUEST_BLOCK_USER.message,
-                BAD_REQUEST_BLOCK_USER.code,
+                BAD_REQUEST_BLOCK_USER.customCode
             ));
         }
 

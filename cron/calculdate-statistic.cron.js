@@ -1,8 +1,8 @@
-const {userService} = require('../service')
+const {userService: {getUsersService}} = require('../service');
 
 module.exports = async () => {
     // тут рахуємо шось важне )
-    let newVar = await userService.getUsers();
+    let newVar = await getUsersService();
 
-    console.log(newVar.length)
-}
+    console.log(newVar.length);
+};

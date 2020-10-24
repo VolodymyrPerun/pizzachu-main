@@ -9,16 +9,21 @@ const {userValidator: {updateUserValidationSchema}} = require("../../validators"
 const ErrorHandler = require('../../error/ErrorHandler');
 
 module.exports = (req, res, next) => {
+    try {
+        const user = req.body;
 
-    const user = req.body;
+        const {error} = Joi.validate(user, updateUserValidationSchema);
 
-    const {error} = Joi.validate(user, updateUserValidationSchema);
+        if (error) return next(new ErrorHandler(
+            BAD_REQUEST,
+            error.details[0].message,
+            NOT_VALID.customCode));
 
-    if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
+        req.user;
 
-    req.user;
+        next();
 
-    next();
-
-    res.end();
+    } catch (e) {
+        next(new ErrorHandler(e.status, e.message, e.code));
+    }
 };

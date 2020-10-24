@@ -50,7 +50,7 @@ module.exports = (productType) => async (req, res, next) => {
         await res.json(products).end();
 
     } catch (e) {
-        next(new ErrorHandler(e.status, e.message, e.code));
+        next(new ErrorHandler(e.status, e.message, e.customCode));
     }
 };
 
