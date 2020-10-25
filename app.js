@@ -31,7 +31,8 @@ const {
     UserRouter,
     ProductRouter,
     SellerRouter,
-    ProductTypeRouter
+    ProductTypeRouter,
+    ProductSectionRouter
 } = require('./routes');
 
 app.use('/admin&blablabla', AdminRouter);
@@ -40,7 +41,7 @@ app.use('/sellers', SellerRouter);
 app.use('/users', UserRouter);
 app.use('/products', ProductRouter);
 app.use('/product-types', ProductTypeRouter);
-
+app.use('/product-sections', ProductSectionRouter);
 
 app.use((err, req, res, next) => {
     res

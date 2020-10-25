@@ -1,4 +1,4 @@
-const {ErrorHandler, CustomErrorData: {BAD_REQUEST_PRODUCT_NOT_PRESENT}} = require('../../error');
+const {ErrorHandler, CustomErrorData: {BAD_REQUEST_PRODUCT_TYPE_NOT_PRESENT}} = require('../../error');
 const {productTypeService: {getProductTypeByIdService}} = require("../../service");
 const {responseStatusCodesEnum: {BAD_REQUEST}} = require("../../constants");
 
@@ -9,8 +9,8 @@ module.exports = async (req, res, next) => {
         if (isNaN(id) || +id < 0) {
             return next(new ErrorHandler(
                 BAD_REQUEST,
-                BAD_REQUEST_PRODUCT_NOT_PRESENT.message,
-                BAD_REQUEST_PRODUCT_NOT_PRESENT.customCode
+                BAD_REQUEST_PRODUCT_TYPE_NOT_PRESENT.message,
+                BAD_REQUEST_PRODUCT_TYPE_NOT_PRESENT.customCode
             ));
         }
 
@@ -19,8 +19,8 @@ module.exports = async (req, res, next) => {
         if (!productType) {
             return next(new ErrorHandler(
                 BAD_REQUEST,
-                BAD_REQUEST_PRODUCT_NOT_PRESENT.message,
-                BAD_REQUEST_PRODUCT_NOT_PRESENT.customCode
+                BAD_REQUEST_PRODUCT_TYPE_NOT_PRESENT.message,
+                BAD_REQUEST_PRODUCT_TYPE_NOT_PRESENT.customCode
             ));
         }
 

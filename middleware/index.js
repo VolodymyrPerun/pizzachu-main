@@ -3,5 +3,6 @@ module.exports.authMiddleware = require('./authMiddleware');
 module.exports.fileMiddleware = require('./filesMiddleware');
 module.exports.productMiddleware = require('./productMiddleware');
 module.exports.productTypeMiddleware = require('./productTypeMiddleware');
+module.exports.productSectionMiddleware = require('./productSectionMiddleware');
 module.exports.userMiddleware = require('./userMiddleware');
 

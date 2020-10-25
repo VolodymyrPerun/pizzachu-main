@@ -5,6 +5,7 @@ const {
         USER_REGISTER, USER_DELETE, USER_UPDATE, PASSWORD_UPDATE,
         CREATE_PRODUCT, DELETE_PRODUCT, UPDATE_PRODUCT,
         CREATE_PRODUCT_TYPE, UPDATE_PRODUCT_TYPE, DELETE_PRODUCT_TYPE,
+        CREATE_PRODUCT_SECTION, UPDATE_PRODUCT_SECTION, DELETE_PRODUCT_SECTION,
     }
 } = require('../constants');
 
@@ -72,5 +73,17 @@ module.exports = {
     [DELETE_PRODUCT_TYPE]: {
         subject: '[PIZZACHU] ВИДАЛЕНО ТИП ПРОДУКТУ!',
         templateFileName: 'deleteProductType'
+    },
+    [CREATE_PRODUCT_SECTION]: {
+        subject: '[PIZZACHU] СТВОРЕНО НОВУ СЕКЦІЮ ПРОДУКТУ!',
+        templateFileName: 'createProductSection'
+    },
+    [UPDATE_PRODUCT_SECTION]: {
+        subject: '[PIZZACHU] ОНОЛЕНО СЕКЦІЮ ПРОДУКТУ!',
+        templateFileName: 'updateProductSection'
+    },
+    [DELETE_PRODUCT_SECTION]: {
+        subject: '[PIZZACHU] ВИДАЛЕНО СЕКЦІЮ ПРОДУКТУ!',
+        templateFileName: 'deleteProductSection'
     },
 };
