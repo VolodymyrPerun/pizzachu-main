@@ -5,8 +5,6 @@
             alt="logo"
     />
     <p class="green"> Продукт видалено адміне💾: <%= userFromDB.name %> <%= userFromDB.surname %>!🙏</p>
-    <p class="pink"> Назва видаленого продукту: <%= isProductCreated.name %>🍕</p>
-    <p class="pink"> Опис видаленого продукту: <%= isProductCreated.description %>📕</p>
-    <p class="pink"> Ціна видаленого продукту: <%= isProductCreated.price %>грн.💵</p>
+    <p class="pink"> Назва видаленого типу продукту <%= productType.type %>📕</p>
 </div>
 <%- include('../includes/footer.ejs', {SITE}) %>

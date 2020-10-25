@@ -1,9 +1,9 @@
 const chalk = require('chalk');
 
 const {transactionInstance} = require('../../dataBase').getInstance();
-const {productService: {getProductByIdService, updateProductService}} = require('../../service');
+const {productTypeService: {getProductTypeByIdService, updateProductTypeService}} = require('../../service');
 const {
-    emailActionEnum: {UPDATE_PRODUCT},
+    emailActionEnum: {UPDATE_PRODUCT_TYPE},
     responseStatusCodesEnum: {NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_UPDATE},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK}
@@ -16,18 +16,17 @@ module.exports = async (req, res, next) => {
     try {
         const {userId} = req.user;
 
-        const product = req.body;
+        const productType = req.body;
 
-        const {productId} = req.params;
+        const {id} = req.params;
 
-        const userFromDB = await getUserByIdService(userId, transaction);
-        await getProductByIdService(productId);
-
-        const isUpdated = await updateProductService(productId, product, transaction);
+        const userFromDB = await getUserByIdService(userId);
+        const updatedProductType = await getProductTypeByIdService(id);
+        const isUpdated = await updateProductTypeService(productType, {id}, transaction);
 
         if (!isUpdated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_UPDATE.message, NOT_UPDATE.customCode));
 
-        await sendMail(userFromDB.email, UPDATE_PRODUCT, {userFromDB, isProductCreated: product});
+        await sendMail(userFromDB.email, UPDATE_PRODUCT_TYPE, {userFromDB, updatedProductType, productType});
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

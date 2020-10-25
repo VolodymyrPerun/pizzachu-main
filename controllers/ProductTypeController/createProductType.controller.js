@@ -2,36 +2,36 @@ const chalk = require('chalk');
 
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {
-    responseStatusCodesEnum: {NOT_FOUND: NOT_FOUND_CODE},
-    responseCustomErrorEnum: {NOT_UPDATE},
-    emailActionEnum: {USER_UPDATE},
-    transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK}
+    emailActionEnum: {CREATE_PRODUCT_TYPE},
+    responseStatusCodesEnum: {CREATED, NOT_FOUND: NOT_FOUND_CODE},
+    responseCustomErrorEnum: {NOT_CREATED},
+    transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK},
 } = require('../../constants');
-const {ErrorHandler} = require("../../error");
+const ErrorHandler = require("../../error/ErrorHandler");
 const {
     emailService: {sendMail},
-    userService: {getUserByIdService, updateUserService}
+    productTypeService: {createProductTypeService},
+    userService: {getUserByIdService}
 } = require("../../service");
-
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
-
-        const user = req.body;
         const {userId} = req.user;
+
+        const productType = req.body;
 
         const userFromDB = await getUserByIdService(userId);
 
-        const isUpdated = await updateUserService(userId, user, transaction);
+        const isProductTypeCreated = await createProductTypeService(productType, transaction);
 
-        if (!isUpdated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_UPDATE.message, NOT_UPDATE.customCode));
+        if (!isProductTypeCreated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_CREATED.message, NOT_CREATED.customCode));
 
-        await sendMail(userFromDB.email, USER_UPDATE, {user});
+        await sendMail(userFromDB.email, CREATE_PRODUCT_TYPE, {userFromDB, productType});
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 
-        res.end();
+        res.status(CREATED).end();
     } catch (e) {
         console.log(chalk.bgGreen.bold.red(e.status, e.message, e.customCode));
         console.log(chalk.red(TRANSACTION_ROLLBACK));

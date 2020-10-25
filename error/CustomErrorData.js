@@ -93,7 +93,11 @@ module.exports = {
         message: 'Product is not present',
         code: 40015
     },
-
+//+
+    BAD_REQUEST_PRODUCT_TYPE_NOT_PRESENT: {
+        message: 'Product type is not present',
+        code: 40016
+    },
 
     //403 error code
 

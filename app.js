@@ -25,13 +25,21 @@ app.use(morgan('dev'));
 app.set('views', path.join(__dirname, 'public'));
 
 
-const {AdminRouter, AuthRouter, UserRouter, ProductRouter, SellerRouter} = require('./routes');
+const {
+    AdminRouter,
+    AuthRouter,
+    UserRouter,
+    ProductRouter,
+    SellerRouter,
+    ProductTypeRouter
+} = require('./routes');
 
 app.use('/admin&blablabla', AdminRouter);
 app.use('/auth', AuthRouter);
 app.use('/sellers', SellerRouter);
 app.use('/users', UserRouter);
 app.use('/products', ProductRouter);
+app.use('/product-types', ProductTypeRouter);
 
 
 app.use((err, req, res, next) => {

@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const {productValidator: {productValidationSchema}} = require("../../validators");
+const {productTypeValidator: {productTypeValidationSchema}} = require("../../validators");
 const {
     responseStatusCodesEnum: {BAD_REQUEST},
     responseCustomErrorEnum: {NOT_VALID},
@@ -9,9 +9,9 @@ const ErrorHandler = require('../../error/ErrorHandler');
 
 module.exports = (req, res, next) => {
     try {
-        const product = req.body;
+        const productType = req.body;
 
-        const {error} = Joi.validate(product, productValidationSchema);
+        const {error} = Joi.validate(productType, productTypeValidationSchema);
 
         if (error) {
             return next(new ErrorHandler(
@@ -20,7 +20,7 @@ module.exports = (req, res, next) => {
                 NOT_VALID.customCode));
         }
 
-        req.product = product;
+        req.productType = productType;
 
         next();
 
