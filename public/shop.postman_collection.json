@@ -1,0 +1,1837 @@
+{
+	"info": {
+		"_postman_id": "689d9f26-2847-432e-a3f8-870d6824fed6",
+		"name": "shop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "auth admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"email\": \"volodimirperun007@ukr.net\",\r\n        \"password\": \"Puytregg5!\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/auth/auth-admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"auth-admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth seller",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"email\": \"volodimirperun007@ukr.net\",\r\n        \"password\": \"Puytregg6!\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/admin&blablabla/auth-seller",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"admin&blablabla",
+								"auth-seller"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"email\": \"volodimirperun007@ukr.net\",\r\n        \"password\": \"PassW0rd!\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/auth/auth-client",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"auth-client"
+							]
+						},
+						"description": "auth user"
+					},
+					"response": []
+				},
+				{
+					"name": "auth logout admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n        \"email\": \"volodimirperun007@ukr.net\",\r\n        \"password\": \"Puytregg6!\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/admin&blablabla/auth/logout-admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"admin&blablabla",
+								"auth",
+								"logout-admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth logout seller",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n        \"email\": \"volodimirperun007@ukr.net\",\r\n        \"password\": \"Puytregg6!\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/admin&blablabla/auth/logout-seller",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"admin&blablabla",
+								"auth",
+								"logout-seller"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth logout user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n        \"email\": \"volodimirperun007@ukr.net\",\r\n        \"password\": \"Puytregg6!\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/auth/auth-client",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"auth-client"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth refresh admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDMwMzQ4NjUsImV4cCI6MTY5ODkzODg2NX0.HIMITkVgnxeSMOoZssXsVK1PIm4UCAAO4rq5guppZ4U",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n        \"email\": \"volodimirperun007@ukr.net\",\r\n        \"password\": \"Puytregg6!\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/admin&blablabla/auth/auth-admin/refresh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"admin&blablabla",
+								"auth",
+								"auth-admin",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth refresh seller",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDMwMzQ4NjUsImV4cCI6MTY5ODkzODg2NX0.HIMITkVgnxeSMOoZssXsVK1PIm4UCAAO4rq5guppZ4U",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n        \"email\": \"volodimirperun007@ukr.net\",\r\n        \"password\": \"Puytregg6!\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/admin&blablabla/auth/auth-admin/refresh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"admin&blablabla",
+								"auth",
+								"auth-admin",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth refresh client",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDMwMzQ4NjUsImV4cCI6MTY5ODkzODg2NX0.HIMITkVgnxeSMOoZssXsVK1PIm4UCAAO4rq5guppZ4U",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n        \"email\": \"volodimirperun007@ukr.net\",\r\n        \"password\": \"Puytregg6!\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/auth/auth-client/refresh",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"auth-client",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth admin change password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDMwMzQ4NjUsImV4cCI6MTY5ODkzODg2NX0.HIMITkVgnxeSMOoZssXsVK1PIm4UCAAO4rq5guppZ4U",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n        \"email\": \"volodimirperun007@ukr.net\",\r\n        \"password\": \"Puytregg2!\",\r\n        \"newPassword\": \"Puytregg5!\",\r\n        \"repeatNewPassword\": \"Puytregg5!\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/auth/auth-admin/password-change",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"auth-admin",
+								"password-change"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth client change password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDMwNDQzODgsImV4cCI6MTY5ODk0ODM4OH0.K84fl3qUZTsXqMUzKezWD0FP1fNZORlPorMm-vxGTYI",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "   {\r\n        \"email\": \"volodimirperun007@ukr.net\",\r\n        \"password\": \"Puytregg2!\",\r\n        \"newPassword\": \"Puytregg5!\",\r\n        \"repeatNewPassword\": \"Puytregg5!\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/auth/auth-client/password-change",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"auth-client",
+								"password-change"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth seller change password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDMwMzQ4NjUsImV4cCI6MTY5ODkzODg2NX0.HIMITkVgnxeSMOoZssXsVK1PIm4UCAAO4rq5guppZ4U",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"email\": \"volodimirperun007@ukr.net\",\r\n        \"password\": \"Puytregg2!\",\r\n        \"newPassword\": \"Puytregg5!\",\r\n        \"repeatNewPassword\": \"Puytregg5!\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/auth/auth-seller/password-change",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"auth",
+								"auth-seller",
+								"password-change"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "create admin",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg2MjIwNjAsImV4cCI6MTY5NDUyNjA2MH0.hj6QiQBkwGQY4LQfT1EPEH-CZyk7WNZJXjWL3VDx-UE",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_photo",
+									"type": "file",
+									"src": "/C:/Users/Volodymyr/Desktop/pricol/bean avatar/2019-12-07.jpeg"
+								},
+								{
+									"key": "email",
+									"value": "volodimirperun008@ukr.net",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Назар",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Млинець",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "33",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "PassWord!",
+									"type": "text"
+								},
+								{
+									"key": "gender_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "0978887357",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Ужгород",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "вул.Зимна, буд.18",
+									"type": "text"
+								},
+								{
+									"key": "postOfficeLocation",
+									"value": "вул.Лімба, буд.3",
+									"type": "text"
+								},
+								{
+									"key": "role_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "status_id",
+									"value": "1",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/registerAdmin&blablabla",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"registerAdmin&blablabla"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update admin",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg2NTk0OTgsImV4cCI6MTY5NDU2MzQ5OH0.S3Zt-VU-zqIXVdxbzcFIGqHPxLYvrlk5NWFDmRXOw_Y",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"email\": \"volodimirperun007@ukr.net\",\r\n        \"name\": \"Іван\",\r\n        \"surname\": \"Клим\",\r\n        \"age\": 76,\r\n        \"gender_id\": \"1\",\r\n        \"password\": \"PassWord!\",\r\n        \"phone\": \"0988887059\",\r\n        \"city\": \"Львів\",\r\n        \"address\": \"вул.Бімба, буд.199\",\r\n        \"postOfficeLocation\": \"вул.Лімба, буд.10\",\r\n        \"status_id\": 1,\r\n        \"role_id\": 2\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/115",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"115"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "block user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg2NTk0OTgsImV4cCI6MTY5NDU2MzQ5OH0.S3Zt-VU-zqIXVdxbzcFIGqHPxLYvrlk5NWFDmRXOw_Y",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"email\": \"volodimirperun007@ukr.net\",\r\n        \"name\": \"Іван\",\r\n        \"surname\": \"Клим\",\r\n        \"age\": 76,\r\n        \"gender_id\": \"1\",\r\n        \"password\": \"PassWord!\",\r\n        \"phone\": \"0988887059\",\r\n        \"city\": \"Львів\",\r\n        \"address\": \"вул.Бімба, буд.199\",\r\n        \"postOfficeLocation\": \"вул.Лімба, буд.10\",\r\n        \"status_id\": 1,\r\n        \"role_id\": 2\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/115",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"115"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unblock user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg2NTk0OTgsImV4cCI6MTY5NDU2MzQ5OH0.S3Zt-VU-zqIXVdxbzcFIGqHPxLYvrlk5NWFDmRXOw_Y",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"email\": \"volodimirperun007@ukr.net\",\r\n        \"name\": \"Іван\",\r\n        \"surname\": \"Клим\",\r\n        \"age\": 76,\r\n        \"gender_id\": \"1\",\r\n        \"password\": \"PassWord!\",\r\n        \"phone\": \"0988887059\",\r\n        \"city\": \"Львів\",\r\n        \"address\": \"вул.Бімба, буд.199\",\r\n        \"postOfficeLocation\": \"вул.Лімба, буд.10\",\r\n        \"status_id\": 1,\r\n        \"role_id\": 2\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/115",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"115"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "seller",
+			"item": [
+				{
+					"name": "create seller",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg2MjIwNjAsImV4cCI6MTY5NDUyNjA2MH0.hj6QiQBkwGQY4LQfT1EPEH-CZyk7WNZJXjWL3VDx-UE",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_photo",
+									"type": "file",
+									"src": "/C:/Users/Volodymyr/Desktop/pricol/bean avatar/2019-12-07.jpeg"
+								},
+								{
+									"key": "email",
+									"value": "volodimirperun007@ukr.net",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Назар",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Млинець",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "33",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "PassWord!",
+									"type": "text"
+								},
+								{
+									"key": "gender_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "0978887357",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Ужгород",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "вул.Зимна, буд.18",
+									"type": "text"
+								},
+								{
+									"key": "postOfficeLocation",
+									"value": "вул.Лімба, буд.3",
+									"type": "text"
+								},
+								{
+									"key": "role_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "status_id",
+									"value": "1",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/admin&blablabla/registerAdmin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"admin&blablabla",
+								"registerAdmin"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "create user",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg2MjIwNjAsImV4cCI6MTY5NDUyNjA2MH0.hj6QiQBkwGQY4LQfT1EPEH-CZyk7WNZJXjWL3VDx-UE",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user_photo",
+									"type": "file",
+									"src": "/C:/Users/Volodymyr/Desktop/pricol/bean avatar/WpUFLCOricI.jpg"
+								},
+								{
+									"key": "email",
+									"value": "volodimirperun007@ukr.net",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Inan",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Klim",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "78",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "PassWord!",
+									"type": "text"
+								},
+								{
+									"key": "gender_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "0988887057",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Київ",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "вул.Бімба, буд.19",
+									"type": "text"
+								},
+								{
+									"key": "postOfficeLocation",
+									"value": "вул.Лімба, буд.1",
+									"type": "text"
+								},
+								{
+									"key": "role_id",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "status_id",
+									"value": "1",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get me",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "status_id",
+								"value": "2",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/getAllBlockedUsers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"getAllBlockedUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all active users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "status_id",
+								"value": "2",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/getAllBlockedUsers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"getAllBlockedUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all blocked users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "status_id",
+								"value": "2",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/getAllBlockedUsers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"getAllBlockedUsers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/users/115",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"115"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1OTg2NTk0OTgsImV4cCI6MTY5NDU2MzQ5OH0.S3Zt-VU-zqIXVdxbzcFIGqHPxLYvrlk5NWFDmRXOw_Y",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"email\": \"volodimirperun007@ukr.net\",\r\n        \"name\": \"Іван\",\r\n        \"surname\": \"Клим\",\r\n        \"age\": 76,\r\n        \"gender_id\": \"1\",\r\n        \"password\": \"PassWord!\",\r\n        \"phone\": \"0988887059\",\r\n        \"city\": \"Львів\",\r\n        \"address\": \"вул.Бімба, буд.199\",\r\n        \"postOfficeLocation\": \"вул.Лімба, буд.10\",\r\n        \"status_id\": 1,\r\n        \"role_id\": 2\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/115",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"115"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 103,\r\n    \"email\": \"volodimirperun007@ukr.net\",\r\n    \"name\": \"Андрій\",\r\n    \"surname\": \"Лимич\",\r\n    \"age\": 26,\r\n    \"password\": \"$2b$10$ithZ/fmC.b.PkPddagY7rO4R9FZNs17eSJWy/vjOps3kivaR3XHPO\",\r\n    \"user_photo\": \"users/103/photos/0b4eae10-fbf0-11ea-83a6-1f43bb2ecf04.png\",\r\n    \"create_at\": \"2020-09-21T09:51:53.000Z\"\r\n      \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/103",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"103"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "get all chains",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/products/chains",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"products",
+								"chains"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all desserts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/products/desserts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"products",
+								"desserts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all drinks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/products/drinks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"products",
+								"drinks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all miso-soups",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/products/miso-soups",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"products",
+								"miso-soups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all pizza",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/products/pizza",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"products",
+								"pizza"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all roles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/product/209",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product",
+								"209"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all salads",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/product/209",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product",
+								"209"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all supplements",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/product/209",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product",
+								"209"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all sushi",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/product/209",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product",
+								"209"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create product",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDMwMDQxNzgsImV4cCI6MTY5ODkwODE3OH0.DtSzh1bHf7DUEOInD49lzoMZzyLQj_ku9GCQbGfX39Y",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "product_photo",
+									"type": "file",
+									"src": "/C:/Users/Volodymyr/Desktop/pricol/ватсап/84488085_584574945456641_2417443211799691264_n.jpg"
+								},
+								{
+									"key": "name",
+									"value": "Піца Маргарита3",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Неаполітанський соус, сир моцарела, помідор, базилік",
+									"type": "text"
+								},
+								{
+									"key": "weight",
+									"value": "300",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "74",
+									"type": "text"
+								},
+								{
+									"key": "type_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "section_id",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "status_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "size_id",
+									"value": "1",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/products/createProduct",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"products",
+								"createProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": 103,\r\n    \"email\": \"volodimirperun007@ukr.net\",\r\n    \"name\": \"Андрій\",\r\n    \"surname\": \"Лимич\",\r\n    \"age\": 26,\r\n    \"password\": \"$2b$10$ithZ/fmC.b.PkPddagY7rO4R9FZNs17eSJWy/vjOps3kivaR3XHPO\",\r\n    \"user_photo\": \"users/103/photos/0b4eae10-fbf0-11ea-83a6-1f43bb2ecf04.png\",\r\n    \"create_at\": \"2020-09-21T09:51:53.000Z\"\r\n      \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/201",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"201"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update product",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDI4NjI2MDUsImV4cCI6MTY5ODc2NjYwNX0.KNlqU1amVv0p8r8z6lZ9dFOIYTI4R8naooutCN-51Ug",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Andriy",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Blaccc",
+									"type": "text"
+								},
+								{
+									"key": "age",
+									"value": "33",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "0674512535",
+									"type": "text"
+								},
+								{
+									"key": "city",
+									"value": "Ужгород",
+									"type": "text"
+								},
+								{
+									"key": "postOfficeLocation",
+									"value": "вул.Лімба, буд.4",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "вул.Зимна, буд.14",
+									"type": "text"
+								},
+								{
+									"key": "user_photo",
+									"type": "file",
+									"src": "/C:/PROGRAMMING/Git.Hub/pizzachu-main/public/img/mail_bg.png"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/users/update-profile/209",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"users",
+								"update-profile",
+								"209"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "product type",
+			"item": [
+				{
+					"name": "get all product types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/product-types/get-all-product-types",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product-types",
+								"get-all-product-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create product type",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDM1MzkwMzQsImV4cCI6MTY5OTQ0MzAzNH0.9WTSPgurDiYiXdMe7hNdiqfuxa2_2Mw0PO3KOYFqEmY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "type",
+									"value": "water",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "10",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/product-types/create-product-type",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product-types",
+								"create-product-type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete product type",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDM1MzkwMzQsImV4cCI6MTY5OTQ0MzAzNH0.9WTSPgurDiYiXdMe7hNdiqfuxa2_2Mw0PO3KOYFqEmY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/product-types/delete-product-type/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product-types",
+								"delete-product-type",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update product type",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDM1MzkwMzQsImV4cCI6MTY5OTQ0MzAzNH0.9WTSPgurDiYiXdMe7hNdiqfuxa2_2Mw0PO3KOYFqEmY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "type",
+									"value": "milk",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "10",
+									"type": "text",
+									"disabled": true
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/product-types/update-product-type/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product-types",
+								"update-product-type",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "product section",
+			"item": [
+				{
+					"name": "get all product sections",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/product-types/get-all-product-types",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product-types",
+								"get-all-product-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create product section",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDM1MzkwMzQsImV4cCI6MTY5OTQ0MzAzNH0.9WTSPgurDiYiXdMe7hNdiqfuxa2_2Mw0PO3KOYFqEmY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "type",
+									"value": "water",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "10",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/product-types/create-product-type",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product-types",
+								"create-product-type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete product section",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDM1MzkwMzQsImV4cCI6MTY5OTQ0MzAzNH0.9WTSPgurDiYiXdMe7hNdiqfuxa2_2Mw0PO3KOYFqEmY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/product-types/delete-product-type/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product-types",
+								"delete-product-type",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update product section",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDM1MzkwMzQsImV4cCI6MTY5OTQ0MzAzNH0.9WTSPgurDiYiXdMe7hNdiqfuxa2_2Mw0PO3KOYFqEmY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "type",
+									"value": "milk",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "10",
+									"type": "text",
+									"disabled": true
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/product-types/update-product-type/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product-types",
+								"update-product-type",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

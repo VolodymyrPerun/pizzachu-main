@@ -8,6 +8,7 @@ const {
     productController: {
         createProduct,
         deleteProductByParams,
+        getAllProducts,
         updateProduct,
         getAllProductsByType
     },
@@ -38,6 +39,7 @@ productRouter.delete('/delete-product/:productId',
     checkAccessTokenMethodMiddleware(ADMIN),
     getAdminFromAccessTokenMiddleware,
     deleteProductByParams);
+productRouter.get('/get-all-products', getAllProducts);
 productRouter.get('/chains', getAllProductsByType(CHAINS));
 productRouter.get('/desserts', getAllProductsByType(DESSERTS));
 productRouter.get('/drinks',getAllProductsByType(DRINKS));

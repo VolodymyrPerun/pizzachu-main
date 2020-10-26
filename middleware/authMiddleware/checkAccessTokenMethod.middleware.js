@@ -18,14 +18,14 @@ const {
     SELLER_ACCESS
 } = require('../../config');
 
-module.exports = (jwtMethod) => async (req, res, next) => {
+module.exports = jwtMethod => async (req, res, next) => {
     let keyMethod = '';
     let keyMethodErrorData = '';
     let secretWord = '';
     try {
     const authorizationToken = req.get(AUTHORIZATION);
 
-    switch (jwtMethod) {
+        switch (jwtMethod) {
         case ADMIN:
             keyMethod = ADMIN;
             secretWord = ADMIN_ACCESS;
@@ -54,7 +54,7 @@ module.exports = (jwtMethod) => async (req, res, next) => {
             [keyMethodErrorData].customCode));
     }
 
-    jwt.verify(authorizationToken, secretWord, err => {
+        jwt.verify(authorizationToken, secretWord, err => {
         if (err) {
             return next(new ErrorHandler(
                 keyMethodErrorData,
