@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const {USER_STATUS: {ACTIVE, BLOCKED}, JWT_METHOD: {CLIENT, ADMIN}} = require("../../constants");
+const {USER_STATUS: {ACTIVE, BLOCKED}, JWT_METHOD: {CLIENT}} = require("../../constants");
 const {
     authMiddleware: {
         checkAccessTokenMethodMiddleware,
@@ -21,9 +21,6 @@ const {
     = require('../../middleware')
 
 const {
-    oAuthController: {
-        getUserProfileFromAccessToken
-    },
     userController: {
         createUser,
         deleteUserByParams,
@@ -55,9 +52,5 @@ router.delete('/delete-profile/:userId',
     checkAccessTokenMethodMiddleware(CLIENT),
     getUserFromAccessTokenMiddleware,
     deleteUserByParams);
-router.get('/me',
-    checkAccessTokenMethodMiddleware(CLIENT),
-    getUserFromAccessTokenMiddleware,
-    getUserProfileFromAccessToken);
 
 module.exports = router;

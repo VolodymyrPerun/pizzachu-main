@@ -19,6 +19,7 @@ const {
         },
     oAuthController:
         {
+            getUserProfileFromAccessToken,
             refreshToken
         }
 } = require('../../controllers');
@@ -56,6 +57,11 @@ router.put(
     checkAccessTokenMethodMiddleware(SELLER),
     getUserFromAccessTokenMiddleware,
     changePassword
+);
+router.get('/me',
+    checkAccessTokenMethodMiddleware(CLIENT),
+    getUserFromAccessTokenMiddleware,
+    getUserProfileFromAccessToken
 );
 
 module.exports = router;

@@ -47,12 +47,12 @@ module.exports = jwtMethod => async (req, res, next) => {
                 UNAUTHORIZED.customCode));
     }
 
-    if (!authorizationToken) {
-        return next(new ErrorHandler(
-            keyMethodErrorData,
-            [keyMethodErrorData].message,
-            [keyMethodErrorData].customCode));
-    }
+        if (!authorizationToken) {
+            return next(new ErrorHandler(
+                keyMethodErrorData,
+                [keyMethodErrorData].message,
+                [keyMethodErrorData].customCode));
+        }
 
         jwt.verify(authorizationToken, secretWord, err => {
         if (err) {

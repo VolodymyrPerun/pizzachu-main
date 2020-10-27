@@ -1,3 +1,3 @@
 module.exports.getUserProfileFromAccessToken = require('./getUserProfileFromAccessToken.controller');
-module.exports.deleteTokenByParams = require('../OAuthController/deleteTokenByParams.controller');
-module.exports.refreshToken = require('../OAuthController/refreshToken.controller');
+module.exports.deleteTokenByParams = require('./deleteTokenByParams.controller');
+module.exports.refreshToken = require('./refreshToken.controller');

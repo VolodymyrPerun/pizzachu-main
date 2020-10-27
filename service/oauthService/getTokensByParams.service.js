@@ -7,11 +7,11 @@ module.exports = async token => {
 
     return OauthModel.findOne({
         where: token,
-        nest: true,
-        raw: true,
         include: [{
             model: UserModel,
-            attributes: ['userId', 'name', 'surname', 'role_id']
-        }]
+            attributes: ['userId', 'email', 'name', 'surname', 'age', 'phone', 'city', 'address', 'user_photo']
+        }],
+        nest: true,
+        raw: true
     });
 }

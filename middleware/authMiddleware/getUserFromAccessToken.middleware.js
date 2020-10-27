@@ -10,8 +10,6 @@ module.exports = async (req, res, next) => {
     try {
         const authorizationToken = req.get(AUTHORIZATION);
 
-        console.log(authorizationToken);
-
         if (!authorizationToken) {
             return next(new ErrorHandler(
                 BAD_REQUEST,

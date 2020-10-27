@@ -10,13 +10,9 @@ const {
 
 module.exports = async (req, res, next) => {
     try {
-        console.log('6666666666666666666');
         const {userId} = req.user;
 
-        console.log('6666666666666666666');
-        console.log(userId);
-
-        const user = await getUserProfileFromAccessTokenService(userId);
+        const user = await getUserProfileFromAccessTokenService({userId});
 
         if (!user) {
             return next(new ErrorHandler(
