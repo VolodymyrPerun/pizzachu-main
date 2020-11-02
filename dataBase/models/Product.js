@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         name: {
             type: DataTypes.STRING,
-            unique: true,
             allowNull: false
         },
         description: {
@@ -33,7 +32,6 @@ module.exports = (sequelize, DataTypes) => {
         },
         size_id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
             foreignKey: true
         },
         weight: {
@@ -68,6 +66,5 @@ module.exports = (sequelize, DataTypes) => {
     Product.belongsTo(ProductSize, {foreignKey: 'size_id'});
     Product.belongsTo(ProductSection, {foreignKey: 'section_id'});
 
-    return Product
-
+    return Product;
 };

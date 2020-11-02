@@ -18,5 +18,5 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: false
     });
 
-    return ProductStatus
+    return ProductStatus;
 };

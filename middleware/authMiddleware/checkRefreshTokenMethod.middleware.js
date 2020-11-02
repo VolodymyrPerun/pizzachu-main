@@ -18,7 +18,7 @@ const {
     SELLER_REFRESH
 } = require('../../config');
 
-module.exports = (jwtMethod) => async (req, res, next) => {
+module.exports = jwtMethod => async (req, res, next) => {
     let keyMethod = '';
     let keyMethodErrorData = '';
     let secretWord = '';

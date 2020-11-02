@@ -46,10 +46,6 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: false
             },
-            postOfficeLocation: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
             status_id: {
                 type: DataTypes.INTEGER,
                 foreignKey: true,
@@ -73,14 +69,14 @@ module.exports = (sequelize, DataTypes) => {
         {
             tableName: USER,
             timestamps: false
-        })
+        });
 
 
-    const Gender = sequelize.import('./Gender.js')
+    const Gender = sequelize.import('./Gender.js');
     const UserRole = sequelize.import('./UserRole.js');
     const UserStatus = sequelize.import('./UserStatus.js');
 
-    User.belongsTo(Gender, {foreignKey: 'gender_id'})
+    User.belongsTo(Gender, {foreignKey: 'gender_id'});
     User.belongsTo(UserRole, {foreignKey: 'role_id'});
     User.belongsTo(UserStatus, {foreignKey: 'status_id'});
 

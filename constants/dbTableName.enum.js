@@ -1,5 +1,6 @@
 module.exports = {
     GENDER: 'Gender',
+    HISTORY_ACTION: 'HistoryAction',
     OAUTH_TOKEN: 'OAuthToken',
     USER: 'User',
     USER_ROLE: 'UserRole',

@@ -42,7 +42,7 @@ module.exports = async (req, res, next) => {
 
             await fsep.mkdir(path.resolve(process.cwd(), 'public', photoDir), {recursive: true});
             await productImage.mv(path.resolve(process.cwd(), 'public', photoDir, photoName));
-            await updateProductService(isProductCreated.productId, {product_photo: photoDir + photoName})
+            await updateProductService(isProductCreated.productId, {product_photo: photoDir + photoName});
         }
 
         await sendMail(userFromDB.email, CREATE_PRODUCT, {userFromDB, isProductCreated});

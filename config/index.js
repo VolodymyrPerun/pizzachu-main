@@ -33,6 +33,5 @@ module.exports = {
 
     FRONT_END_URL: process.env.FRONT_END_URL || 'http://localhost:3000',
 
-    CRON_JOB_PERIOD: process.env.CRON_JOB_PERIOD || '0 0 * * *',
-
+    CRON_JOB_PERIOD: process.env.CRON_JOB_PERIOD || '0 0 * * *'
 }

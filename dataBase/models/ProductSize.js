@@ -4,18 +4,17 @@ module.exports = (sequelize, DataTypes) => {
     const ProductSize = sequelize.define(PRODUCT_SIZE, {
         id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
             primaryKey: true,
             autoIncrement: true,
         },
         size: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            unique: true
         }
     }, {
         tableName: PRODUCT_SIZE,
         timestamps: false
     });
 
-    return ProductSize
+    return ProductSize;
 };

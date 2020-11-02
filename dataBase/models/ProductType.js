@@ -20,6 +20,6 @@ module.exports = (sequelize, DataTypes) => {
     });
 
 
-    return ProductType
+    return ProductType;
 
 };

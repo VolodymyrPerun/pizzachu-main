@@ -7,11 +7,10 @@ const {ErrorHandler} = require("../../error");
 const {userService: {getUsersService}} = require("../../service");
 
 
-module.exports = (userStatus) => async (req, res, next) => {
+module.exports = userStatus => async (req, res, next) => {
     let keyStatus = '';
     let users = [];
     try {
-
         switch (userStatus) {
             case ACTIVE:
                 keyStatus = ACTIVE

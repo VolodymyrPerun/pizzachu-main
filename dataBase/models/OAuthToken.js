@@ -31,11 +31,11 @@ module.exports = (sequelize, DataTypes) => {
         {
             tableName: OAUTH_TOKEN,
             timestamps: false
-        })
+        });
 
-    const User = sequelize.import('./User.js')
+    const User = sequelize.import('./User.js');
 
-    OAuthToken.belongsTo(User, {foreignKey: 'userId'})
+    OAuthToken.belongsTo(User, {foreignKey: 'userId'});
 
     return OAuthToken;
 };

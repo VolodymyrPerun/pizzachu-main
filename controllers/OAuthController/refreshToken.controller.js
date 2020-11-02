@@ -13,7 +13,7 @@ const {
     oauthService: {deleteTokenByParamsService, createTokenPairService}
 } = require('../../service');
 
-module.exports = (jwtMethod) => async (req, res, next) => {
+module.exports = jwtMethod => async (req, res, next) => {
     const transaction = await transactionInstance();
     let keyMethod = '';
     try {

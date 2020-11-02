@@ -6,7 +6,7 @@ module.exports = Joi.object().keys({
     price: Joi.number().required(),
     type_id: Joi.number().integer().required(),
     status_id: Joi.number().integer().required(),
-    size_id: Joi.number().integer().required(),
+    size_id: Joi.number().integer(),
     weight: Joi.number().integer().required(),
     section_id: Joi.number().integer(),
     product_photo: Joi.string(),

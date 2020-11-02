@@ -31,7 +31,7 @@ const {
 } = require('../../service');
 
 
-module.exports = (userRole) => async (req, res, next) => {
+module.exports = userRole => async (req, res, next) => {
     const transaction = await transactionInstance();
     let keyRole = '';
     let keyMethod = '';

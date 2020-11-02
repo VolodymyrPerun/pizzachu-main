@@ -6,7 +6,7 @@ const {
 const {ErrorHandler} = require("../../error");
 const {productService: {getAllProductsByTypeService}} = require("../../service");
 
-module.exports = (productType) => async (req, res, next) => {
+module.exports = productType => async (req, res, next) => {
     let keyType = '';
     let products = [];
 

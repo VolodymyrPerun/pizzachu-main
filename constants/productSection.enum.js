@@ -6,5 +6,5 @@ module.exports = {
     HALF: 5,
     HOT_ROLES: 6,
     MEAT: 7,
-    DEFAULT: 0
+    PROMOTIONAL: 8
 }

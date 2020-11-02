@@ -9,15 +9,20 @@ const {
     responseStatusCodesEnum: {CREATED, NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_CREATED},
     emailActionEnum: {ADMIN_REGISTER, SELLER_REGISTER, USER_REGISTER},
+    historyActionEnum: {createUser},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK},
     USER_ROLE: {ADMIN, CLIENT, SELLER},
     USER_STATUS: {ACTIVE},
 } = require('../../constants');
 const {HashPasswordHelper} = require('../../helpers');
-const {emailService, userService: {createUserService, updateUserService}} = require("../../service");
+const {
+    emailService: {sendMail},
+    historyService: {addEventService},
+    userService: {createUserService, updateUserService}
+} = require("../../service");
 
 
-module.exports = (userRole) => async (req, res, next) => {
+module.exports = userRole => async (req, res, next) => {
     const transaction = await transactionInstance();
     let keyRole = '';
     let emailAction = '';
@@ -66,7 +71,8 @@ module.exports = (userRole) => async (req, res, next) => {
             await updateUserService(isUserCreated.userId, {user_photo: photoDir + photoName}, transaction);
         }
 
-        await emailService.sendMail(user.email, [emailAction], {user, password});
+        await addEventService({event: createUser, userId: isUserCreated.userId}, transaction);
+        await sendMail(user.email, [emailAction], {user, password});
 
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
