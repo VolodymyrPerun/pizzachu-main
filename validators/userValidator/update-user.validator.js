@@ -5,12 +5,11 @@ const {
 } = require("../../constants");
 
 module.exports = Joi.object().keys({
-    name: Joi.string().trim().min(2).max(60).required().allow('X Æ A-12'),
-    surname: Joi.string().trim().min(2).max(60).required().allow('X Æ A-12'),
-    phone: Joi.string().regex(PHONE_NUMBER).required(),
-    age: Joi.number().integer().min(18).max(120).required(),
-    city: Joi.string().required(),
-    address: Joi.string().required(),
-    postOfficeLocation: Joi.string().required(),
+    name: Joi.string().trim().min(2).max(60).allow('X Æ A-12'),
+    surname: Joi.string().trim().min(2).max(60).allow('X Æ A-12'),
+    phone: Joi.string().regex(PHONE_NUMBER),
+    age: Joi.number().integer().min(18).max(120),
+    city: Joi.string(),
+    address: Joi.string(),
     user_photo: Joi.string()
 });

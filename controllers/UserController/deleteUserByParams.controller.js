@@ -3,14 +3,16 @@ const chalk = require('chalk');
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {
     emailActionEnum: {USER_DELETE},
+    historyActionEnum: {deleteUser},
     responseStatusCodesEnum: {NO_CONTENT},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK}
 } = require('../../constants');
 const {ErrorHandler} = require("../../error");
 const {
-    emailService,
-    userService: {deleteUserByParamsService, getUserByIdService},
-    oauthService: {deleteTokenByParamsService}
+    emailService: {sendMail},
+    historyService: {addEventService},
+    oauthService: {deleteTokenByParamsService},
+    userService: {deleteUserByParamsService, getUserByIdService}
 } = require("../../service");
 
 module.exports = async (req, res, next) => {
@@ -22,7 +24,8 @@ module.exports = async (req, res, next) => {
 
         await deleteUserByParamsService({userId}, transaction);
         await deleteTokenByParamsService({userId}, transaction);
-        await emailService.sendMail(user.email, USER_DELETE, {
+        await addEventService({event: deleteUser, userId: user.userId}, transaction);
+        await sendMail(user.email, USER_DELETE, {
             userName: user.name,
             userSurname: user.surname
         });

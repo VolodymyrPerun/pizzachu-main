@@ -5,11 +5,13 @@ const {
     responseStatusCodesEnum: {NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_UPDATE},
     emailActionEnum: {USER_UPDATE},
+    historyActionEnum: {updateUser},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK}
 } = require('../../constants');
 const {ErrorHandler} = require("../../error");
 const {
     emailService: {sendMail},
+    historyService: {addEventService},
     userService: {getUserByIdService, updateUserService}
 } = require("../../service");
 
@@ -27,6 +29,7 @@ module.exports = async (req, res, next) => {
 
         if (!isUpdated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_UPDATE.message, NOT_UPDATE.customCode));
 
+        await addEventService({event: updateUser, userId: userFromDB.userId}, transaction);
         await sendMail(userFromDB.email, USER_UPDATE, {user});
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));

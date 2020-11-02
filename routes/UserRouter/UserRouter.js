@@ -43,7 +43,7 @@ router.get('/:userId',
     getUserFromAccessTokenMiddleware,
     checkIsUserExistMiddleware,
     getUserById);
-router.put('/update-profile/:userId',
+router.put('/update-profile',
     checkAccessTokenMethodMiddleware(CLIENT),
     getUserFromAccessTokenMiddleware,
     checkUserValidityIfUpdateMiddleware,
