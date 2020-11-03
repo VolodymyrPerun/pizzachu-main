@@ -3,6 +3,7 @@ const chalk = require('chalk');
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {
     emailActionEnum: {DELETE_PRODUCT},
+    historyActionEnum: {deleteProductHistory},
     responseStatusCodesEnum: {BAD_REQUEST},
     PRODUCT_STATUS: {DELETED},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK}
@@ -10,6 +11,7 @@ const {
 const {ErrorHandler, CustomErrorData: {BAD_REQUEST_PRODUCT_NOT_PRESENT}} = require("../../error");
 const {
     emailService: {sendMail},
+    historyService: {addEventService},
     productService: {deleteProductByParamsService, getProductByIdService},
     userService: {getUserByIdService}
 } = require("../../service");
@@ -32,6 +34,7 @@ module.exports = async (req, res, next) => {
         }
 
         await deleteProductByParamsService({productId}, transaction);
+        await addEventService({event: deleteProductHistory, userId: userId}, transaction);
         await sendMail(userFromDB.email, DELETE_PRODUCT, {userFromDB, isProductCreated: product});
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));

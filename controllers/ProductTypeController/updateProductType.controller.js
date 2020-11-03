@@ -4,11 +4,16 @@ const {transactionInstance} = require('../../dataBase').getInstance();
 const {productTypeService: {getProductTypeByIdService, updateProductTypeService}} = require('../../service');
 const {
     emailActionEnum: {UPDATE_PRODUCT_TYPE},
+    historyActionEnum: {updateProductTypeHistory},
     responseStatusCodesEnum: {NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_UPDATE},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK}
 } = require('../../constants');
-const {emailService: {sendMail}, userService: {getUserByIdService}} = require('../../service');
+const {
+    emailService: {sendMail},
+    historyService: {addEventService},
+    userService: {getUserByIdService}
+} = require('../../service');
 const {ErrorHandler} = require("../../error");
 
 module.exports = async (req, res, next) => {
@@ -26,6 +31,7 @@ module.exports = async (req, res, next) => {
 
         if (!isUpdated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_UPDATE.message, NOT_UPDATE.customCode));
 
+        await addEventService({event: updateProductTypeHistory, userId: userId}, transaction);
         await sendMail(userFromDB.email, UPDATE_PRODUCT_TYPE, {userFromDB, updatedProductType, productType});
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));

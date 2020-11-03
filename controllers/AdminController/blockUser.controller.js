@@ -2,6 +2,7 @@ const chalk = require('chalk');
 
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {
+    historyActionEnum: {blockUserHistory},
     responseStatusCodesEnum: {CREATED, BAD_REQUEST},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK},
     USER_STATUS:{BLOCKED}
@@ -11,8 +12,9 @@ const {
     CustomErrorData: {BAD_REQUEST_BLOCK_USER}
 } = require("../../error");
 const {
+    adminService: {blockUserService},
     oauthService: {deleteTokenByParamsService},
-    adminService: {blockUserService}
+    historyService: {addEventService}
 } = require('../../service');
 
 module.exports = async (req, res, next) => {
@@ -31,6 +33,7 @@ module.exports = async (req, res, next) => {
 
         await blockUserService(userId, transaction);
         await deleteTokenByParamsService({userId}, transaction);
+        await addEventService({event: blockUserHistory, userId: userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

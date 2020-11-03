@@ -11,7 +11,6 @@ module.exports = async userId => {
         where: {
             userId
         },
-        attributes: ['userId', 'email', 'name', 'surname', 'age', 'phone', 'city', 'address', 'user_photo'],
         include: [
             {
                 model: RoleModel,

@@ -20,5 +20,4 @@ module.exports = async (req, res, next) => {
     } catch (e) {
         next(new ErrorHandler(e.status, e.message, e.customCode));
     }
-
 };

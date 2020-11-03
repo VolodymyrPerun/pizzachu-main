@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken');
-const {responseCustomErrorEnum: {NOT_VALID_TOKEN_METHOD}} = require("../constants");
-const {ErrorHandler} = require("../error");
-const {JWT_METHOD: {ADMIN, SELLER, CLIENT}} = require("../constants");
 
+const {
+    JWT_METHOD: {ADMIN, SELLER, CLIENT},
+    responseCustomErrorEnum: {NOT_VALID_TOKEN_METHOD}
+} = require("../constants");
+const {ErrorHandler} = require("../error");
 
 const {
     ADMIN_ACCESS,
@@ -18,9 +20,7 @@ const {
     JWT_SELLER_SECRET_TIME,
     JWT_SELLER_REFRESH_SECRET_TIME
 
-
 } = require('../config');
-
 
 module.exports = method => {
 

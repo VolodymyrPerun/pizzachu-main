@@ -8,4 +8,4 @@ module.exports = {
     NO_CONTENT: 204,
     GONE: 410,
     SERVER_ERROR: 500
-}
+};

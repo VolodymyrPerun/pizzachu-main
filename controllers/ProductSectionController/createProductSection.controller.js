@@ -3,6 +3,7 @@ const chalk = require('chalk');
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {
     emailActionEnum: {CREATE_PRODUCT_SECTION},
+    historyActionEnum: {createProductSectionHistory},
     responseStatusCodesEnum: {CREATED, NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_CREATED},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK},
@@ -10,6 +11,7 @@ const {
 const ErrorHandler = require("../../error/ErrorHandler");
 const {
     emailService: {sendMail},
+    historyService: {addEventService},
     productSectionService: {createProductSectionService},
     userService: {getUserByIdService}
 } = require("../../service");
@@ -27,6 +29,7 @@ module.exports = async (req, res, next) => {
 
         if (!isProductTypeCreated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_CREATED.message, NOT_CREATED.customCode));
 
+        await addEventService({event: createProductSectionHistory, userId: userId}, transaction);
         await sendMail(userFromDB.email, CREATE_PRODUCT_SECTION, {userFromDB, productSection});
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));

@@ -1,5 +1,20 @@
 module.exports = {
-    createUser : 'createUser',
-    deleteUser : 'deleteUser',
-    updateUser : 'updateUser'
+    blockUserHistory: 'blockUser',
+    changePasswordHistory: 'changePassword',
+    createProductHistory: 'createProduct',
+    createProductSectionHistory: 'createProductSection',
+    createProductTypeHistory: 'createProductType',
+    createUserHistory: 'createUser',
+    deleteProductHistory: 'deleteProduct',
+    deleteProductSectionHistory: 'deleteProductSection',
+    deleteProductTypeHistory: 'deleteProductType',
+    deleteUserHistory: 'deleteUser',
+    logoutUserHistory: 'logoutUser',
+    refreshTokenHistory: 'refreshToken',
+    registerUserHistory: 'registerUser',
+    unblockUserHistory: 'unblockUser',
+    updateProductHistory: 'updateProduct',
+    updateProductSectionHistory: 'updateProductSection',
+    updateProductTypeHistory: 'updateProductType',
+    updateUserHistory: 'updateUser',
 };

@@ -2,14 +2,16 @@ const chalk = require('chalk');
 
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {
+    historyActionEnum: {refreshTokenHistory},
+    JWT_METHOD: {ADMIN, CLIENT, SELLER},
     requestHeadersEnum: {AUTHORIZATION},
     responseStatusCodesEnum: {BAD_REQUEST, UNAUTHORIZED},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK},
-    JWT_METHOD: {ADMIN, CLIENT, SELLER}
 } = require('../../constants');
 const {tokenGeneratorHelper} = require('../../helpers');
 const {ErrorHandler} = require('../../error');
 const {
+    historyService: {addEventService},
     oauthService: {deleteTokenByParamsService, createTokenPairService}
 } = require('../../service');
 
@@ -42,6 +44,7 @@ module.exports = jwtMethod => async (req, res, next) => {
 
         await deleteTokenByParamsService({refresh_token}, transaction);
         await createTokenPairService({userId, ...tokens}, transaction);
+        await addEventService({event: refreshTokenHistory, userId: userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

@@ -9,7 +9,7 @@ const {
     responseStatusCodesEnum: {CREATED, NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_CREATED},
     emailActionEnum: {ADMIN_REGISTER, SELLER_REGISTER, USER_REGISTER},
-    historyActionEnum: {createUser},
+    historyActionEnum: {createUserHistory},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK},
     USER_ROLE: {ADMIN, CLIENT, SELLER},
     USER_STATUS: {ACTIVE},
@@ -71,7 +71,7 @@ module.exports = userRole => async (req, res, next) => {
             await updateUserService(isUserCreated.userId, {user_photo: photoDir + photoName}, transaction);
         }
 
-        await addEventService({event: createUser, userId: isUserCreated.userId}, transaction);
+        await addEventService({event: createUserHistory, userId: isUserCreated.userId}, transaction);
         await sendMail(user.email, [emailAction], {user, password});
 
         await transaction.commit();

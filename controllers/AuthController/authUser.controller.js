@@ -13,19 +13,20 @@ const {
 
 const {
     JWT_METHOD,
+    historyActionEnum: {registerUserHistory},
+    responseStatusCodesEnum: {BAD_REQUEST, FORBIDDEN},
+    responseCustomErrorEnum: {NOT_VALID},
+    transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK},
     USER_ROLE: {ADMIN, CLIENT, SELLER},
     USER_STATUS: {BLOCKED}
 } = require("../../constants");
 
 const {authValidator: {authValidationSchema}} = require("../../validators");
-const {
-    responseStatusCodesEnum: {BAD_REQUEST, FORBIDDEN},
-    responseCustomErrorEnum: {NOT_VALID},
-    transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK}
-} = require('../../constants');
+
 const {tokenGeneratorHelper, HashPasswordCheckHelper} = require('../../helpers');
 const {ErrorHandler} = require('../../error');
 const {
+    historyService: {addEventService},
     oauthService: {createTokenPairService},
     userService: {getUserByParamsService}
 } = require('../../service');
@@ -62,8 +63,6 @@ module.exports = userRole => async (req, res, next) => {
 
         const {email, password} = req.body;
 
-        //todo create compare password service, forgot pass and change pass controller, try to login user
-
         const {error} = Joi.validate({email, password}, authValidationSchema);
 
         if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
@@ -89,6 +88,7 @@ module.exports = userRole => async (req, res, next) => {
         const tokens = tokenGeneratorHelper(keyMethod);
 
         await createTokenPairService({userId: user.userId, ...tokens}, transaction);
+        await addEventService({event: registerUserHistory, userId: user.userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

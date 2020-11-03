@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {
     emailActionEnum: {USER_DELETE},
-    historyActionEnum: {deleteUser},
+    historyActionEnum: {deleteUserHistory},
     responseStatusCodesEnum: {NO_CONTENT},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK}
 } = require('../../constants');
@@ -24,7 +24,7 @@ module.exports = async (req, res, next) => {
 
         await deleteUserByParamsService({userId}, transaction);
         await deleteTokenByParamsService({userId}, transaction);
-        await addEventService({event: deleteUser, userId: user.userId}, transaction);
+        await addEventService({event: deleteUserHistory, userId: user.userId}, transaction);
         await sendMail(user.email, USER_DELETE, {
             userName: user.name,
             userSurname: user.surname

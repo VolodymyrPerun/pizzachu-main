@@ -1,12 +1,19 @@
 const chalk = require('chalk');
 
 const {transactionInstance} = require('../../dataBase').getInstance();
-const {ErrorHandler} = require("../../error");
+const {ErrorHandler, CustomErrorData: {BAD_REQUEST_USER_NOT_PRESENT}} = require("../../error");
 const {
+    historyActionEnum: {logoutUserHistory},
     requestHeadersEnum: {AUTHORIZATION},
+    responseStatusCodesEnum: {BAD_REQUEST},
+    responseCustomErrorEnum: {NOT_VALID},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK}
 } = require('../../constants');
-const {oauthService: {deleteTokenByParamsService}} = require('../../service');
+const {
+    authService: {getUserFromAccessTokenService},
+    historyService: {addEventService},
+    oauthService: {deleteTokenByParamsService}
+} = require('../../service');
 
 
 module.exports = async (req, res, next) => {
@@ -14,8 +21,26 @@ module.exports = async (req, res, next) => {
     try {
         const access_token = req.get(AUTHORIZATION);
 
-        await deleteTokenByParamsService({access_token}, transaction);
+        if (!access_token) {
+            return next(new ErrorHandler(
+                BAD_REQUEST,
+                NOT_VALID.message,
+                NOT_VALID.customCode));
+        }
 
+        const user = await getUserFromAccessTokenService(access_token);
+
+        console.log(user);
+
+        if (!user) {
+            return next(new ErrorHandler(
+                BAD_REQUEST,
+                BAD_REQUEST_USER_NOT_PRESENT.message,
+                BAD_REQUEST_USER_NOT_PRESENT.customCode));
+        }
+
+        await deleteTokenByParamsService({access_token}, transaction);
+        await addEventService({event: logoutUserHistory, userId: user.userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 
