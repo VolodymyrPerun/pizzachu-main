@@ -1,6 +1,5 @@
 const Joi = require('joi');
 const chalk = require('chalk');
-const bcrypt = require('bcrypt');
 
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {
@@ -26,7 +25,6 @@ const {
     historyService: {addEventService},
     userService: {getUserByIdService, updateUserService}
 } = require('../../service');
-
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();

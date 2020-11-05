@@ -9,11 +9,8 @@ const {PORT} = require('./config');
 const {responseStatusCodesEnum: {SERVER_ERROR}} = require("./constants");
 require('./dataBase').getInstance().setModels();
 const {WHITE_LIST, ENV} = require('./config');
-const winston = require('./logger/winston');
 
 const app = express();
-
-const logger = winston('APP');
 
 if (ENV === 'DEV') {
     app.use(cors());
@@ -56,6 +53,8 @@ app.use('/users', UserRouter);
 app.use('/products', ProductRouter);
 app.use('/product-types', ProductTypeRouter);
 app.use('/product-sections', ProductSectionRouter);
+
+
 
 app.use((err, req, res, next) => {
     res

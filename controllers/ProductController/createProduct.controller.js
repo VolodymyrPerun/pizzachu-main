@@ -19,6 +19,9 @@ const {
     productService: {createProductService, updateProductService},
     userService: {getUserByIdService}
 } = require("../../service");
+const winston = require('../../logger/winston');
+const logger = winston(createProductHistory);
+
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
@@ -48,6 +51,12 @@ module.exports = async (req, res, next) => {
             await updateProductService(isProductCreated.productId, {product_photo: photoDir + photoName});
         }
 
+        logger.info({
+            info: createProductHistory,
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            userId
+        });
         await addEventService({event: createProductHistory, userId: userId}, transaction);
         await sendMail(userFromDB.email, CREATE_PRODUCT, {userFromDB, isProductCreated});
         await transaction.commit();

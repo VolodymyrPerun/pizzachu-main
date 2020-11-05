@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ansi-colors": "^4.1.1",
     "bcrypt": "^4.0.1",
     "chalk": "^4.1.0",
     "cors": "^2.8.5",
