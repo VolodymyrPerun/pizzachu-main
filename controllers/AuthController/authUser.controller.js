@@ -72,8 +72,8 @@ module.exports = userRole => async (req, res, next) => {
         if (!user) {
             return next(new ErrorHandler(
                 BAD_REQUEST,
-                [keyErrorData].message,
-                [keyErrorData].customCode));
+                keyErrorData.message,
+                keyErrorData.customCode));
         }
 
         if (user.status_id === BLOCKED) {

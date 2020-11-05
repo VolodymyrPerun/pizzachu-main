@@ -23,15 +23,16 @@ const {
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
-        const {userId} = req.user;
-
-        const product = req.body;
+        const {
+            body: product, photos,
+            user: {userId}
+        } = req;
 
         product.status_id = IN_STOCK;
 
         const userFromDB = await getUserByIdService(userId, transaction);
 
-        const [productImage] = req.photos;
+        const [productImage] = photos;
 
         const isProductCreated = await createProductService(product, transaction);
 

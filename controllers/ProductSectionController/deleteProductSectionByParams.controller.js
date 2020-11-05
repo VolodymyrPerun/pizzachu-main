@@ -18,9 +18,10 @@ const {
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
-        const {userId} = req.user;
-
-        const {id} = req.params;
+        const {
+            params: {id},
+            user: {userId}
+        } = req;
 
         const userFromDB = await getUserByIdService(userId);
         const productSection = await getProductSectionByIdService(id, transaction);

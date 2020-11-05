@@ -1,7 +1,7 @@
 const {
     emailActionEnum: {
-        ADMIN_REGISTER, ADMIN_DELETE, ADMIN_UPDATE,
-        SELLER_REGISTER, SELLER_DELETE, SELLER_UPDATE,
+        ADMIN_REGISTER,
+        SELLER_REGISTER,
         USER_REGISTER, USER_DELETE, USER_UPDATE, PASSWORD_UPDATE,
         CREATE_PRODUCT, DELETE_PRODUCT, UPDATE_PRODUCT,
         CREATE_PRODUCT_TYPE, UPDATE_PRODUCT_TYPE, DELETE_PRODUCT_TYPE,
@@ -14,26 +14,10 @@ module.exports = {
         subject: '[PIZZACHU] АДМІНЕ ВІТАЄМО ВАС!',
         templateFileName: 'createAdmin'
     },
-    // [ADMIN_DELETE]: {
-    //     subject: '[PIZZACHU] АДМІНЕ ВАШ АКАУНТ БУВ ВИДАЛЕНИЙ!',
-    //     templateFileName: 'deleteUser'
-    // },
-    // [ADMIN_UPDATE]: {
-    //     subject: '[PIZZACHU] АДМІНЕ ВАШ АКАУНТ ОНОВЛЕНО!',
-    //     templateFileName: 'updateUser'
-    // },
     [SELLER_REGISTER]: {
         subject: '[PIZZACHU] НОВИЙ ПРОДАВЕЦЬ ВІТАЄМО ВАС!',
         templateFileName: 'createSeller'
     },
-    // [SELLER_DELETE]: {
-    //     subject: '[PIZZACHU] АДМІНЕ ВАШ АКАУНТ БУВ ВИДАЛЕНИЙ!',
-    //     templateFileName: 'deleteUser'
-    // },
-    // [SELLER_UPDATE]: {
-    //     subject: '[PIZZACHU] АДМІНЕ ВАШ АКАУНТ ОНОВЛЕНО!',
-    //     templateFileName: 'updateUser'
-    // },
     [USER_REGISTER]: {
         subject: '[PIZZACHU] ВІТАЄМО!',
         templateFileName: 'createUser'
@@ -59,7 +43,7 @@ module.exports = {
         templateFileName: 'deleteProduct'
     },
     [UPDATE_PRODUCT]: {
-        subject: '[PIZZACHU] ПРОДУКТ ОНОЛЕНО!',
+        subject: '[PIZZACHU] ПРОДУКТ ОНОВЛЕНО!',
         templateFileName: 'updateProduct'
     },
     [CREATE_PRODUCT_TYPE]: {
@@ -67,7 +51,7 @@ module.exports = {
         templateFileName: 'createProductType'
     },
     [UPDATE_PRODUCT_TYPE]: {
-        subject: '[PIZZACHU] ОНОЛЕНО ТИП ПРОДУКТУ!',
+        subject: '[PIZZACHU] ОНОВЛЕНО ТИП ПРОДУКТУ!',
         templateFileName: 'updateProductType'
     },
     [DELETE_PRODUCT_TYPE]: {
@@ -79,7 +63,7 @@ module.exports = {
         templateFileName: 'createProductSection'
     },
     [UPDATE_PRODUCT_SECTION]: {
-        subject: '[PIZZACHU] ОНОЛЕНО СЕКЦІЮ ПРОДУКТУ!',
+        subject: '[PIZZACHU] ОНОВЛЕНО СЕКЦІЮ ПРОДУКТУ!',
         templateFileName: 'updateProductSection'
     },
     [DELETE_PRODUCT_SECTION]: {

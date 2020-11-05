@@ -1,5 +1,6 @@
 const Joi = require('joi');
 const chalk = require('chalk');
+const bcrypt = require('bcrypt');
 
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {
@@ -30,9 +31,10 @@ const {
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
-        const {password, newPassword, repeatNewPassword, email} = req.body;
-
-        const {userId} = req.user;
+        const {
+            body: {password, newPassword, repeatNewPassword, email},
+            user: {userId}
+        } = req;
 
         const user = await getUserByIdService(userId);
 
@@ -54,10 +56,12 @@ module.exports = async (req, res, next) => {
 
         const {error} = Joi.validate({password, newPassword, repeatNewPassword}, changePasswordValidationSchema);
 
-        if (error) return next(new ErrorHandler(
-            FORBIDDEN,
-            error.details[0].message,
-            NOT_VALID.customCode));
+        if (error) {
+            return next(new ErrorHandler(
+                FORBIDDEN,
+                error.details[0].message,
+                NOT_VALID.customCode));
+        }
 
         if (newPassword !== repeatNewPassword) {
             return next(new ErrorHandler(

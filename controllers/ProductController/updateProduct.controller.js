@@ -19,11 +19,11 @@ const {ErrorHandler} = require("../../error");
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
-        const {userId} = req.user;
-
-        const product = req.body;
-
-        const {productId} = req.params;
+        const {
+            body: product,
+            params: {productId},
+            user: {userId}
+        } = req;
 
         const userFromDB = await getUserByIdService(userId, transaction);
         await getProductByIdService(productId);

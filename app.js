@@ -8,12 +8,27 @@ const path = require('path');
 const {PORT} = require('./config');
 const {responseStatusCodesEnum: {SERVER_ERROR}} = require("./constants");
 require('./dataBase').getInstance().setModels();
-
+const {WHITE_LIST, ENV} = require('./config');
+const winston = require('./logger/winston');
 
 const app = express();
 
-app.use(morgan('dev'));
-app.use(cors());
+const logger = winston('APP');
+
+if (ENV === 'DEV') {
+    app.use(cors());
+    app.use(morgan('dev'));
+} else {
+    app.use(cors({
+        origin: (origin, callback) => {
+            if (WHITE_LIST.split(';').includes(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error('Not allowed by CORS'));
+            }
+        }
+    }));
+}
 
 app.use(fileUpload({}));
 app.use(express.urlencoded({extended: true}));
