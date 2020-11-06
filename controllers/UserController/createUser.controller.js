@@ -20,6 +20,8 @@ const {
     historyService: {addEventService},
     userService: {createUserService, updateUserService}
 } = require("../../service");
+const winston = require('../../logger/winston');
+const logger = winston(createUserHistory);
 
 
 module.exports = userRole => async (req, res, next) => {
@@ -47,19 +49,31 @@ module.exports = userRole => async (req, res, next) => {
                     NOT_CREATED.customCode));
         }
 
-        const user = req.body;
+        const {
+            body: user, photos
+        } = req;
 
         user.role_id = [keyRole];
         user.status_id = ACTIVE;
 
-        const [profileImage] = req.photos;
+        const [profileImage] = photos;
         const password = user.password;
 
         user.password = await HashPasswordHelper(user.password);
 
         const isUserCreated = await createUserService(user, transaction);
 
-        if (!isUserCreated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_CREATED.message, NOT_CREATED.customCode));
+        if (!isUserCreated) {
+            logger.error({
+                message: NOT_CREATED.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
+            return next(new ErrorHandler(
+                NOT_FOUND_CODE,
+                NOT_CREATED.message,
+                NOT_CREATED.customCode));
+        }
 
         if (profileImage) {
             const photoDir = `users/${isUserCreated.userId}/photos/`;
@@ -71,9 +85,15 @@ module.exports = userRole => async (req, res, next) => {
             await updateUserService(isUserCreated.userId, {user_photo: photoDir + photoName}, transaction);
         }
 
+        logger.info({
+            info: createUserHistory,
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            userId: isUserCreated.userId
+        });
+
         await addEventService({event: createUserHistory, userId: isUserCreated.userId}, transaction);
         await sendMail(user.email, [emailAction], {user, password});
-
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

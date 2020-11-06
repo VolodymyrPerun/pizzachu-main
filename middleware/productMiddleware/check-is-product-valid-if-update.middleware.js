@@ -4,24 +4,33 @@ const {
     responseStatusCodesEnum: {BAD_REQUEST},
     responseCustomErrorEnum: {NOT_VALID}
 } = require('../../constants');
-
 const {productValidator: {updateProductValidationSchema}} = require("../../validators");
 const ErrorHandler = require('../../error/ErrorHandler');
+const winston = require('../../logger/winston');
+const logger = winston(NOT_VALID.message);
 
 module.exports = async (req, res, next) => {
+    try {
+        const product = req.body;
 
-    const product = req.body;
+        const {error} = Joi.validate(product, updateProductValidationSchema);
 
-    const {error} = Joi.validate(product, updateProductValidationSchema);
+        if (error) {
+            logger.error({
+                message: error.details[0].message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
+            return next(new ErrorHandler(
+                BAD_REQUEST,
+                error.details[0].message,
+                NOT_VALID.customCode));
+        }
 
-    if (error) return next(new ErrorHandler(
-        BAD_REQUEST,
-        error.details[0].message,
-        NOT_VALID.customCode));
+        req.product = product;
 
-    req.product = product;
-
-    next();
-
-    res.end();
+        next();
+    } catch (e) {
+        next(new ErrorHandler(e.status, e.message, e.customCode));
+    }
 };

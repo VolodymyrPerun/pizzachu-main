@@ -14,6 +14,8 @@ const {
     productTypeService: {deleteProductTypeByParamsService, getProductTypeByIdService},
     userService: {getUserByIdService}
 } = require("../../service");
+const winston = require('../../logger/winston');
+const logger = winston(deleteProductTypeHistory);
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
@@ -25,8 +27,12 @@ module.exports = async (req, res, next) => {
 
         const userFromDB = await getUserByIdService(userId);
         const productType = await getProductTypeByIdService(id, transaction);
-
         if (!productType) {
+            logger.error({
+                message: BAD_REQUEST_PRODUCT_TYPE_NOT_PRESENT.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
             return next(new ErrorHandler(
                 BAD_REQUEST,
                 BAD_REQUEST_PRODUCT_TYPE_NOT_PRESENT.message,
@@ -34,6 +40,15 @@ module.exports = async (req, res, next) => {
         }
 
         await deleteProductTypeByParamsService({id}, transaction);
+
+        logger.info({
+            info: deleteProductTypeHistory,
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            userId: userId,
+            productTypeId: id
+        });
+
         await addEventService({event: deleteProductTypeHistory, userId: userId}, transaction);
         await sendMail(userFromDB.email, DELETE_PRODUCT_TYPE, {userFromDB, productType});
         await transaction.commit();

@@ -39,7 +39,17 @@ module.exports = async (req, res, next) => {
 
         const isProductCreated = await createProductService(product, transaction);
 
-        if (!isProductCreated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_CREATED.message, NOT_CREATED.customCode));
+        if (!isProductCreated) {
+            logger.error({
+                message: NOT_CREATED.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
+            return next(new ErrorHandler(
+                NOT_FOUND_CODE,
+                NOT_CREATED.message,
+                NOT_CREATED.customCode));
+        }
 
         if (productImage) {
             const photoDir = `products/${isProductCreated.productId}/photos/`;
@@ -55,8 +65,10 @@ module.exports = async (req, res, next) => {
             info: createProductHistory,
             date: new Date().toLocaleDateString(),
             time: new Date().toLocaleTimeString(),
-            userId
+            userId: userId,
+            productId: isProductCreated.productId
         });
+
         await addEventService({event: createProductHistory, userId: userId}, transaction);
         await sendMail(userFromDB.email, CREATE_PRODUCT, {userFromDB, isProductCreated});
         await transaction.commit();

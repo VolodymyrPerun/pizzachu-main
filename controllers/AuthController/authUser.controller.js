@@ -30,6 +30,8 @@ const {
     oauthService: {createTokenPairService},
     userService: {getUserByParamsService}
 } = require('../../service');
+const winston = require('../../logger/winston');
+const logger = winston(registerUserHistory);
 
 
 module.exports = userRole => async (req, res, next) => {
@@ -65,11 +67,26 @@ module.exports = userRole => async (req, res, next) => {
 
         const {error} = Joi.validate({email, password}, authValidationSchema);
 
-        if (error) return next(new ErrorHandler(BAD_REQUEST, error.details[0].message, NOT_VALID.customCode));
+        if (error) {
+            logger.error({
+                message: error.details[0].message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
+            return next(new ErrorHandler(
+                BAD_REQUEST,
+                error.details[0].message,
+                NOT_VALID.customCode));
+        }
 
         const user = await getUserByParamsService({email, role_id: [keyRole]}, transaction);
 
         if (!user) {
+            logger.error({
+                message: keyErrorData.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
             return next(new ErrorHandler(
                 BAD_REQUEST,
                 keyErrorData.message,
@@ -77,6 +94,11 @@ module.exports = userRole => async (req, res, next) => {
         }
 
         if (user.status_id === BLOCKED) {
+            logger.error({
+                message: FORBIDDEN_USER_IS_BLOCKED.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
             return next(new ErrorHandler(
                 FORBIDDEN,
                 FORBIDDEN_USER_IS_BLOCKED.message,
@@ -88,6 +110,14 @@ module.exports = userRole => async (req, res, next) => {
         const tokens = tokenGeneratorHelper(keyMethod);
 
         await createTokenPairService({userId: user.userId, ...tokens}, transaction);
+
+        logger.info({
+            info: registerUserHistory,
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            userId: user.userId
+        });
+
         await addEventService({event: registerUserHistory, userId: user.userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));

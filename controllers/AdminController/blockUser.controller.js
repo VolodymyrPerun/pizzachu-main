@@ -5,7 +5,7 @@ const {
     historyActionEnum: {blockUserHistory},
     responseStatusCodesEnum: {CREATED, BAD_REQUEST},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK},
-    USER_STATUS:{BLOCKED}
+    USER_STATUS: {BLOCKED}
 } = require('../../constants');
 const {
     ErrorHandler,
@@ -16,6 +16,8 @@ const {
     oauthService: {deleteTokenByParamsService},
     historyService: {addEventService}
 } = require('../../service');
+const winston = require('../../logger/winston');
+const logger = winston(blockUserHistory);
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
@@ -23,8 +25,12 @@ module.exports = async (req, res, next) => {
         const {userId, status_id} = req.user;
 
         if (status_id === BLOCKED) {
-
-            return next (new ErrorHandler(
+            logger.error({
+                message: BAD_REQUEST_BLOCK_USER.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
+            return next(new ErrorHandler(
                 BAD_REQUEST,
                 BAD_REQUEST_BLOCK_USER.message,
                 BAD_REQUEST_BLOCK_USER.customCode
@@ -33,6 +39,14 @@ module.exports = async (req, res, next) => {
 
         await blockUserService(userId, transaction);
         await deleteTokenByParamsService({userId}, transaction);
+
+        logger.info({
+            info: blockUserHistory,
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            userId: userId
+        });
+
         await addEventService({event: blockUserHistory, userId: userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));

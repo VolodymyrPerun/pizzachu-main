@@ -15,6 +15,8 @@ const {
     userService: {getUserByIdService}
 } = require('../../service');
 const {ErrorHandler} = require("../../error");
+const winston = require('../../logger/winston');
+const logger = winston(updateProductHistory);
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
@@ -26,12 +28,40 @@ module.exports = async (req, res, next) => {
         } = req;
 
         const userFromDB = await getUserByIdService(userId, transaction);
-        await getProductByIdService(productId);
+        const ProductFromDB = await getProductByIdService(productId);
+        if (!ProductFromDB) {
+            logger.error({
+                message: NOT_UPDATE.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
+            return next(new ErrorHandler(
+                NOT_FOUND_CODE,
+                NOT_UPDATE.message,
+                NOT_UPDATE.customCode));
+        }
 
         const isUpdated = await updateProductService(productId, product, transaction);
 
-        if (!isUpdated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_UPDATE.message, NOT_UPDATE.customCode));
+        if (!isUpdated) {
+            logger.error({
+                message: NOT_UPDATE.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
+            return next(new ErrorHandler(
+                NOT_FOUND_CODE,
+                NOT_UPDATE.message,
+                NOT_UPDATE.customCode));
+        }
 
+        logger.info({
+            info: updateProductHistory,
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            userId,
+            productId
+        });
         await addEventService({event: updateProductHistory, userId: userId}, transaction);
         await sendMail(userFromDB.email, UPDATE_PRODUCT, {userFromDB, isProductCreated: product});
         await transaction.commit();

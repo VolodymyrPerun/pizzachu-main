@@ -5,8 +5,9 @@ const {
     requestHeadersEnum: {AUTHORIZATION},
     responseStatusCodesEnum: {UNAUTHORIZED, BAD_REQUEST},
     responseCustomErrorEnum: {NOT_VALID, NOT_VALID_TOKEN}
-
 } = require('../../constants');
+const winston = require('../../logger/winston');
+const logger = winston(NOT_VALID_TOKEN.message);
 
 module.exports = async (req, res, next) => {
     try {
@@ -22,6 +23,11 @@ module.exports = async (req, res, next) => {
         const userFromAccessToken = await getTokensByParamsService({access_token: authorizationToken});
 
         if (!userFromAccessToken) {
+            logger.error({
+                message: userFromAccessToken.details[0].message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
             return next(new ErrorHandler(
                 UNAUTHORIZED,
                 NOT_VALID_TOKEN.message,

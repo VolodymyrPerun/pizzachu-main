@@ -25,6 +25,8 @@ const {
     historyService: {addEventService},
     userService: {getUserByIdService, updateUserService}
 } = require('../../service');
+const winston = require('../../logger/winston');
+const logger = winston(changePasswordHistory);
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
@@ -37,6 +39,11 @@ module.exports = async (req, res, next) => {
         const user = await getUserByIdService(userId);
 
         if (!user) {
+            logger.error({
+                message: BAD_REQUEST_USER_NOT_PRESENT.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
             return next(new ErrorHandler(
                 BAD_REQUEST,
                 BAD_REQUEST_USER_NOT_PRESENT.message,
@@ -44,6 +51,11 @@ module.exports = async (req, res, next) => {
         }
 
         if (user.status_id === BLOCKED || user.status_id === DELETED) {
+            logger.error({
+                message: FORBIDDEN_USER_IS_BLOCKED.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
             return next(new ErrorHandler(
                 FORBIDDEN,
                 FORBIDDEN_USER_IS_BLOCKED.message,
@@ -55,6 +67,11 @@ module.exports = async (req, res, next) => {
         const {error} = Joi.validate({password, newPassword, repeatNewPassword}, changePasswordValidationSchema);
 
         if (error) {
+            logger.error({
+                message: error.details[0].message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
             return next(new ErrorHandler(
                 FORBIDDEN,
                 error.details[0].message,
@@ -62,6 +79,11 @@ module.exports = async (req, res, next) => {
         }
 
         if (newPassword !== repeatNewPassword) {
+            logger.error({
+                message: FORBIDDEN_PASSWORDS_NOT_MATCH.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
             return next(new ErrorHandler(
                 FORBIDDEN_PASSWORDS_NOT_MATCH,
                 FORBIDDEN_PASSWORDS_NOT_MATCH.message,
@@ -71,6 +93,14 @@ module.exports = async (req, res, next) => {
         const hashPassword = await HashPasswordHelper(newPassword);
 
         await updateUserService(userId, {password: hashPassword}, transaction);
+
+        logger.info({
+            info: changePasswordHistory,
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            userId: user.userId
+        });
+
         await addEventService({event: changePasswordHistory, userId: user.userId}, transaction);
         await sendMail(email, PASSWORD_UPDATE, {user, newPassword});
         await transaction.commit();

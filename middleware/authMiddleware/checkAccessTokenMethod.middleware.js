@@ -4,11 +4,12 @@ const {
     ErrorHandler,
     CustomErrorData: {
         BAD_REQUEST_YOU_ARE_NOT_ADMIN,
-        BAD_REQUEST_YOU_ARE_NOT_SELLER
+        BAD_REQUEST_YOU_ARE_NOT_SELLER,
     }
 } = require("../../error");
 const {
     JWT_METHOD: {ADMIN, CLIENT, SELLER},
+    responseCustomErrorEnum: {NOT_VALID_TOKEN},
     responseStatusCodesEnum: {BAD_REQUEST, UNAUTHORIZED},
     requestHeadersEnum: {AUTHORIZATION}
 } = require('../../constants');
@@ -17,6 +18,8 @@ const {
     JWT_SECRET,
     SELLER_ACCESS
 } = require('../../config');
+const winston = require('../../logger/winston');
+const logger = winston(NOT_VALID_TOKEN.message);
 
 module.exports = jwtMethod => async (req, res, next) => {
     let keyMethod = '';
@@ -42,12 +45,18 @@ module.exports = jwtMethod => async (req, res, next) => {
             keyMethodErrorData = BAD_REQUEST_YOU_ARE_NOT_SELLER;
             break;
         default:
-            return next(new ErrorHandler(BAD_REQUEST,
+            return next(new ErrorHandler(
+                BAD_REQUEST,
                 UNAUTHORIZED.message,
                 UNAUTHORIZED.customCode));
     }
 
         if (!authorizationToken) {
+            logger.error({
+                message: keyMethodErrorData.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
             return next(new ErrorHandler(
                 keyMethodErrorData,
                 keyMethodErrorData.message,

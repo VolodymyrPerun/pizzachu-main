@@ -15,20 +15,41 @@ const {
     productSectionService: {createProductSectionService},
     userService: {getUserByIdService}
 } = require("../../service");
+const winston = require('../../logger/winston');
+const logger = winston(createProductSectionHistory);
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
         const {
             body: productSection,
+            body: {id},
             user: {userId}
         } = req;
 
         const userFromDB = await getUserByIdService(userId);
 
-        const isProductTypeCreated = await createProductSectionService(productSection, transaction);
+        const isProductSectionCreated = await createProductSectionService(productSection, transaction);
 
-        if (!isProductTypeCreated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_CREATED.message, NOT_CREATED.customCode));
+        if (!isProductSectionCreated) {
+            logger.error({
+                message: NOT_CREATED.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
+            return next(new ErrorHandler(
+                NOT_FOUND_CODE,
+                NOT_CREATED.message,
+                NOT_CREATED.customCode));
+        }
+
+        logger.info({
+            info: createProductSectionHistory,
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            userId: userId,
+            productSectionId: id
+        });
 
         await addEventService({event: createProductSectionHistory, userId: userId}, transaction);
         await sendMail(userFromDB.email, CREATE_PRODUCT_SECTION, {userFromDB, productSection});

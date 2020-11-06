@@ -14,6 +14,8 @@ const {
     historyService: {addEventService},
     oauthService: {deleteTokenByParamsService}
 } = require('../../service');
+const winston = require('../../logger/winston');
+const logger = winston(logoutUserHistory);
 
 
 module.exports = async (req, res, next) => {
@@ -22,6 +24,11 @@ module.exports = async (req, res, next) => {
         const access_token = req.get(AUTHORIZATION);
 
         if (!access_token) {
+            logger.error({
+                message: NOT_VALID.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
             return next(new ErrorHandler(
                 BAD_REQUEST,
                 NOT_VALID.message,
@@ -30,9 +37,12 @@ module.exports = async (req, res, next) => {
 
         const user = await getUserFromAccessTokenService(access_token);
 
-        console.log(user);
-
         if (!user) {
+            logger.error({
+                message: BAD_REQUEST_USER_NOT_PRESENT.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
             return next(new ErrorHandler(
                 BAD_REQUEST,
                 BAD_REQUEST_USER_NOT_PRESENT.message,
@@ -40,6 +50,14 @@ module.exports = async (req, res, next) => {
         }
 
         await deleteTokenByParamsService({access_token}, transaction);
+
+        logger.info({
+            info: logoutUserHistory,
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            userId: user.userId
+        });
+
         await addEventService({event: logoutUserHistory, userId: user.userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));

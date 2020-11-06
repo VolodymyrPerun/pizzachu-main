@@ -1,10 +1,13 @@
 const {
+    historyActionEnum: {getAllUsersHistory},
     responseStatusCodesEnum: {NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_GET},
     USER_STATUS: {ACTIVE, BLOCKED}
 } = require('../../constants');
 const {ErrorHandler} = require("../../error");
 const {userService: {getUsersService}} = require("../../service");
+const winston = require('../../logger/winston');
+const logger = winston(getAllUsersHistory);
 
 
 module.exports = userStatus => async (req, res, next) => {
@@ -24,7 +27,17 @@ module.exports = userStatus => async (req, res, next) => {
 
         users = await getUsersService([keyStatus]);
 
-        if (!users) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_GET.message, NOT_GET.customCode));
+        if (!users) {
+            logger.error({
+                message: NOT_GET.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
+            return next(new ErrorHandler(
+                NOT_FOUND_CODE,
+                NOT_GET.message,
+                NOT_GET.customCode));
+        }
 
         res.json(users).end();
     } catch (e) {

@@ -7,13 +7,15 @@ const {
     responseStatusCodesEnum: {BAD_REQUEST},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK}
 } = require('../../constants');
-const {ErrorHandler, CustomErrorData: {BAD_REQUEST_PRODUCT_TYPE_NOT_PRESENT}} = require("../../error");
+const {ErrorHandler, CustomErrorData: {BAD_REQUEST_PRODUCT_SECTION_NOT_PRESENT}} = require("../../error");
 const {
     emailService: {sendMail},
     historyService: {addEventService},
     productSectionService: {deleteProductSectionByParamsService, getProductSectionByIdService},
     userService: {getUserByIdService}
 } = require("../../service");
+const winston = require('../../logger/winston');
+const logger = winston(deleteProductSectionHistory);
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
@@ -27,11 +29,24 @@ module.exports = async (req, res, next) => {
         const productSection = await getProductSectionByIdService(id, transaction);
 
         if (!productSection) {
+            logger.error({
+                message: BAD_REQUEST_PRODUCT_SECTION_NOT_PRESENT.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
             return next(new ErrorHandler(
                 BAD_REQUEST,
-                BAD_REQUEST_PRODUCT_TYPE_NOT_PRESENT.message,
-                BAD_REQUEST_PRODUCT_TYPE_NOT_PRESENT.customCode));
+                BAD_REQUEST_PRODUCT_SECTION_NOT_PRESENT.message,
+                BAD_REQUEST_PRODUCT_SECTION_NOT_PRESENT.customCode));
         }
+
+        logger.info({
+            info: deleteProductSectionHistory,
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            userId: userId,
+            productSectionId: id
+        });
 
         await deleteProductSectionByParamsService({id}, transaction);
         await addEventService({event: deleteProductSectionHistory, userId: userId}, transaction);

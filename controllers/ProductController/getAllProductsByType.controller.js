@@ -1,10 +1,13 @@
 const {
+    historyActionEnum: {getAllProductsHistory},
     responseStatusCodesEnum: {NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_GET},
     PRODUCT_TYPE: {CHAINS, DESSERTS, DRINKS, MISO_SOUPS, PIZZA, ROLES, SALADS, SUPPLEMENTS, SUSHI}
 } = require('../../constants');
 const {ErrorHandler} = require("../../error");
 const {productService: {getAllProductsByTypeService}} = require("../../service");
+const winston = require('../../logger/winston');
+const logger = winston(getAllProductsHistory);
 
 module.exports = productType => async (req, res, next) => {
     let keyType = '';
@@ -45,7 +48,17 @@ module.exports = productType => async (req, res, next) => {
 
         products = await getAllProductsByTypeService([keyType]);
 
-        if (!products) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_GET.message, NOT_GET.customCode));
+        if (!products) {
+            logger.error({
+                message: NOT_GET.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
+            return next(new ErrorHandler(
+                NOT_FOUND_CODE,
+                NOT_GET.message,
+                NOT_GET.customCode));
+        }
 
         await res.json(products).end();
 

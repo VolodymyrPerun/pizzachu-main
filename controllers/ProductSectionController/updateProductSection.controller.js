@@ -15,6 +15,8 @@ const {
     userService: {getUserByIdService}
 } = require('../../service');
 const {ErrorHandler} = require("../../error");
+const winston = require('../../logger/winston');
+const logger = winston(updateProductSectionHistory);
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
@@ -27,9 +29,39 @@ module.exports = async (req, res, next) => {
 
         const userFromDB = await getUserByIdService(userId);
         const updatedProductSection = await getProductSectionByIdService(id);
+        if (!updatedProductSection) {
+            logger.error({
+                message: NOT_UPDATE.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
+            return next(new ErrorHandler(
+                NOT_FOUND_CODE,
+                NOT_UPDATE.message,
+                NOT_UPDATE.customCode));
+        }
+
         const isUpdated = await updateProductSectionService(productSection, {id}, transaction);
 
-        if (!isUpdated) return next(new ErrorHandler(NOT_FOUND_CODE, NOT_UPDATE.message, NOT_UPDATE.customCode));
+        if (!isUpdated) {
+            logger.error({
+                message: NOT_UPDATE.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
+            return next(new ErrorHandler(
+                NOT_FOUND_CODE,
+                NOT_UPDATE.message,
+                NOT_UPDATE.customCode));
+        }
+
+        logger.info({
+            info: updateProductSectionHistory,
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            userId: userId,
+            productSectionId: id
+        });
 
         await addEventService({event: updateProductSectionHistory, userId: userId}, transaction);
         await sendMail(userFromDB.email, UPDATE_PRODUCT_SECTION, {userFromDB, updatedProductSection, productSection});

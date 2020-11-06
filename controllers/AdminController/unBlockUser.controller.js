@@ -16,6 +16,8 @@ const {
     oauthService: {deleteTokenByParamsService},
     historyService: {addEventService}
 } = require('../../service');
+const winston = require('../../logger/winston');
+const logger = winston(unblockUserHistory);
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
@@ -23,7 +25,11 @@ module.exports = async (req, res, next) => {
         const {userId, status_id} = req.user;
 
         if (status_id === ACTIVE) {
-
+            logger.error({
+                message: BAD_REQUEST_BLOCK_USER.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
             return next (new ErrorHandler(
                 BAD_REQUEST,
                 BAD_REQUEST_BLOCK_USER.message,
@@ -33,6 +39,14 @@ module.exports = async (req, res, next) => {
 
         await unBlockUserService(userId, transaction);
         await deleteTokenByParamsService({userId}, transaction);
+
+        logger.info({
+            info: unblockUserHistory,
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            userId: userId
+        });
+
         await addEventService({event: unblockUserHistory, userId: userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
