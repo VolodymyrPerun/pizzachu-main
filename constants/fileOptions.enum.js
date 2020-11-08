@@ -10,4 +10,4 @@ module.exports = {
         'application/msword', //doc
         'application/pdf'
     ]
-}
+};

@@ -7,4 +7,4 @@ module.exports = {
     HOT_ROLES: 6,
     MEAT: 7,
     PROMOTIONAL: 8
-}
+};

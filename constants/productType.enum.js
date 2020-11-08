@@ -8,4 +8,4 @@ module.exports = {
     DESSERTS: 7,
     DRINKS: 8,
     SUPPLEMENTS: 9
-}
+};

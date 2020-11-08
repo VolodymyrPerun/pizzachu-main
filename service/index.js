@@ -1,5 +1,6 @@
 module.exports.adminService = require('./adminService');
 module.exports.authService = require('./authService');
+module.exports.cartService = require('./cartService');
 module.exports.emailService = require('./emailService');
 module.exports.historyService = require('./historyService');
 module.exports.oauthService = require('./oauthService');
