@@ -12,7 +12,7 @@ const {
     },
 } = require('../../controllers');
 const {
-    adminMiddleware: {getAdminFromAccessTokenMiddleware},
+    adminMiddleware: {getUserFromAccessTokenMiddleware},
     authMiddleware: {checkAccessTokenMethodMiddleware},
     productTypeMiddleware: {
         checkProductTypeValidityMiddleware,
@@ -22,17 +22,17 @@ const {
 
 productTypeRouter.post('/create-product-type',
     checkAccessTokenMethodMiddleware(ADMIN),
-    getAdminFromAccessTokenMiddleware,
+    getUserFromAccessTokenMiddleware,
     checkProductTypeValidityMiddleware,
     createProductType);
 productTypeRouter.put('/update-product-type/:id',
     checkAccessTokenMethodMiddleware(ADMIN),
-    getAdminFromAccessTokenMiddleware,
+    getUserFromAccessTokenMiddleware,
     checkProductTypeValidityIfUpdateMiddleware,
     updateProductType);
 productTypeRouter.delete('/delete-product-type/:id',
     checkAccessTokenMethodMiddleware(ADMIN),
-    getAdminFromAccessTokenMiddleware,
+    getUserFromAccessTokenMiddleware,
     deleteProductTypeByParams);
 productTypeRouter.get('/get-all-product-types', getAllProductTypes);
 

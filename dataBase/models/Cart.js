@@ -1,4 +1,4 @@
-const {DB_TABLE_NAME: {CART}} = require('../../constants');
+const {DB_TABLE_NAME: {CART}, CART_STATUS: {IN_PROGRESS}} = require('../../constants');
 
 module.exports = (sequelize, DataTypes) => {
     const Cart = sequelize.define(CART, {
@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: true
         },
         products: {
-            type: DataTypes.STRING,
-            allowNull: false
+            type: DataTypes.STRING
         },
         status_id: {
             type: DataTypes.INTEGER,
+            defaultValue: IN_PROGRESS,
             allowNull: false,
             foreignKey: true
         },

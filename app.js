@@ -39,20 +39,22 @@ app.set('views', path.join(__dirname, 'public'));
 const {
     AdminRouter,
     AuthRouter,
-    UserRouter,
+    CartRouter,
     ProductRouter,
-    SellerRouter,
     ProductTypeRouter,
-    ProductSectionRouter
+    ProductSectionRouter,
+    SellerRouter,
+    UserRouter
 } = require('./routes');
 
 app.use('/admin&blablabla', AdminRouter);
 app.use('/auth', AuthRouter);
+app.use('/cart', CartRouter);
 app.use('/sellers', SellerRouter);
-app.use('/users', UserRouter);
 app.use('/products', ProductRouter);
 app.use('/product-types', ProductTypeRouter);
 app.use('/product-sections', ProductSectionRouter);
+app.use('/users', UserRouter);
 
 
 

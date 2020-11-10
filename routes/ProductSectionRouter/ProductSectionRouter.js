@@ -12,7 +12,7 @@ const {
     },
 } = require('../../controllers');
 const {
-    adminMiddleware: {getAdminFromAccessTokenMiddleware},
+    adminMiddleware: {getUserFromAccessTokenMiddleware},
     authMiddleware: {checkAccessTokenMethodMiddleware},
     productSectionMiddleware: {
         checkProductSectionValidityMiddleware,
@@ -22,17 +22,17 @@ const {
 
 productSectionRouter.post('/create-product-section',
     checkAccessTokenMethodMiddleware(ADMIN),
-    getAdminFromAccessTokenMiddleware,
+    getUserFromAccessTokenMiddleware,
     checkProductSectionValidityMiddleware,
     createProductSection);
 productSectionRouter.put('/update-product-section/:id',
     checkAccessTokenMethodMiddleware(ADMIN),
-    getAdminFromAccessTokenMiddleware,
+    getUserFromAccessTokenMiddleware,
     checkProductSectionValidityIfUpdateMiddleware,
     updateProductSection);
 productSectionRouter.delete('/delete-product-section/:id',
     checkAccessTokenMethodMiddleware(ADMIN),
-    getAdminFromAccessTokenMiddleware,
+    getUserFromAccessTokenMiddleware,
     deleteProductSectionByParams);
 productSectionRouter.get('/get-all-product-sections', getAllProductSections);
 

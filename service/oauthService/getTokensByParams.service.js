@@ -9,7 +9,7 @@ module.exports = async token => {
         where: token,
         include: [{
             model: UserModel,
-            attributes: ['userId', 'email', 'name', 'surname', 'age', 'phone', 'city', 'address', 'user_photo']
+            attributes: ['userId', 'email', 'name', 'surname', 'age', 'phone', 'city', 'address', 'user_photo', 'status_id']
         }],
         nest: true,
         raw: true

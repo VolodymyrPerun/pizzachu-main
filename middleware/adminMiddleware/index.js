@@ -1,1 +1,1 @@
-module.exports.getAdminFromAccessTokenMiddleware = require('./getAdminFromAccessToken.middleware');
+module.exports.getUserFromAccessTokenMiddleware = require('./getUserFromAccessToken.middleware');

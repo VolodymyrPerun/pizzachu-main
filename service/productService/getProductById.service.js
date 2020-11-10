@@ -7,6 +7,6 @@ module.exports = async productId => {
 
     return ProductModel.findByPk(productId, {
         raw: true,
-        attributes: ['status_id']
+        // attributes: ['status_id']
     });
 };

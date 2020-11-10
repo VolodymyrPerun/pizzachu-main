@@ -9,6 +9,7 @@ module.exports = async (updatedCart, id, transaction) => {
         where: id,
         returning: true,
         plain: true,
-        raw: true
+        raw: true,
+        new: true
     }, transaction);
 };

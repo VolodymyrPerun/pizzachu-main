@@ -14,7 +14,7 @@ const {
     },
 } = require('../../controllers');
 const {
-    adminMiddleware: {getAdminFromAccessTokenMiddleware},
+    adminMiddleware: {getUserFromAccessTokenMiddleware},
     authMiddleware: {checkAccessTokenMethodMiddleware},
     fileMiddleware: {checkFilesMiddleware, checkUserPhotoCountMiddleware},
     productMiddleware: {
@@ -25,19 +25,19 @@ const {
 
 productRouter.post('/create-product',
     checkAccessTokenMethodMiddleware(ADMIN),
-    getAdminFromAccessTokenMiddleware,
+    getUserFromAccessTokenMiddleware,
     checkProductValidityMiddleware,
     checkFilesMiddleware,
     checkUserPhotoCountMiddleware,
     createProduct);
 productRouter.put('/update-product/:productId',
     checkAccessTokenMethodMiddleware(ADMIN),
-    getAdminFromAccessTokenMiddleware,
+    getUserFromAccessTokenMiddleware,
     checkProductValidityIfUpdateMiddleware,
     updateProduct);
 productRouter.delete('/delete-product/:productId',
     checkAccessTokenMethodMiddleware(ADMIN),
-    getAdminFromAccessTokenMiddleware,
+    getUserFromAccessTokenMiddleware,
     deleteProductByParams);
 productRouter.get('/get-all-products', getAllProducts);
 productRouter.get('/chains', getAllProductsByType(CHAINS));

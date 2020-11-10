@@ -5,6 +5,7 @@ const {
     CustomErrorData: {
         BAD_REQUEST_YOU_ARE_NOT_ADMIN,
         BAD_REQUEST_YOU_ARE_NOT_SELLER,
+        BAD_REQUEST_USER_NOT_PRESENT
     }
 } = require("../../error");
 const {
@@ -37,7 +38,7 @@ module.exports = jwtMethod => async (req, res, next) => {
         case CLIENT:
             keyMethod = CLIENT;
             secretWord = JWT_SECRET;
-            keyMethodErrorData = UNAUTHORIZED;
+            keyMethodErrorData = BAD_REQUEST_USER_NOT_PRESENT;
             break;
         case SELLER:
             keyMethod = SELLER;
@@ -47,8 +48,8 @@ module.exports = jwtMethod => async (req, res, next) => {
         default:
             return next(new ErrorHandler(
                 BAD_REQUEST,
-                UNAUTHORIZED.message,
-                UNAUTHORIZED.customCode));
+                BAD_REQUEST_USER_NOT_PRESENT.message,
+                BAD_REQUEST_USER_NOT_PRESENT.customCode));
     }
 
         if (!authorizationToken) {
@@ -58,7 +59,7 @@ module.exports = jwtMethod => async (req, res, next) => {
                 time: new Date().toLocaleTimeString()
             });
             return next(new ErrorHandler(
-                keyMethodErrorData,
+                BAD_REQUEST,
                 keyMethodErrorData.message,
                 keyMethodErrorData.customCode));
         }
@@ -66,9 +67,9 @@ module.exports = jwtMethod => async (req, res, next) => {
         jwt.verify(authorizationToken, secretWord, err => {
         if (err) {
             return next(new ErrorHandler(
-                keyMethodErrorData,
-                [keyMethodErrorData].message,
-                [keyMethodErrorData].customCode));
+                BAD_REQUEST,
+                BAD_REQUEST_USER_NOT_PRESENT.message,
+                BAD_REQUEST_USER_NOT_PRESENT.customCode));
         }
     });
 

@@ -66,6 +66,10 @@ module.exports = {
         message: 'Wrong password',
         customCode: 40014
     },
+    BAD_REQUEST_USER_NOT_ACTIVE: {
+        message: 'User is not active',
+        customCode: 40015
+    },
 
 
     //401 error code
