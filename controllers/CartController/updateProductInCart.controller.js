@@ -44,7 +44,13 @@ module.exports = async (req, res, next) => {
 
         const price = product.price;
 
-        const sum = price * count;
+        let sum;
+
+        if (!count || count < 0) {
+            sum = price * 1;
+        } else {
+            sum = price * count;
+        }
 
         await updateCartService({count, sum, updated_at: Date.now()}, {userId, productId}, transaction);
 

@@ -15,11 +15,7 @@ const {
 const {
     adminMiddleware: {getUserFromAccessTokenMiddleware},
     authMiddleware: {checkAccessTokenMethodMiddleware},
-    cartMiddleware: {
-        checkIsUserProceedCartExistMiddleware,
-        checkUserProceedCartValidityIfUpdateMiddleware,
-        checkUserProceedCartValidityMiddleware
-    },
+    cartMiddleware: {checkIsUserProceedCartExistMiddleware},
     productMiddleware: {checkIsProductExistMiddleware,}
 } = require('./../../middleware');
 

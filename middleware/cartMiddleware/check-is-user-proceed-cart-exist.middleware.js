@@ -1,14 +1,11 @@
 const chalk = require('chalk');
 const {transactionInstance} = require('../../dataBase').getInstance();
-const Joi = require('joi');
 
-const {cartValidator:{CartProductValidationSchema}} = require("../../validators");
 const {ErrorHandler, CustomErrorData: {BAD_REQUEST_USER_CART_ALREADY_PRESENT}} = require('../../error');
 const {cartService: {findUserProceedCartService}, historyService: {addEventService},} = require("../../service");
 const {
     historyActionEnum: {addProductToCartHistory},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK},
-    responseCustomErrorEnum: {NOT_VALID},
     responseStatusCodesEnum: {BAD_REQUEST}
 } = require("../../constants");
 
@@ -25,6 +22,8 @@ module.exports = async (req, res, next) => {
 
         const userProceedCart = await findUserProceedCartService({userId, productId});
 
+        console.log(userProceedCart);
+
         if (userProceedCart) {
             logger.error({
                 message: BAD_REQUEST_USER_CART_ALREADY_PRESENT.message,
@@ -36,20 +35,6 @@ module.exports = async (req, res, next) => {
                 BAD_REQUEST_USER_CART_ALREADY_PRESENT.message,
                 BAD_REQUEST_USER_CART_ALREADY_PRESENT.customCode
             ));
-        }
-
-        const {error} = Joi.validate(userProceedCart, CartProductValidationSchema);
-
-        if (error) {
-            logger.error({
-                message: error.details[0].message,
-                date: new Date().toLocaleDateString(),
-                time: new Date().toLocaleTimeString()
-            });
-            return next(new ErrorHandler(
-                BAD_REQUEST,
-                error.details[0].message,
-                NOT_VALID.customCode));
         }
 
         await addEventService({event: addProductToCartHistory, userId: userId}, transaction);
