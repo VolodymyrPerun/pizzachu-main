@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
     try {
         const user = req.body;
 
-        const {error} = Joi.validate(user, userValidationSchema)
+        const {error} = Joi.validate(user, userValidationSchema);
 
         if (error) {
             return next(new ErrorHandler(

@@ -20,20 +20,20 @@ const {
     }
 } = require('./../../middleware');
 
-productSectionRouter.post('/create-product-section',
+productSectionRouter.post('/',
     checkAccessTokenMethodMiddleware(ADMIN),
     getUserFromAccessTokenMiddleware,
     checkProductSectionValidityMiddleware,
     createProductSection);
-productSectionRouter.put('/update-product-section/:id',
+productSectionRouter.put('/:id',
     checkAccessTokenMethodMiddleware(ADMIN),
     getUserFromAccessTokenMiddleware,
     checkProductSectionValidityIfUpdateMiddleware,
     updateProductSection);
-productSectionRouter.delete('/delete-product-section/:id',
+productSectionRouter.delete('/:id',
     checkAccessTokenMethodMiddleware(ADMIN),
     getUserFromAccessTokenMiddleware,
     deleteProductSectionByParams);
-productSectionRouter.get('/get-all-product-sections', getAllProductSections);
+productSectionRouter.get('/', getAllProductSections);
 
 module.exports = productSectionRouter;

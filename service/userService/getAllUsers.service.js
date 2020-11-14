@@ -12,7 +12,6 @@ module.exports = async (status_id, transaction) => {
         where: {
             status_id
         },
-        attributes: ['userId', 'name', 'surname'],
         include: [
             {
                 model: UserGenderModel,

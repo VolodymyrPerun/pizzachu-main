@@ -23,23 +23,23 @@ const {
     }
 } = require('./../../middleware');
 
-productRouter.post('/create-product',
+productRouter.post('/',
     checkAccessTokenMethodMiddleware(ADMIN),
     getUserFromAccessTokenMiddleware,
     checkProductValidityMiddleware,
     checkFilesMiddleware,
     checkUserPhotoCountMiddleware,
     createProduct);
-productRouter.put('/update-product/:productId',
+productRouter.put('/:productId',
     checkAccessTokenMethodMiddleware(ADMIN),
     getUserFromAccessTokenMiddleware,
     checkProductValidityIfUpdateMiddleware,
     updateProduct);
-productRouter.delete('/delete-product/:productId',
+productRouter.delete('/:productId',
     checkAccessTokenMethodMiddleware(ADMIN),
     getUserFromAccessTokenMiddleware,
     deleteProductByParams);
-productRouter.get('/get-all-products', getAllProducts);
+productRouter.get('/', getAllProducts);
 productRouter.get('/chains', getAllProductsByType(CHAINS));
 productRouter.get('/desserts', getAllProductsByType(DESSERTS));
 productRouter.get('/drinks',getAllProductsByType(DRINKS));

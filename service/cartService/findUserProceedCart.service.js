@@ -5,11 +5,15 @@ const {
     CART_STATUS: {IN_PROGRESS}
 } = require('../../constants');
 
-module.exports = async userId => {
+module.exports = async options => {
     const CartToFindModel = await db.getModel(CART);
 
-    return CartToFindModel.findByPk(userId, {
-        status_id: IN_PROGRESS,
-        raw: true,
-    });
+    return CartToFindModel.findOne(
+        {
+            where: options
+        }, {
+            status_id: IN_PROGRESS,
+            new: true,
+            raw: true
+        });
 };

@@ -1,6 +1,6 @@
 const {ErrorHandler, CustomErrorData: {BAD_REQUEST_PRODUCT_NOT_PRESENT}} = require('../../error');
 const {productService: {getProductByIdService}} = require("../../service");
-const {responseStatusCodesEnum: {BAD_REQUEST}} = require("../../constants");
+const {responseStatusCodesEnum: {BAD_REQUEST}, PRODUCT_STATUS: {DELETED}} = require("../../constants");
 
 module.exports = async (req, res, next) => {
     try {
@@ -16,7 +16,7 @@ module.exports = async (req, res, next) => {
 
         const product = await getProductByIdService(productId);
 
-        if (!product) {
+        if (!product || product.status_id === DELETED) {
             return next(new ErrorHandler(
                 BAD_REQUEST,
                 BAD_REQUEST_PRODUCT_NOT_PRESENT.message,

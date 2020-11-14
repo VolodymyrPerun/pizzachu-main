@@ -107,6 +107,15 @@ module.exports = {
         message: 'Product section is not present',
         customCode: 40017
     },
+    BAD_REQUEST_USER_CART_NOT_PRESENT: {
+        message: 'User cart is not present',
+        customCode: 40018
+    },
+    BAD_REQUEST_USER_CART_ALREADY_PRESENT: {
+        message: 'User cart is already present',
+        customCode: 40019
+    },
+
 
     //403 error code
 

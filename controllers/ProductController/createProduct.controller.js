@@ -12,7 +12,7 @@ const {
     PRODUCT_STATUS: {IN_STOCK},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK},
 } = require('../../constants');
-const ErrorHandler = require("../../error/ErrorHandler");
+const {ErrorHandler} = require("../../error");
 const {
     emailService: {sendMail},
     historyService: {addEventService},

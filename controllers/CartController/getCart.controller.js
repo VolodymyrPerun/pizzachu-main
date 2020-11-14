@@ -4,17 +4,21 @@ const {
     responseCustomErrorEnum: {NOT_GET}
 } = require('../../constants');
 const {ErrorHandler} = require("../../error");
-const {productTypeService: {getAllProductTypesService}} = require("../../service");
+const {cartService: {getCartService}} = require("../../service");
 const winston = require('../../logger/winston');
+const {calculateCartPriceHelper} = require("../../helpers");
 const logger = winston(getAllProductTypesHistory);
 
 module.exports = async (req, res, next) => {
-    let productTypes = [];
+    let cartData = {};
     try {
+        const {
+            user: {userId}
+        } = req;
 
-        productTypes = await getAllProductTypesService();
+        const cart = await getCartService(userId);
 
-        if (!productTypes) {
+        if (!cart) {
             logger.error({
                 message: NOT_GET.message,
                 date: new Date().toLocaleDateString(),
@@ -26,7 +30,12 @@ module.exports = async (req, res, next) => {
                 NOT_GET.customCode));
         }
 
-        await res.json(productTypes).end();
+        const total = await calculateCartPriceHelper(cart);
+
+        cartData.cart = cart;
+        cartData.total = total;
+
+        await res.json(cartData);
 
     } catch (e) {
         next(new ErrorHandler(e.status, e.message, e.customCode));

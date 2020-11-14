@@ -12,7 +12,7 @@ const {
             checkUserPhotoCountMiddleware
         }
 }
-    = require('../../middleware')
+    = require('../../middleware');
 
 const {
     userController: {
@@ -20,7 +20,7 @@ const {
     }
 } = require('../../controllers');
 
-router.post('/registerSeller',
+router.post('/',
     checkUserValidityMiddleware,
     checkFilesMiddleware,
     checkUserPhotoCountMiddleware,

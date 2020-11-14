@@ -1,6 +1,5 @@
 module.exports = {
     CART: 'Cart',
-    CART_PRODUCT: 'CartProduct',
     CART_STATUS: 'CartStatus',
     GENDER: 'Gender',
     HISTORY_ACTION: 'HistoryAction',

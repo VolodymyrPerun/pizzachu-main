@@ -10,6 +10,10 @@ module.exports = Joi.object().keys({
     phone: Joi.string().regex(PHONE_NUMBER),
     age: Joi.number().integer().min(18).max(120),
     city: Joi.string(),
-    address: Joi.string(),
+    street: Joi.string(),
+    house: Joi.string(),
+    apartment: Joi.string(),
+    entrance: Joi.string(),
+    floor: Joi.string(),
     user_photo: Joi.string()
 });

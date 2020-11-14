@@ -23,7 +23,7 @@ const {
 const {
     adminController: {
         blockUser,
-        unBlockUser
+        unlockUser
     },
     userController: {
         createUser,
@@ -31,26 +31,24 @@ const {
     }
 } = require('../../controllers');
 
-router.post('/register-admin',
+router.post('/',
     checkUserValidityMiddleware,
     checkFilesMiddleware,
     checkUserPhotoCountMiddleware,
     createUser(ADMIN));
-router.put('/update-profile/:userId',
+
+router.use('/',
     checkAccessTokenMethodMiddleware(ADMIN),
-    getUserFromAccessTokenMiddleware,
+    getUserFromAccessTokenMiddleware);
+
+router.put('/:userId',
     checkUserValidityIfUpdateMiddleware,
     updateUser);
-router.put('/users/:userId/block-user',
-    checkAccessTokenMethodMiddleware(ADMIN),
-    getUserFromAccessTokenMiddleware,
+router.put('/block/:userId',
     checkIsUserExistMiddleware,
     blockUser);
-router.put('/users/:userId/unblock-user',
-    checkAccessTokenMethodMiddleware(ADMIN),
-    getUserFromAccessTokenMiddleware,
+router.put('/unlock/:userId',
     checkIsUserExistMiddleware,
-    unBlockUser);
-
+    unlockUser);
 
 module.exports = router;

@@ -13,8 +13,17 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             foreignKey: true
         },
-        products: {
-            type: DataTypes.STRING
+        productId: {
+            type: DataTypes.INTEGER,
+            foreignKey: true
+        },
+        price: {
+            type: DataTypes.INTEGER,
+            defaultValue: 0
+        },
+        count: {
+            type: DataTypes.INTEGER,
+            defaultValue: 1
         },
         status_id: {
             type: DataTypes.INTEGER,
@@ -44,9 +53,11 @@ module.exports = (sequelize, DataTypes) => {
 
     const User = sequelize.import('./User');
     const CartStatus = sequelize.import('./CartStatus');
+    const Product = sequelize.import('./Product');
 
     Cart.belongsTo(User, {foreignKey: 'userId'});
     Cart.belongsTo(CartStatus, {foreignKey: 'status_id'});
+    Cart.belongsTo(Product, {foreignKey: 'productId'});
 
     return Cart;
 };

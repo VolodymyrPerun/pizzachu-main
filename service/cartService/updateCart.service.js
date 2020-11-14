@@ -1,15 +1,14 @@
 const db = require('../../dataBase').getInstance();
 
-const {DB_TABLE_NAME: {CART}} = require('../../constants')
+const {DB_TABLE_NAME: {CART}} = require('../../constants');
 
-module.exports = async (updatedCart, id, transaction) => {
+module.exports = async (params, options, transaction) => {
     const CartToUpdateModel = await db.getModel(CART);
 
-    return CartToUpdateModel.update(updatedCart, {
-        where: id,
+    return CartToUpdateModel.update(params, {
+        where: options,
         returning: true,
         plain: true,
-        raw: true,
-        new: true
+        raw: true
     }, transaction);
 };

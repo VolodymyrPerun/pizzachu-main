@@ -30,25 +30,25 @@ const {
     }
 } = require('../../controllers');
 
-router.post('/register',
+router.post('/',
     checkUserValidityMiddleware,
     checkFilesMiddleware,
     checkUserPhotoCountMiddleware,
     createUser(CLIENT));
 
-router.get('/getAllActiveUsers', getAllUsers(ACTIVE));
-router.get('/getAllBlockedUsers', getAllUsers(BLOCKED));
+router.get('/active', getAllUsers(ACTIVE));
+router.get('/blocked', getAllUsers(BLOCKED));
 router.get('/:userId',
     checkAccessTokenMethodMiddleware(CLIENT),
     getUserFromAccessTokenMiddleware,
     checkIsUserExistMiddleware,
     getUserById);
-router.put('/update-profile',
+router.put('/',
     checkAccessTokenMethodMiddleware(CLIENT),
     getUserFromAccessTokenMiddleware,
     checkUserValidityIfUpdateMiddleware,
     updateUser);
-router.delete('/delete-profile/:userId',
+router.delete('/:userId',
     checkAccessTokenMethodMiddleware(CLIENT),
     getUserFromAccessTokenMiddleware,
     deleteUserByParams);

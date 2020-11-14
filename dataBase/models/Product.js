@@ -44,7 +44,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         stockCount: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+            defaultValue: 100
         },
         product_photo: {
             type: DataTypes.STRING,

@@ -1,7 +1,7 @@
-module.exports = async (cartProducts) => {
-    return cartProducts.reduce((previousValue, currentValue) => {
-        previousValue += currentValue.price * currentValue.count;
+module.exports = async cartProducts => {
 
-        return previousValue;
+    return await cartProducts.reduce((previousValue, currentValue) => {
+        return previousValue += currentValue.sum;
+        
     }, 0);
 };

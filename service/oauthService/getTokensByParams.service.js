@@ -8,8 +8,7 @@ module.exports = async token => {
     return OauthModel.findOne({
         where: token,
         include: [{
-            model: UserModel,
-            attributes: ['userId', 'email', 'name', 'surname', 'age', 'phone', 'city', 'address', 'user_photo', 'status_id']
+            model: UserModel
         }],
         nest: true,
         raw: true

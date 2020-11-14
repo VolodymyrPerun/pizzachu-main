@@ -42,9 +42,22 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: false
             },
-            address: {
+            street: {
                 type: DataTypes.STRING,
                 allowNull: false
+            },
+            house: {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
+            apartment: {
+                type: DataTypes.STRING
+            },
+            entrance: {
+                type: DataTypes.STRING
+            },
+            floor: {
+                type: DataTypes.STRING
             },
             status_id: {
                 type: DataTypes.INTEGER,
@@ -79,7 +92,6 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsTo(Gender, {foreignKey: 'gender_id'});
     User.belongsTo(UserRole, {foreignKey: 'role_id'});
     User.belongsTo(UserStatus, {foreignKey: 'status_id'});
-
 
     return User;
 };

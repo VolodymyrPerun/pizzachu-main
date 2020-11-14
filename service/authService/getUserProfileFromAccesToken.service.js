@@ -9,7 +9,6 @@ module.exports = async userId => {
 
     return UserModel.findOne({
         where: userId,
-        // attributes: ['userId', 'email', 'name', 'surname', 'age', 'phone', 'city', 'address', 'user_photo'],
         include: [
             {
                 model: RoleModel,

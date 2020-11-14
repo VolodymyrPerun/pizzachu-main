@@ -24,36 +24,36 @@ const {
         }
 } = require('../../controllers');
 
-router.post('/auth-admin', authUser(ADMIN));
-router.post('/auth-client', authUser(CLIENT));
-router.post('/auth-seller', authUser(SELLER));
+router.post('/admin', authUser(ADMIN));
+router.post('/client', authUser(CLIENT));
+router.post('/seller', authUser(SELLER));
 router.post('/logout-admin', checkAccessTokenMethodMiddleware(ADMIN), logoutUser);
 router.post('/logout-client', checkAccessTokenMethodMiddleware(CLIENT), logoutUser);
 router.post('/logout-seller', checkAccessTokenMethodMiddleware(SELLER), logoutUser);
-router.post('/auth-admin/refresh',
+router.post('/refresh-admin',
     checkRefreshTokenMethodMiddleware(ADMIN),
     getUserFromRefreshTokenMiddleware,
     refreshToken(ADMIN));
-router.post('/auth-client/refresh',
+router.post('/refresh-client',
     getUserFromRefreshTokenMiddleware,
     refreshToken(CLIENT));
-router.post('/auth-seller/refresh',
+router.post('/refresh-seller',
     getUserFromRefreshTokenMiddleware,
     refreshToken(SELLER));
 router.put(
-    '/auth-admin/password-change',
+    '/admin/password-change',
     checkAccessTokenMethodMiddleware(ADMIN),
     getUserFromAccessTokenMiddleware,
     changePassword
 );
 router.put(
-    '/auth-client/password-change',
+    '/client/password-change',
     checkAccessTokenMethodMiddleware(CLIENT),
     getUserFromAccessTokenMiddleware,
     changePassword
 );
 router.put(
-    '/auth-seller/password-change',
+    '/seller/password-change',
     checkAccessTokenMethodMiddleware(SELLER),
     getUserFromAccessTokenMiddleware,
     changePassword

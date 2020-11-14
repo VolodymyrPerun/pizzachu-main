@@ -1,56 +1,62 @@
 const chalk = require('chalk');
-
 const {transactionInstance} = require('../../dataBase').getInstance();
+
 const {
-    emailActionEnum: {DELETE_PRODUCT_TYPE},
-    historyActionEnum: {deleteProductTypeHistory},
+    historyActionEnum: {updateProductInCartHistory},
     responseStatusCodesEnum: {BAD_REQUEST},
-    transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK}
+    transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK},
+    USER_STATUS: {ACTIVE}
 } = require('../../constants');
-const {ErrorHandler, CustomErrorData: {BAD_REQUEST_PRODUCT_TYPE_NOT_PRESENT}} = require("../../error");
+const {ErrorHandler, CustomErrorData: {BAD_REQUEST_USER_NOT_ACTIVE}} = require("../../error");
 const {
-    emailService: {sendMail},
+    cartService: {updateCartService},
     historyService: {addEventService},
-    productTypeService: {deleteProductTypeByParamsService, getProductTypeByIdService},
-    userService: {getUserByIdService}
+    productService: {getProductByIdService},
+    userService: {getUserByIdService},
 } = require("../../service");
 const winston = require('../../logger/winston');
-const logger = winston(deleteProductTypeHistory);
+const logger = winston(updateProductInCartHistory);
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
         const {
-            params: {id},
-            user: {userId}
+            product: {productId},
+            user: {userId},
+            body: {count}
         } = req;
 
         const userFromDB = await getUserByIdService(userId);
-        const productType = await getProductTypeByIdService(id, transaction);
-        if (!productType) {
+
+        if (userFromDB.status_id !== ACTIVE) {
             logger.error({
-                message: BAD_REQUEST_PRODUCT_TYPE_NOT_PRESENT.message,
+                message: BAD_REQUEST_USER_NOT_ACTIVE.message,
                 date: new Date().toLocaleDateString(),
                 time: new Date().toLocaleTimeString()
             });
             return next(new ErrorHandler(
                 BAD_REQUEST,
-                BAD_REQUEST_PRODUCT_TYPE_NOT_PRESENT.message,
-                BAD_REQUEST_PRODUCT_TYPE_NOT_PRESENT.customCode));
+                BAD_REQUEST_USER_NOT_ACTIVE.message,
+                BAD_REQUEST_USER_NOT_ACTIVE.customCode
+            ));
         }
+        const product = await getProductByIdService(productId);
 
-        await deleteProductTypeByParamsService({id}, transaction);
+        const price = product.price;
+
+        const sum = price * count;
+
+        await updateCartService({count, sum, updated_at: Date.now()}, {userId, productId}, transaction);
 
         logger.info({
-            info: deleteProductTypeHistory,
+            info: updateProductInCartHistory,
             date: new Date().toLocaleDateString(),
             time: new Date().toLocaleTimeString(),
             userId: userId,
-            productTypeId: id
+            productId: product.productId,
+            count
         });
-
-        await addEventService({event: deleteProductTypeHistory, userId: userId}, transaction);
-        await sendMail(userFromDB.email, DELETE_PRODUCT_TYPE, {userFromDB, productType});
+        await addEventService({event: updateProductInCartHistory, userId: userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

@@ -2,22 +2,22 @@ const chalk = require('chalk');
 
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {
-    historyActionEnum: {unblockUserHistory},
+    historyActionEnum: {unlockUserHistory},
     responseStatusCodesEnum: {CREATED, BAD_REQUEST},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK},
     USER_STATUS:{ACTIVE}
 } = require('../../constants');
 const {
     ErrorHandler,
-    CustomErrorData: {BAD_REQUEST_BLOCK_USER}
+    CustomErrorData: {BAD_REQUEST_UNLOCK_USER}
 } = require("../../error");
 const {
-    adminService: {unBlockUserService},
+    adminService: {unlockUserService},
     oauthService: {deleteTokenByParamsService},
     historyService: {addEventService}
 } = require('../../service');
 const winston = require('../../logger/winston');
-const logger = winston(unblockUserHistory);
+const logger = winston(unlockUserHistory);
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
@@ -26,28 +26,28 @@ module.exports = async (req, res, next) => {
 
         if (status_id === ACTIVE) {
             logger.error({
-                message: BAD_REQUEST_BLOCK_USER.message,
+                message: BAD_REQUEST_UNLOCK_USER.message,
                 date: new Date().toLocaleDateString(),
                 time: new Date().toLocaleTimeString()
             });
             return next (new ErrorHandler(
                 BAD_REQUEST,
-                BAD_REQUEST_BLOCK_USER.message,
-                BAD_REQUEST_BLOCK_USER.customCode
+                BAD_REQUEST_UNLOCK_USER.message,
+                BAD_REQUEST_UNLOCK_USER.customCode
             ));
         }
 
-        await unBlockUserService(userId, transaction);
+        await unlockUserService(userId, transaction);
         await deleteTokenByParamsService({userId}, transaction);
 
         logger.info({
-            info: unblockUserHistory,
+            info: unlockUserHistory,
             date: new Date().toLocaleDateString(),
             time: new Date().toLocaleTimeString(),
             userId: userId
         });
 
-        await addEventService({event: unblockUserHistory, userId: userId}, transaction);
+        await addEventService({event: unlockUserHistory, userId: userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

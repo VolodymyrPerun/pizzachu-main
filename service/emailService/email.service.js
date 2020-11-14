@@ -3,7 +3,7 @@ const EmailTemplates = require('email-templates');
 const path = require('path');
 
 const {ROOT_EMAIL_LOGIN, ROOT_EMAIL_PASSWORD, ROOT_EMAIL_SERVICE, SITE} = require('../../config');
-const htmlTemplates = require('../../email-templates')
+const htmlTemplates = require('../../email-templates');
 
 const mailTransport = nodemailer.createTransport({
     service: ROOT_EMAIL_SERVICE,
@@ -42,7 +42,7 @@ module.exports = async (userMail, action, context) => {
         html
     };
 
-    return mailTransport.sendMail(mailOptions)
+    return mailTransport.sendMail(mailOptions);
 };
 
 // class EmailService {
