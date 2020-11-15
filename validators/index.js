@@ -1,4 +1,5 @@
 module.exports.authValidator = require('./authValidator');
+module.exports.cartValidator = require('./cartValidator');
 module.exports.productValidator = require('./productValidator');
 module.exports.productTypeValidator = require('./productTypeValidator');
 module.exports.productSectionValidator = require('./productSectionValidator');

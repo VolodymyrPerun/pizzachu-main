@@ -15,7 +15,6 @@ module.exports = async userId => {
             model: CartStatusModel,
             attributes: ['status']
         }],
-
     });
 };
 

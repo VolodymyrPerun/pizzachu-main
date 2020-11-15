@@ -9,10 +9,10 @@ const {
 } = require('../../constants');
 const {
     ErrorHandler,
-    CustomErrorData: {BAD_REQUEST_USER_NOT_ACTIVE}
+    CustomErrorData: {BAD_REQUEST_PRODUCT_IS_ALREADY_PRESENT, BAD_REQUEST_USER_NOT_ACTIVE}
 } = require("../../error");
 const {
-    cartService: {addProductToCart},
+    cartService: {addProductToCart, findUserProceedCartService},
     historyService: {addEventService},
     productService: {getProductByIdService},
     userService: {getUserByIdService},
@@ -27,8 +27,7 @@ module.exports = async (req, res, next) => {
         const {
             product: {productId},
             user: {userId},
-            body: {count},
-            userProceedCart
+            count: {count}
         } = req;
 
         const userFromDB = await getUserByIdService(userId);
@@ -47,15 +46,19 @@ module.exports = async (req, res, next) => {
         }
         const product = await getProductByIdService(productId);
 
+        const userProceedCart = await findUserProceedCartService({userId, productId});
+
+        if (userProceedCart) {
+            return next(new ErrorHandler(
+                BAD_REQUEST,
+                BAD_REQUEST_PRODUCT_IS_ALREADY_PRESENT.message,
+                BAD_REQUEST_PRODUCT_IS_ALREADY_PRESENT.customCode
+            ));
+        }
+
         const price = product.price;
 
-        let sum;
-
-        if (!count || count < 0) {
-            sum = price * 1;
-        } else {
-            sum = price * count;
-        }
+         const   sum = price * count;
 
         if (!userProceedCart) {
             await addProductToCart({
@@ -69,7 +72,7 @@ module.exports = async (req, res, next) => {
         }
 
         //todo create confirmed(active) user middleware
-        //todo validate cart,purchase and after await updateProductService(product.productId, {stockCount: product.stockCount-count});
+        //todo unauthorized cart,purchase and after await updateProductService(product.productId, {stockCount: product.stockCount-count});
         //  const stockCount = product.stockCount; const updatedStockCount = stockCount - count;
         // await updateProductService(productId, {stockCount: updatedStockCount});
 
@@ -93,5 +96,4 @@ module.exports = async (req, res, next) => {
         await transaction.rollback();
         next(new ErrorHandler(e.status, e.message, e.customCode));
     }
-}
-;
+};

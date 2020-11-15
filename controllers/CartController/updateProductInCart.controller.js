@@ -7,9 +7,12 @@ const {
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK},
     USER_STATUS: {ACTIVE}
 } = require('../../constants');
-const {ErrorHandler, CustomErrorData: {BAD_REQUEST_USER_NOT_ACTIVE}} = require("../../error");
 const {
-    cartService: {updateCartService},
+    ErrorHandler,
+    CustomErrorData: {BAD_REQUEST_PRODUCT_NOT_PRESENT, BAD_REQUEST_USER_NOT_ACTIVE}
+} = require("../../error");
+const {
+    cartService: {findUserProceedCartService, updateCartService},
     historyService: {addEventService},
     productService: {getProductByIdService},
     userService: {getUserByIdService},
@@ -23,7 +26,7 @@ module.exports = async (req, res, next) => {
         const {
             product: {productId},
             user: {userId},
-            body: {count}
+            count: {count}
         } = req;
 
         const userFromDB = await getUserByIdService(userId);
@@ -42,15 +45,19 @@ module.exports = async (req, res, next) => {
         }
         const product = await getProductByIdService(productId);
 
+        const userProceedCart = await findUserProceedCartService({userId, productId});
+
+        if (!userProceedCart) {
+            return next(new ErrorHandler(
+                BAD_REQUEST,
+                BAD_REQUEST_PRODUCT_NOT_PRESENT.message,
+                BAD_REQUEST_PRODUCT_NOT_PRESENT.customCode
+            ));
+        }
+
         const price = product.price;
 
-        let sum;
-
-        if (!count || count < 0) {
-            sum = price * 1;
-        } else {
-            sum = price * count;
-        }
+        const sum = price * count;
 
         await updateCartService({count, sum, updated_at: Date.now()}, {userId, productId}, transaction);
 

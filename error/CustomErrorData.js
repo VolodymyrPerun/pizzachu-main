@@ -70,6 +70,10 @@ module.exports = {
         message: 'User is not active',
         customCode: 40015
     },
+    BAD_REQUEST_WRONG_COUNT: {
+        message: 'The count number must be greater than 0',
+        customCode: 40016
+    },
 
 
     //401 error code
@@ -107,12 +111,8 @@ module.exports = {
         message: 'Product section is not present',
         customCode: 40017
     },
-    BAD_REQUEST_USER_CART_NOT_PRESENT: {
-        message: 'User cart is not present',
-        customCode: 40018
-    },
-    BAD_REQUEST_USER_CART_ALREADY_PRESENT: {
-        message: 'User cart is already present',
+    BAD_REQUEST_PRODUCT_IS_ALREADY_PRESENT: {
+        message: 'Product is already present',
         customCode: 40019
     },
 

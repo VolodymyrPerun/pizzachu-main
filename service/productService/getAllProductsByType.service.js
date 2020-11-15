@@ -3,7 +3,7 @@ const {
     DB_TABLE_NAME: {PRODUCT, PRODUCT_TYPE, PRODUCT_STATUS, PRODUCT_SIZE, PRODUCT_SECTION},
 } = require('../../constants');
 
-module.exports = async (type_id, transaction) => {
+module.exports = async type_id => {
     const ProductModel = await db.getModel(PRODUCT);
 
     const ProductTypeModel = await db.getModel(PRODUCT_TYPE);
@@ -12,10 +12,7 @@ module.exports = async (type_id, transaction) => {
     const ProductSectionsModel = await db.getModel(PRODUCT_SECTION);
 
     return ProductModel.findAll({
-        where: {
-            type_id
-        },
-        attributes: ['productId', 'name', 'description', 'price', 'weight', 'product_photo'],
+        where: {type_id},
         include: [
             {
                 model: ProductTypeModel,
@@ -34,8 +31,7 @@ module.exports = async (type_id, transaction) => {
                 attributes: ['section']
             }
         ],
-        raw: true,
-        transaction
+        raw: true
     });
 };
 

@@ -1,4 +1,4 @@
-const Joi = require('joi')
+const Joi = require('joi');
 
 const {
     regexpPhoneNumberEnum: {PHONE_NUMBER},

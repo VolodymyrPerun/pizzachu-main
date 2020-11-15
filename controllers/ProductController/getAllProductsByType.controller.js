@@ -9,46 +9,20 @@ const {productService: {getAllProductsByTypeService}} = require("../../service")
 const winston = require('../../logger/winston');
 const logger = winston(getAllProductsHistory);
 
-module.exports = productType => async (req, res, next) => {
-    let keyType = '';
-    let products = [];
-
+module.exports = async (req, res, next) => {
+    let cartData = {};
     try {
-        switch (productType) {
-            case CHAINS:
-                keyType = CHAINS
-                break;
-            case DESSERTS:
-                keyType = DESSERTS
-                break;
-            case DRINKS:
-                keyType = DRINKS
-                break;
-            case MISO_SOUPS:
-                keyType = MISO_SOUPS
-                break;
-            case PIZZA:
-                keyType = PIZZA
-                break;
-            case ROLES:
-                keyType = ROLES
-                break;
-            case SALADS:
-                keyType = SALADS
-                break;
-            case SUPPLEMENTS:
-                keyType = SUPPLEMENTS
-                break;
-            case SUSHI:
-                keyType = SUSHI
-                break;
-            default:
-                return next(new ErrorHandler(NOT_FOUND_CODE, NOT_GET.message, NOT_GET.customCode));
-        }
+        const chains = await getAllProductsByTypeService(CHAINS);
+        const desserts = await getAllProductsByTypeService(DESSERTS);
+        const drinks = await getAllProductsByTypeService(DRINKS);
+        const miso_soups = await getAllProductsByTypeService(MISO_SOUPS);
+        const pizza = await getAllProductsByTypeService(PIZZA);
+        const roles = await getAllProductsByTypeService(ROLES);
+        const salads = await getAllProductsByTypeService(SALADS);
+        const supplements = await getAllProductsByTypeService(SUPPLEMENTS);
+        const sushi = await getAllProductsByTypeService(SUSHI);
 
-        products = await getAllProductsByTypeService([keyType]);
-
-        if (!products) {
+        if (!chains || !desserts || !drinks || !miso_soups || !pizza || !roles || !salads || !supplements || !sushi) {
             logger.error({
                 message: NOT_GET.message,
                 date: new Date().toLocaleDateString(),
@@ -60,7 +34,17 @@ module.exports = productType => async (req, res, next) => {
                 NOT_GET.customCode));
         }
 
-        await res.json(products).end();
+        cartData.CHAINS = chains;
+        cartData.DESSERTS = desserts;
+        cartData.DRINKS = drinks;
+        cartData.MISO_SOUPS = miso_soups;
+        cartData.PIZZA = pizza;
+        cartData.ROLES = roles;
+        cartData.SALADS = salads;
+        cartData.SUPPLEMENTS = supplements;
+        cartData.SUSHI = sushi;
+
+        await res.json(cartData);
 
     } catch (e) {
         next(new ErrorHandler(e.status, e.message, e.customCode));

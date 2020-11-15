@@ -15,7 +15,7 @@ const {
 const {
     adminMiddleware: {getUserFromAccessTokenMiddleware},
     authMiddleware: {checkAccessTokenMethodMiddleware},
-    cartMiddleware: {checkIsUserProceedCartExistMiddleware},
+    cartMiddleware: {checkProductInCartValidityMiddleware, checkProductInCartValidityIfUpdateMiddleware},
     productMiddleware: {checkIsProductExistMiddleware,}
 } = require('./../../middleware');
 
@@ -35,9 +35,10 @@ cartRouter.use('/:productId',
 cartRouter.delete('/:productId',
     deleteProductFromCartByParams);
 cartRouter.post('/:productId',
-    checkIsUserProceedCartExistMiddleware,
+    checkProductInCartValidityMiddleware,
     addProductToCart);
 cartRouter.put('/:productId',
+    checkProductInCartValidityIfUpdateMiddleware,
     updateProductInCart);
 
 module.exports = cartRouter;
