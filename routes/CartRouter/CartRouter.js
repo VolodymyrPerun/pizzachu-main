@@ -1,9 +1,6 @@
 const cartRouter = require('express').Router();
 
 const {
-    JWT_METHOD: {CLIENT}
-} = require('../../constants');
-const {
     cartController: {
         addProductToCart,
         deleteCartByUserId,
@@ -13,16 +10,14 @@ const {
     }
 } = require('../../controllers');
 const {
-    adminMiddleware: {getUserFromAccessTokenMiddleware},
-    authMiddleware: {checkAccessTokenMethodMiddleware},
+    authMiddleware: {getUserForPurchaseMiddleware},
     cartMiddleware: {checkProductInCartValidityMiddleware, checkProductInCartValidityIfUpdateMiddleware},
     productMiddleware: {checkIsProductExistMiddleware,}
 } = require('./../../middleware');
 
 
 cartRouter.use('/',
-    checkAccessTokenMethodMiddleware(CLIENT),
-    getUserFromAccessTokenMiddleware);
+    getUserForPurchaseMiddleware);
 
 cartRouter.get('/',
     getCart);

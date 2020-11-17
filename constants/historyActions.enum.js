@@ -16,7 +16,6 @@ module.exports = {
     getAllUsersHistory: 'getAllUsers',
     getUserByIdHistory: 'getUserById',
     deleteUserHistory: 'deleteUser',
-    getAllProductsHistory: 'getAllProducts',
     logoutUserHistory: 'logoutUser',
     refreshTokenHistory: 'refreshToken',
     registerUserHistory: 'registerUser',

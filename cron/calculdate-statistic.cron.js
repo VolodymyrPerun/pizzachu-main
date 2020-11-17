@@ -4,7 +4,7 @@ const {
 } = require("../constants");
 const {
     userService: {getUsersService},
-    productService: {getAllProductsService, getAllProductsByTypeService}
+    productService: {getAllProductsService, getAllProductsByTypeAndSection}
 } = require('../service');
 
 module.exports = async () => {
@@ -14,15 +14,15 @@ module.exports = async () => {
     let sellersCounter = await getUsersService(SELLER);
 
     let AllProductsCounter = await getAllProductsService();
-    let CHAINSCounter = await getAllProductsByTypeService(CHAINS);
-    let DESSERTSCounter = await getAllProductsByTypeService(DESSERTS);
-    let DRINKSCounter = await getAllProductsByTypeService(DRINKS);
-    let SUPPLEMENTSCounter = await getAllProductsByTypeService(SUPPLEMENTS);
-    let MISO_SOUPSCounter = await getAllProductsByTypeService(MISO_SOUPS);
-    let PIZZACounter = await getAllProductsByTypeService(PIZZA);
-    let ROLESCounter = await getAllProductsByTypeService(ROLES);
-    let SALADSCounter = await getAllProductsByTypeService(SALADS);
-    let SUSHICounter = await getAllProductsByTypeService(SUSHI);
+    let CHAINSCounter = await getAllProductsByTypeAndSection(CHAINS);
+    let DESSERTSCounter = await getAllProductsByTypeAndSection(DESSERTS);
+    let DRINKSCounter = await getAllProductsByTypeAndSection(DRINKS);
+    let SUPPLEMENTSCounter = await getAllProductsByTypeAndSection(SUPPLEMENTS);
+    let MISO_SOUPSCounter = await getAllProductsByTypeAndSection(MISO_SOUPS);
+    let PIZZACounter = await getAllProductsByTypeAndSection(PIZZA);
+    let ROLESCounter = await getAllProductsByTypeAndSection(ROLES);
+    let SALADSCounter = await getAllProductsByTypeAndSection(SALADS);
+    let SUSHICounter = await getAllProductsByTypeAndSection(SUSHI);
 
     console.log('_________________________________________');
     console.log(`AS OF ${new Date().toLocaleString()} NUMBER OF ALL ACTIVE USERS WILL BE ` + (adminsCounter.length + clientsCounter.length + sellersCounter.length) + `, INCLUDING: `

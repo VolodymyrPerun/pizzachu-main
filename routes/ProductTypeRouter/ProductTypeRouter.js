@@ -12,8 +12,7 @@ const {
     },
 } = require('../../controllers');
 const {
-    adminMiddleware: {getUserFromAccessTokenMiddleware},
-    authMiddleware: {checkAccessTokenMethodMiddleware},
+    authMiddleware: {checkAccessTokenMethodMiddleware, getUserFromAccessTokenMiddleware},
     productTypeMiddleware: {
         checkProductTypeValidityMiddleware,
         checkProductTypeValidityIfUpdateMiddleware

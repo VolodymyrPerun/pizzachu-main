@@ -16,7 +16,7 @@ const {
     historyService: {addEventService},
     productService: {getProductByIdService},
     userService: {getUserByIdService},
-} = require("../../service");
+} = require('../../service');
 
 const winston = require('../../logger/winston');
 const logger = winston(addProductToCartHistory);
@@ -32,6 +32,8 @@ module.exports = async (req, res, next) => {
 
         const userFromDB = await getUserByIdService(userId);
 
+        console.log(userFromDB.status_id);
+
         if (userFromDB.status_id !== ACTIVE) {
             logger.error({
                 message: BAD_REQUEST_USER_NOT_ACTIVE.message,
@@ -44,6 +46,7 @@ module.exports = async (req, res, next) => {
                 BAD_REQUEST_USER_NOT_ACTIVE.customCode
             ));
         }
+
         const product = await getProductByIdService(productId);
 
         const userProceedCart = await findUserProceedCartService({userId, productId});
@@ -58,7 +61,7 @@ module.exports = async (req, res, next) => {
 
         const price = product.price;
 
-         const   sum = price * count;
+        const sum = price * count;
 
         if (!userProceedCart) {
             await addProductToCart({
@@ -72,7 +75,7 @@ module.exports = async (req, res, next) => {
         }
 
         //todo create confirmed(active) user middleware
-        //todo unauthorized cart,purchase and after await updateProductService(product.productId, {stockCount: product.stockCount-count});
+        //todo ,purchase and after await updateProductService(product.productId, {stockCount: product.stockCount-count});
         //  const stockCount = product.stockCount; const updatedStockCount = stockCount - count;
         // await updateProductService(productId, {stockCount: updatedStockCount});
 

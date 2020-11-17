@@ -16,7 +16,7 @@ module.exports = async (req, res, next) => {
             user: {userId}
         } = req;
 
-        const cart = await getCartService(userId);
+        const cart = await getCartService({userId});
 
         if (!cart) {
             logger.error({
