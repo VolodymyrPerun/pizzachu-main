@@ -1,35 +1,35 @@
 const chalk = require('chalk');
 
 const {transactionInstance} = require('../../dataBase').getInstance();
-const {productService: {getProductByIdService, updateProductService}} = require('../../service');
 const {
-    emailActionEnum: {UPDATE_PRODUCT},
-    historyActionEnum: {updateProductHistory},
+    historyActionEnum: {updateCommentHistory},
     responseStatusCodesEnum: {NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_UPDATE},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK}
 } = require('../../constants');
 const {
-    emailService: {sendMail},
+    commentService: {getCommentByIdService, updateCommentService},
     historyService: {addEventService},
-    userService: {getUserByIdService}
+    userService: {getUserByIdService},
 } = require('../../service');
 const {ErrorHandler} = require("../../error");
 const winston = require('../../logger/winston');
-const logger = winston(updateProductHistory);
+const logger = winston(updateCommentHistory);
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
         const {
-            product: product,
-            params: {productId},
+            comment: {id},
+            commentToUpdate: {text, rate},
             user: {userId}
         } = req;
 
-        const userFromDB = await getUserByIdService(userId);
-        const ProductFromDB = await getProductByIdService(productId);
-        if (!ProductFromDB) {
+        const userFromDB = await getUserByIdService(userId, transaction);
+
+        const CommentFromDB = await getCommentByIdService(id);
+
+        if (!CommentFromDB) {
             logger.error({
                 message: NOT_UPDATE.message,
                 date: new Date().toLocaleDateString(),
@@ -41,7 +41,10 @@ module.exports = async (req, res, next) => {
                 NOT_UPDATE.customCode));
         }
 
-        const isUpdated = await updateProductService(productId, product, transaction);
+        const isUpdated = await updateCommentService(
+            id,
+            {text, rate, updated_at: Date.now()},
+            transaction)
 
         if (!isUpdated) {
             logger.error({
@@ -56,14 +59,16 @@ module.exports = async (req, res, next) => {
         }
 
         logger.info({
-            info: updateProductHistory,
+            info: updateCommentHistory,
             date: new Date().toLocaleDateString(),
             time: new Date().toLocaleTimeString(),
+            commentId: id,
             userId,
-            productId
+            email: userFromDB.email,
+            productId: CommentFromDB.productId
         });
-        await addEventService({event: updateProductHistory, userId: userId}, transaction);
-        await sendMail(userFromDB.email, UPDATE_PRODUCT, {userFromDB, isProductCreated: product});
+
+        await addEventService({event: updateCommentHistory, userId: userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

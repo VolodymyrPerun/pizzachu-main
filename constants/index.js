@@ -1,4 +1,5 @@
 module.exports.CART_STATUS = require('./cartStatus.enum');
+module.exports.COMMENT_STATUS = require('./commentStatus.enum');
 module.exports.DB_TABLE_NAME = require('./dbTableName.enum');
 module.exports.emailActionEnum = require('./emailAction.enum');
 module.exports.filesOptionsEnum = require('./fileOptions.enum');

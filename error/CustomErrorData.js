@@ -74,6 +74,26 @@ module.exports = {
         message: 'The count number must be greater than 0',
         customCode: 40016
     },
+    //+
+    BAD_REQUEST_PRODUCT_NOT_PRESENT: {
+        message: 'Product is not present',
+        customCode: 40015
+    },
+    //+
+    BAD_REQUEST_PRODUCT_TYPE_NOT_PRESENT: {
+        message: 'Product type is not present',
+        customCode: 40016
+    },
+    //+
+    BAD_REQUEST_PRODUCT_SECTION_NOT_PRESENT: {
+        message: 'Product section is not present',
+        customCode: 40017
+    },
+    //+
+    BAD_REQUEST_PRODUCT_IS_ALREADY_PRESENT: {
+        message: 'Product is already present',
+        customCode: 40019
+    },
 
 
     //401 error code
@@ -96,25 +116,7 @@ module.exports = {
         message: 'Action token is not valid',
         customCode: 4014
     },
-    //+
-    BAD_REQUEST_PRODUCT_NOT_PRESENT: {
-        message: 'Product is not present',
-        customCode: 40015
-    },
-    //+
-    BAD_REQUEST_PRODUCT_TYPE_NOT_PRESENT: {
-        message: 'Product type is not present',
-        customCode: 40016
-    },
-    //+
-    BAD_REQUEST_PRODUCT_SECTION_NOT_PRESENT: {
-        message: 'Product section is not present',
-        customCode: 40017
-    },
-    BAD_REQUEST_PRODUCT_IS_ALREADY_PRESENT: {
-        message: 'Product is already present',
-        customCode: 40019
-    },
+
 
 
     //403 error code

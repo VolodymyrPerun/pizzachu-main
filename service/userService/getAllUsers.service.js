@@ -1,7 +1,7 @@
 const db = require('../../dataBase').getInstance();
 const {DB_TABLE_NAME: {USER, USER_STATUS, USER_ROLE, GENDER}} = require('../../constants')
 
-module.exports = async (status_id, transaction) => {
+module.exports = async (status_id, limit, offset) => {
     const UserModel = await db.getModel(USER);
     const UserGenderModel = await db.getModel(GENDER);
     const UserStatusModel = await db.getModel(USER_STATUS);
@@ -25,6 +25,10 @@ module.exports = async (status_id, transaction) => {
             }
         ],
         raw: true,
-        transaction
+        order: [
+            ['userId', 'DESC']
+        ],
+        limit,
+        offset,
     });
 };

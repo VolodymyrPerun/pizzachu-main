@@ -3,7 +3,7 @@ const {
     DB_TABLE_NAME: {PRODUCT, PRODUCT_TYPE, PRODUCT_STATUS, PRODUCT_SIZE, PRODUCT_SECTION},
 } = require('../../constants');
 
-module.exports = async (type_id, section_id) => {
+module.exports = async (type_id, section_id, limit, offset) => {
     const ProductModel = await db.getModel(PRODUCT);
 
     const ProductTypeModel = await db.getModel(PRODUCT_TYPE);
@@ -31,7 +31,12 @@ module.exports = async (type_id, section_id) => {
                 attributes: ['section']
             }
         ],
-        raw: true
+        raw: true,
+        order: [
+            ['productId', 'DESC']
+        ],
+        limit,
+        offset,
     });
 };
 

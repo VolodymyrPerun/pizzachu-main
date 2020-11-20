@@ -1,46 +1,49 @@
-const path = require('path');
-const uuid = require('uuid').v1();
-const fsep = require('fs-extra').promises;
 const chalk = require('chalk');
 
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {
-    emailActionEnum: {CREATE_PRODUCT},
-    historyActionEnum: {createProductHistory},
+    historyActionEnum: {postCommentHistory},
     responseStatusCodesEnum: {CREATED, NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_CREATED},
-    PRODUCT_STATUS: {IN_STOCK},
+    COMMENT_STATUS: {POSTED},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK},
 } = require('../../constants');
 const {ErrorHandler} = require("../../error");
 const {
-    emailService: {sendMail},
     historyService: {addEventService},
-    productService: {createProductService, updateProductService},
+    commentService: {postCommentService},
     userService: {getUserByIdService}
 } = require("../../service");
 const winston = require('../../logger/winston');
-const logger = winston(createProductHistory);
+const logger = winston(postCommentHistory);
 
 
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
         const {
-            product: product,
-            body: photos,
+            comment: {rate, text},
+            product: {productId},
             user: {userId}
         } = req;
 
-        product.status_id = IN_STOCK;
+        const status_id = POSTED;
 
         const userFromDB = await getUserByIdService(userId);
 
-        const [productImage] = photos;
+        const email = userFromDB.email;
 
-        const isProductCreated = await createProductService(product, transaction);
+        const isCommentCreated = await postCommentService(
+            {
+                text,
+                rate,
+                status_id,
+                productId,
+                userId,
+            },
+            transaction);
 
-        if (!isProductCreated) {
+        if (!isCommentCreated) {
             logger.error({
                 message: NOT_CREATED.message,
                 date: new Date().toLocaleDateString(),
@@ -52,26 +55,16 @@ module.exports = async (req, res, next) => {
                 NOT_CREATED.customCode));
         }
 
-        if (productImage) {
-            const photoDir = `products/${isProductCreated.productId}/photos/`;
-            const fileExtension = path.extname(productImage.name);
-            const photoName = uuid + fileExtension;
-
-            await fsep.mkdir(path.resolve(process.cwd(), 'public', photoDir), {recursive: true});
-            await productImage.mv(path.resolve(process.cwd(), 'public', photoDir, photoName));
-            await updateProductService(isProductCreated.productId, {product_photo: photoDir + photoName});
-        }
-
         logger.info({
-            info: createProductHistory,
+            info: postCommentHistory,
             date: new Date().toLocaleDateString(),
             time: new Date().toLocaleTimeString(),
-            userId: userId,
-            productId: isProductCreated.productId
+            userId,
+            productId,
+            email: email
         });
 
-        await addEventService({event: createProductHistory, userId: userId}, transaction);
-        await sendMail(userFromDB.email, CREATE_PRODUCT, {userFromDB, isProductCreated});
+        await addEventService({event: postCommentHistory, userId: userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

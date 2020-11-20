@@ -50,7 +50,8 @@ module.exports = userRole => async (req, res, next) => {
         }
 
         const {
-            body: user, photos
+            body: photos,
+            user: user
         } = req;
 
         user.role_id = [keyRole];

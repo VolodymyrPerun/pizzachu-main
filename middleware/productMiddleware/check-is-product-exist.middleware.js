@@ -4,7 +4,9 @@ const {responseStatusCodesEnum: {BAD_REQUEST}, PRODUCT_STATUS: {DELETED}} = requ
 
 module.exports = async (req, res, next) => {
     try {
-        const {productId} = req.params;
+        const {
+            params: {productId}
+        } = req;
 
         if (isNaN(productId) || +productId < 0) {
             return next(new ErrorHandler(

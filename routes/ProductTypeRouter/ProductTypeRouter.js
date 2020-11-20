@@ -19,20 +19,18 @@ const {
     }
 } = require('./../../middleware');
 
-productTypeRouter.post('/',
+
+productTypeRouter.get('/', getAllProductTypes);
+productTypeRouter.use('/',
     checkAccessTokenMethodMiddleware(ADMIN),
-    getUserFromAccessTokenMiddleware,
+    getUserFromAccessTokenMiddleware);
+productTypeRouter.post('/',
     checkProductTypeValidityMiddleware,
     createProductType);
 productTypeRouter.put('/:id',
-    checkAccessTokenMethodMiddleware(ADMIN),
-    getUserFromAccessTokenMiddleware,
     checkProductTypeValidityIfUpdateMiddleware,
     updateProductType);
 productTypeRouter.delete('/:id',
-    checkAccessTokenMethodMiddleware(ADMIN),
-    getUserFromAccessTokenMiddleware,
     deleteProductTypeByParams);
-productTypeRouter.get('/', getAllProductTypes);
 
 module.exports = productTypeRouter;

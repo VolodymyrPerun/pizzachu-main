@@ -1,18 +1,20 @@
 module.exports = {
     CART: 'Cart',
     CART_STATUS: 'CartStatus',
+    COMMENT: 'Comment',
+    COMMENT_STATUS: 'CommentStatus',
     GENDER: 'Gender',
     HISTORY_ACTION: 'HistoryAction',
     OAUTH_TOKEN: 'OAuthToken',
     USER: 'User',
     USER_ROLE: 'UserRole',
     USER_STATUS: 'UserStatus',
-    COMMENT: 'Comment',
     ACTION_TOKEN: 'ActionToken',
     ACTION: 'Action',
     PRODUCT: 'Product',
     PRODUCT_TYPE: 'ProductType',
     PRODUCT_SIZE: 'ProductSize',
     PRODUCT_STATUS: 'ProductStatus',
-    PRODUCT_SECTION: 'ProductSection'
+    PRODUCT_SECTION: 'ProductSection',
+    REPLY_COMMENT: 'ReplyComment'
 };

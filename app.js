@@ -40,6 +40,7 @@ const {
     AdminRouter,
     AuthRouter,
     CartRouter,
+    CommentRouter,
     ProductRouter,
     ProductTypeRouter,
     ProductSectionRouter,
@@ -50,6 +51,7 @@ const {
 app.use('/admin&blablabla', AdminRouter);
 app.use('/auth', AuthRouter);
 app.use('/cart', CartRouter);
+app.use('/comments', CommentRouter);
 app.use('/sellers', SellerRouter);
 app.use('/products', ProductRouter);
 app.use('/product-types', ProductTypeRouter);

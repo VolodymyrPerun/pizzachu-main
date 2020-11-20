@@ -1,35 +1,35 @@
+const {avgCountHelper} = require("../../helpers");
 const {
     responseStatusCodesEnum: {NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_GET},
+    COMMENT_STATUS: {POSTED}
 } = require('../../constants');
 const {ErrorHandler} = require('../../error');
-const {productService: {getAllProductsByTypeAndSection, getAllProductsByTypeOnly}} = require('../../service');
+const {commentService: {getAllComments}} = require('../../service');
 
 module.exports = async (req, res, next) => {
-    let products = [];
+    let commentsData = {};
     try {
         let {
-            query: {type, section, limit, page},
+            query: {limit, page},
         } = req;
+
+        const status_id = POSTED;
+
+        const commentsToRate = await getAllComments(status_id);
+
+        let avg = await avgCountHelper(commentsToRate);
 
         if (+page === 0) page = 1;
         page = page - 1;
 
-        if (!section) {
-            products = await getAllProductsByTypeOnly(
-                type,
-                +(limit),
-                limit * page
-            );
-        } else {
-            products = await getAllProductsByTypeAndSection(
-                type,
-                section,
-                +(limit),
-                limit * page);
-        }
+        let comments = await getAllComments(
+            status_id,
+            +(limit),
+            limit * page
+        );
 
-        if (!products) {
+        if (!comments) {
             logger.error({
                 message: NOT_GET.message,
                 date: new Date().toLocaleDateString(),
@@ -41,7 +41,11 @@ module.exports = async (req, res, next) => {
                 NOT_GET.customCode));
         }
 
-        await res.json(products);
+        commentsData.comments = comments;
+        commentsData.commentsCount = comments.length;
+        commentsData.averageRate = avg;
+
+        await res.json(commentsData);
 
     } catch (e) {
         next(new ErrorHandler(e.status, e.message, e.customCode));

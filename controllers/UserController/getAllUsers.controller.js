@@ -14,6 +14,13 @@ module.exports = userStatus => async (req, res, next) => {
     let keyStatus = '';
     let users = [];
     try {
+        let {
+            query: {limit, page},
+        } = req;
+
+        if (+page === 0) page = 1;
+        page = page - 1;
+
         switch (userStatus) {
             case ACTIVE:
                 keyStatus = ACTIVE
@@ -25,7 +32,11 @@ module.exports = userStatus => async (req, res, next) => {
                 return next(new ErrorHandler(NOT_FOUND_CODE, NOT_GET.message, NOT_GET.customCode));
         }
 
-        users = await getUsersService([keyStatus]);
+        users = await getUsersService(
+            [keyStatus],
+            +(limit),
+            limit * page
+        );
 
         if (!users) {
             logger.error({

@@ -22,7 +22,7 @@ module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
         const {
-            body: productType,
+            productType: productType,
             params: {id},
             user: {userId}
         } = req;
