@@ -25,7 +25,7 @@ module.exports = async (req, res, next) => {
             user: {userId}
         } = req;
 
-        const userFromDB = await getUserByIdService(userId, transaction);
+        const userFromDB = await getUserByIdService(userId);
 
         const CommentFromDB = await getCommentByIdService(id);
 
@@ -44,7 +44,7 @@ module.exports = async (req, res, next) => {
         const isUpdated = await updateCommentService(
             id,
             {text, rate, updated_at: Date.now()},
-            transaction)
+            transaction);
 
         if (!isUpdated) {
             logger.error({
@@ -68,7 +68,7 @@ module.exports = async (req, res, next) => {
             productId: CommentFromDB.productId
         });
 
-        await addEventService({event: updateCommentHistory, userId: userId}, transaction);
+        await addEventService({event: updateCommentHistory, userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

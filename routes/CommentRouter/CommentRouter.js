@@ -5,7 +5,7 @@ const {
         deleteCommentById,
         getAllComments,
         postComment,
-        updateComment
+        editComment
     },
 } = require('../../controllers');
 const {
@@ -32,7 +32,7 @@ commentRouter.post('/:productId',
 commentRouter.put('/:id',
     checkIsCommentExistMiddleware,
     checkCommentValidityIfUpdateMiddleware,
-    updateComment);
+    editComment);
 commentRouter.delete('/:id',
     checkIsCommentExistMiddleware,
     deleteCommentById);

@@ -14,9 +14,7 @@ module.exports = async (req, res, next) => {
             query: {limit, page},
         } = req;
 
-        const status_id = POSTED;
-
-        const commentsToRate = await getAllComments(status_id);
+        const commentsToRate = await getAllComments(POSTED);
 
         let avg = await avgCountHelper(commentsToRate);
 
@@ -24,7 +22,7 @@ module.exports = async (req, res, next) => {
         page = page - 1;
 
         let comments = await getAllComments(
-            status_id,
+            POSTED,
             +(limit),
             limit * page
         );

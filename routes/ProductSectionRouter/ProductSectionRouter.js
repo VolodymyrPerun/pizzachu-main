@@ -15,7 +15,8 @@ const {
     authMiddleware: {checkAccessTokenMethodMiddleware, getUserFromAccessTokenMiddleware},
     productSectionMiddleware: {
         checkProductSectionValidityMiddleware,
-        checkProductSectionValidityIfUpdateMiddleware
+        checkProductSectionValidityIfUpdateMiddleware,
+        checkIsProductSectionExistMiddleware
     }
 } = require('./../../middleware');
 
@@ -27,9 +28,11 @@ productSectionRouter.post('/',
     checkProductSectionValidityMiddleware,
     createProductSection);
 productSectionRouter.put('/:id',
+    checkIsProductSectionExistMiddleware,
     checkProductSectionValidityIfUpdateMiddleware,
     updateProductSection);
 productSectionRouter.delete('/:id',
+    checkIsProductSectionExistMiddleware,
     deleteProductSectionByParams);
 
 module.exports = productSectionRouter;

@@ -87,7 +87,7 @@ module.exports = async (req, res, next) => {
             productId: product.productId,
             count
         });
-        await addEventService({event: addProductToCartHistory, userId: userId}, transaction);
+        await addEventService({event: addProductToCartHistory, userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

@@ -16,7 +16,8 @@ const {
     fileMiddleware: {checkFilesMiddleware, checkUserPhotoCountMiddleware},
     productMiddleware: {
         checkProductValidityMiddleware,
-        checkProductValidityIfUpdateMiddleware
+        checkProductValidityIfUpdateMiddleware,
+        checkIsProductExistMiddleware
     }
 } = require('./../../middleware');
 
@@ -30,11 +31,13 @@ productRouter.post('/',
 productRouter.put('/:productId',
     checkAccessTokenMethodMiddleware(ADMIN),
     getUserFromAccessTokenMiddleware,
+    checkIsProductExistMiddleware,
     checkProductValidityIfUpdateMiddleware,
     updateProduct);
 productRouter.delete('/:productId',
     checkAccessTokenMethodMiddleware(ADMIN),
     getUserFromAccessTokenMiddleware,
+    checkIsProductExistMiddleware,
     deleteProductByParams);
 productRouter.get('/', getAllProductsByType);
 

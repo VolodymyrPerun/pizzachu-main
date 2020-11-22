@@ -27,17 +27,13 @@ module.exports = async (req, res, next) => {
             user: {userId}
         } = req;
 
-        const status_id = POSTED;
-
         const userFromDB = await getUserByIdService(userId);
-
-        const email = userFromDB.email;
 
         const isCommentCreated = await postCommentService(
             {
                 text,
                 rate,
-                status_id,
+                status_id: POSTED,
                 productId,
                 userId,
             },
@@ -61,10 +57,10 @@ module.exports = async (req, res, next) => {
             time: new Date().toLocaleTimeString(),
             userId,
             productId,
-            email: email
+            email: userFromDB.email
         });
 
-        await addEventService({event: postCommentHistory, userId: userId}, transaction);
+        await addEventService({event: postCommentHistory, userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

@@ -60,7 +60,7 @@ module.exports = userRole => async (req, res, next) => {
             default:
                 return next(new ErrorHandler(BAD_REQUEST,
                     BAD_REQUEST_USER_NOT_PRESENT.message,
-                    BAD_REQUEST_USER_NOT_PRESENT.code,));
+                    BAD_REQUEST_USER_NOT_PRESENT.customCode));
         }
 
         const {email, password} = req.body;

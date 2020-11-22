@@ -13,8 +13,6 @@ module.exports = async (req, res, next) => {
     try {
         const {body: comment} = req;
 
-        console.log(comment);
-
         const {error} = Joi.validate(comment, updateCommentValidationSchema);
 
         if (error) {

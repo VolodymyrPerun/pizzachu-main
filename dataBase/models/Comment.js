@@ -25,10 +25,6 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             foreignKey: true
         },
-        replyId: {
-            type: DataTypes.INTEGER,
-            foreignKey: true
-        },
         status_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
@@ -51,12 +47,10 @@ module.exports = (sequelize, DataTypes) => {
 
     const CommentStatus = sequelize.import('./CommentStatus');
     const Product = sequelize.import('./Product');
-    const ReplyComment = sequelize.import('./ReplyComment');
     const User = sequelize.import('./User');
 
     Comment.belongsTo(CommentStatus, {foreignKey: 'status_id'});
     Comment.belongsTo(Product, {foreignKey: 'productId'});
-    Comment.belongsTo(ReplyComment, {foreignKey: 'replyId'});
     Comment.belongsTo(User, {foreignKey: 'userId'});
 
     return Comment;

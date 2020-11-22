@@ -44,6 +44,7 @@ const {
     ProductRouter,
     ProductTypeRouter,
     ProductSectionRouter,
+    ReplyCommentRouter,
     SellerRouter,
     UserRouter
 } = require('./routes');
@@ -52,6 +53,7 @@ app.use('/admin&blablabla', AdminRouter);
 app.use('/auth', AuthRouter);
 app.use('/cart', CartRouter);
 app.use('/comments', CommentRouter);
+app.use('/reply-comments', ReplyCommentRouter);
 app.use('/sellers', SellerRouter);
 app.use('/products', ProductRouter);
 app.use('/product-types', ProductTypeRouter);

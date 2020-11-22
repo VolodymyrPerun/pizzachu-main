@@ -51,7 +51,7 @@ module.exports = async (req, res, next) => {
             productSectionId: id
         });
 
-        await addEventService({event: createProductSectionHistory, userId: userId}, transaction);
+        await addEventService({event: createProductSectionHistory, userId}, transaction);
         await sendMail(userFromDB.email, CREATE_PRODUCT_SECTION, {userFromDB, productSection});
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));

@@ -24,7 +24,7 @@ module.exports = async (req, res, next) => {
             user: {userId}
         } = req;
 
-        const userFromDB = await getUserByIdService(userId, transaction);
+        const userFromDB = await getUserByIdService(userId);
 
         const CommentFromDB = await getCommentByIdService(id);
 
@@ -49,7 +49,7 @@ module.exports = async (req, res, next) => {
             email: userFromDB.email,
             productId: CommentFromDB.productId,
         });
-        await addEventService({event: deleteCommentHistory, userId: userId}, transaction);
+        await addEventService({event: deleteCommentHistory, userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

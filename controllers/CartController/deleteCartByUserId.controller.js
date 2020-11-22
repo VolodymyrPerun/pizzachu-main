@@ -61,7 +61,7 @@ module.exports = async (req, res, next) => {
             userId: userId
         });
 
-        await addEventService({event: deleteUserCartHistory, userId: userId}, transaction);
+        await addEventService({event: deleteUserCartHistory, userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 
