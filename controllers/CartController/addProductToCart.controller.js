@@ -32,8 +32,6 @@ module.exports = async (req, res, next) => {
 
         const userFromDB = await getUserByIdService(userId);
 
-        console.log(userFromDB.status_id);
-
         if (userFromDB.status_id !== ACTIVE) {
             logger.error({
                 message: BAD_REQUEST_USER_NOT_ACTIVE.message,

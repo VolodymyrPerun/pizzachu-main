@@ -39,6 +39,7 @@ module.exports = async (req, res, next) => {
                 BAD_REQUEST_USER_NOT_ACTIVE.customCode
             ));
         }
+
         const userCart = await findUserProceedCartService({userId});
         if (!userCart) {
             logger.error({

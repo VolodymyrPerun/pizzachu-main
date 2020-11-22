@@ -27,8 +27,6 @@ module.exports = async (req, res, next) => {
             user: {userId},
         } = req;
 
-        console.log(userId);
-
         const userFromDB = await getUserByIdService(userId);
         if (userFromDB.status_id !== ACTIVE) {
             logger.error({
@@ -42,6 +40,7 @@ module.exports = async (req, res, next) => {
                 BAD_REQUEST_USER_NOT_ACTIVE.customCode
             ));
         }
+
         const userCart = await findUserProceedCartService({userId, productId});
         if (!userCart) {
             logger.error({
