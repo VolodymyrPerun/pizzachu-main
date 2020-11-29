@@ -49,6 +49,8 @@ module.exports = async (req, res, next) => {
 
         const userProceedCart = await findUserProceedCartService({userId, productId});
 
+        console.log(userProceedCart);
+
         if (userProceedCart) {
             return next(new ErrorHandler(
                 BAD_REQUEST,
@@ -85,6 +87,7 @@ module.exports = async (req, res, next) => {
             productId: product.productId,
             count
         });
+
         await addEventService({event: addProductToCartHistory, userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));

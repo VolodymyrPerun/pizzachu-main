@@ -53,8 +53,6 @@ module.exports = userRole => async (req, res, next) => {
             user: user, photos
         } = req;
 
-        console.log(photos);
-
         user.role_id = [keyRole];
         user.status_id = ACTIVE;
 

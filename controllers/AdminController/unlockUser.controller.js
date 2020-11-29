@@ -47,7 +47,7 @@ module.exports = async (req, res, next) => {
             userId: userId
         });
 
-        await addEventService({event: unlockUserHistory, userId: userId}, transaction);
+        await addEventService({event: unlockUserHistory, userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

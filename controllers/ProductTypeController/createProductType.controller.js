@@ -50,6 +50,7 @@ module.exports = async (req, res, next) => {
             userId: userId,
             productTypeId: id
         });
+
         await addEventService({event: createProductTypeHistory, userId: userId}, transaction);
         await sendMail(userFromDB.email, CREATE_PRODUCT_TYPE, {userFromDB, productType});
         await transaction.commit();

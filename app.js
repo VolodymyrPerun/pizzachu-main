@@ -45,6 +45,7 @@ const {
     ProductTypeRouter,
     ProductSectionRouter,
     ReplyCommentRouter,
+    PurchaseRouter,
     SellerRouter,
     UserRouter
 } = require('./routes');
@@ -58,6 +59,7 @@ app.use('/sellers', SellerRouter);
 app.use('/products', ProductRouter);
 app.use('/product-types', ProductTypeRouter);
 app.use('/product-sections', ProductSectionRouter);
+app.use('/purchase',  PurchaseRouter);
 app.use('/users', UserRouter);
 
 

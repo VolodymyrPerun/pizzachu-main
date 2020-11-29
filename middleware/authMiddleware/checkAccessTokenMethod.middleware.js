@@ -11,7 +11,7 @@ const {
 const {
     JWT_METHOD: {ADMIN, CLIENT, SELLER},
     responseCustomErrorEnum: {NOT_VALID_TOKEN},
-    responseStatusCodesEnum: {BAD_REQUEST, UNAUTHORIZED},
+    responseStatusCodesEnum: {BAD_REQUEST},
     requestHeadersEnum: {AUTHORIZATION}
 } = require('../../constants');
 const {

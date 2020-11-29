@@ -14,7 +14,7 @@ module.exports = async options => {
             model: CartStatusModel,
             attributes: ['status']
         }],
-        raw: true,
+        raw: true
     });
 };
 

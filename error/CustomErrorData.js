@@ -94,6 +94,26 @@ module.exports = {
         message: 'Product is already present',
         customCode: 40019
     },
+    //+
+    BAD_REQUEST_PURCHASE_IS_ALREADY_PRESENT: {
+        message: 'Purchase is already present',
+        customCode: 40020
+    },
+    //+
+    BAD_REQUEST_PURCHASE_IS_NOT_PRESENT: {
+        message: 'Purchase is not present',
+        customCode: 40021
+    },
+    //+
+    BAD_REQUEST_PURCHASE_IS_ALREADY_ACCEPTED: {
+        message: 'Purchase is already accepted',
+        customCode: 40022
+    },
+    //+
+    BAD_REQUEST_PURCHASE_IS_ALREADY_CANCELLED: {
+        message: 'Purchase is already cancelled',
+        customCode: 40023
+    },
 
 
     //401 error code
@@ -116,7 +136,6 @@ module.exports = {
         message: 'Action token is not valid',
         customCode: 4014
     },
-
 
 
     //403 error code

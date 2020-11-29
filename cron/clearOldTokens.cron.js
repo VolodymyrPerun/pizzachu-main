@@ -5,7 +5,7 @@ const {oauthService: {deleteTokenByParamsService}} = require('../service');
 
 module.exports = async () => {
     await deleteTokenByParamsService({
-        createdAt: {
+        create_at: {
             [Op.lte]: dayjs().subtract(30, "day").format()
         }
     });

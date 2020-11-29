@@ -1,5 +1,6 @@
 const {
     emailActionEnum: {
+        ACCEPT_PURCHASE, CANCEL_PURCHASE,
         ADMIN_REGISTER,
         SELLER_REGISTER,
         USER_REGISTER, USER_DELETE, USER_UPDATE, PASSWORD_UPDATE,
@@ -69,5 +70,13 @@ module.exports = {
     [DELETE_PRODUCT_SECTION]: {
         subject: '[PIZZACHU] ВИДАЛЕНО СЕКЦІЮ ПРОДУКТУ!',
         templateFileName: 'deleteProductSection'
+    },
+    [ACCEPT_PURCHASE]: {
+        subject: '[PIZZACHU] ВІТАЄМО У ВАС НОВЕ ЗАМОВЛЕННЯ!',
+        templateFileName: 'acceptPurchase'
+    },
+    [CANCEL_PURCHASE]: {
+        subject: '[PIZZACHU] ВАШЕ ЗАМОВЛЕННЯ СКАСОВАНО!',
+        templateFileName: 'cancelPurchase'
     },
 };

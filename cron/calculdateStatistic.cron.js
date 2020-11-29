@@ -4,28 +4,26 @@ const {
 } = require("../constants");
 const {
     userService: {getUsersService},
-    productService: {getAllProductsService, getAllProductsByTypeAndSection}
+    productService: {getAllProductsByTypeOnly}
 } = require('../service');
 
 module.exports = async () => {
-    // тут рахуємо шось важливе
     let adminsCounter = await getUsersService(ADMIN);
     let clientsCounter = await getUsersService(CLIENT);
     let sellersCounter = await getUsersService(SELLER);
 
-    let AllProductsCounter = await getAllProductsService();
-    let CHAINSCounter = await getAllProductsByTypeAndSection(CHAINS);
-    let DESSERTSCounter = await getAllProductsByTypeAndSection(DESSERTS);
-    let DRINKSCounter = await getAllProductsByTypeAndSection(DRINKS);
-    let SUPPLEMENTSCounter = await getAllProductsByTypeAndSection(SUPPLEMENTS);
-    let MISO_SOUPSCounter = await getAllProductsByTypeAndSection(MISO_SOUPS);
-    let PIZZACounter = await getAllProductsByTypeAndSection(PIZZA);
-    let ROLESCounter = await getAllProductsByTypeAndSection(ROLES);
-    let SALADSCounter = await getAllProductsByTypeAndSection(SALADS);
-    let SUSHICounter = await getAllProductsByTypeAndSection(SUSHI);
+    let CHAINSCounter = await getAllProductsByTypeOnly(CHAINS);
+    let DESSERTSCounter = await getAllProductsByTypeOnly(DESSERTS);
+    let DRINKSCounter = await getAllProductsByTypeOnly(DRINKS);
+    let SUPPLEMENTSCounter = await getAllProductsByTypeOnly(SUPPLEMENTS);
+    let MISO_SOUPSCounter = await getAllProductsByTypeOnly(MISO_SOUPS);
+    let PIZZACounter = await getAllProductsByTypeOnly(PIZZA);
+    let ROLESCounter = await getAllProductsByTypeOnly(ROLES);
+    let SALADSCounter = await getAllProductsByTypeOnly(SALADS);
+    let SUSHICounter = await getAllProductsByTypeOnly(SUSHI);
 
     console.log('_________________________________________');
-    console.log(`AS OF ${new Date().toLocaleString()} NUMBER OF ALL ACTIVE USERS WILL BE ` + (adminsCounter.length + clientsCounter.length + sellersCounter.length) + `, INCLUDING: `
+    console.log(`AS OF ${new Date().toLocaleString()} NUMBER OF ALL USERS WILL BE ` + (adminsCounter.length + clientsCounter.length + sellersCounter.length) + `, INCLUDING: `
     );
     console.log(
         'ADMINS: ' + adminsCounter.length + '\n' +
@@ -36,7 +34,16 @@ module.exports = async () => {
 
     console.log('_________________________________________');
     console.log(`AS OF ${new Date().toLocaleString()} NUMBER OF ALL PRODUCTS WILL BE ` +
-        AllProductsCounter.length + `, INCLUDING: `);
+        (
+            CHAINSCounter.length +
+            DESSERTSCounter.length +
+            DRINKSCounter.length +
+            SUPPLEMENTSCounter.length +
+            MISO_SOUPSCounter.length +
+            PIZZACounter.length +
+            ROLESCounter.length +
+            SALADSCounter.length +
+            SUSHICounter.length) + `, INCLUDING: `);
     console.log(
         'CHAINS: ' + CHAINSCounter.length + '\n' +
         'DESSERTS: ' + DESSERTSCounter.length + '\n' +

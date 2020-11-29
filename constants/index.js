@@ -15,6 +15,7 @@ module.exports.responseStatusCodesEnum = require('./responseStatusCodes.enum');
 module.exports.PRODUCT_STATUS = require('./productStatus.enum');
 module.exports.PRODUCT_TYPE = require('./productType.enum');
 module.exports.PRODUCT_SECTION = require('./productSection.enum');
+module.exports.PURCHASE_STATUS = require('./purchaseStatus.enum');
 module.exports.transactionEnum = require('./transaction.enum');
 module.exports.JWT_METHOD = require('./jwtMethod.enum');
 module.exports.USER_GENDER = require('./userGender.enum');

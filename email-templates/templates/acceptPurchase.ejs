@@ -1,0 +1,13 @@
+<%- include('../includes/header.ejs') %>
+<div class="pokemons">
+    <img
+            src="https://preview.redd.it/3tov2at7f8n31.png?width=960&crop=smart&auto=webp&s=e7d4731a611be14d760c4e1771e6e1271db04fbb"
+            alt="logo"
+    />
+    <p class="green"> Шановний клієнте💾 <span class="pink"><%= purchaseData.name %> <%= purchaseData.surname %></span>,
+        ваше замовлення🛒 прийнято💳!🙏</p>
+    <p class="pink"> Кількість товарів вашого замовлення <span class="green"><%= purchase.length %></span> на загальну суму <span class="green"><%= purchaseData.total %>грн.</span>💵</p>
+    <p class="green"> Очікуйте⏱  скоро наш кур'єр зв'яжеться з вами!📱</p>
+
+</div>
+<%- include('../includes/footer.ejs', {SITE}) %>

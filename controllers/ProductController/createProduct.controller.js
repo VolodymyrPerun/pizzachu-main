@@ -66,11 +66,11 @@ module.exports = async (req, res, next) => {
             info: createProductHistory,
             date: new Date().toLocaleDateString(),
             time: new Date().toLocaleTimeString(),
-            userId: userId,
+            userId,
             productId: isProductCreated.productId
         });
 
-        await addEventService({event: createProductHistory, userId: userId}, transaction);
+        await addEventService({event: createProductHistory, userId}, transaction);
         await sendMail(userFromDB.email, CREATE_PRODUCT, {userFromDB, isProductCreated});
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));

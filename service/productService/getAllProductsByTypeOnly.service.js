@@ -36,7 +36,7 @@ module.exports = async (type_id, limit, offset) => {
             ['productId', 'DESC']
         ],
         limit,
-        offset,
+        offset
     });
 };
 

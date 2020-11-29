@@ -5,6 +5,7 @@ module.exports.CommentRouter = require('./CommentRouter');
 module.exports.ProductRouter = require('./ProductRouter');
 module.exports.ProductTypeRouter = require('./ProductTypeRouter');
 module.exports.ProductSectionRouter = require('./ProductSectionRouter');
+module.exports.PurchaseRouter = require('./PurchaseRouter');
 module.exports.ReplyCommentRouter = require('./ReplyCommentRouter');
 module.exports.SellerRouter = require('./SellerRouter');
 module.exports.UserRouter = require('./UserRouter');

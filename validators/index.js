@@ -4,5 +4,6 @@ module.exports.commentValidator = require('./commentValidator');
 module.exports.productValidator = require('./productValidator');
 module.exports.productTypeValidator = require('./productTypeValidator');
 module.exports.productSectionValidator = require('./productSectionValidator');
+module.exports.purchaseValidator = require('./purchaseValidator');
 module.exports.userValidator = require('./userValidator');
 

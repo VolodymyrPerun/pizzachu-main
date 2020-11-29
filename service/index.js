@@ -8,6 +8,7 @@ module.exports.oauthService = require('./oauthService');
 module.exports.productService = require('./productService');
 module.exports.productTypeService = require('./productTypeService');
 module.exports.productSectionService = require('./productSectionService');
+module.exports.purchaseService = require('./purchaseService');
 module.exports.repliedCommentService = require('./repliedCommentService');
 module.exports.userService = require('./userService');
 

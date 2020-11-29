@@ -23,12 +23,5 @@ module.exports = Joi.object().keys({
     status_id: Joi.number().integer().min(1).max(2).required(),
     role_id: Joi.number().integer().min(1).max(3).required(),
     user_photo: Joi.string(),
-    created_at: Joi.date(),
-
-    // description: Joi.string().optional().allow(null, ''),
-    // cars: Joi.array().items(
-    //     Joi.object().keys({
-    //         name: Joi.string()
-    //     })
-    // ).optional()
-})
+    created_at: Joi.date()
+});

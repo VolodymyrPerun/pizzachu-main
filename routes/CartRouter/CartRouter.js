@@ -6,21 +6,26 @@ const {
         deleteCartByUserId,
         deleteProductFromCartByParams,
         getCart,
+        getUnauthorizedCart,
         updateProductInCart
     }
 } = require('../../controllers');
 const {
-    authMiddleware: {getUserForPurchaseMiddleware},
+    authMiddleware: {getUserFromAccessTokenMiddleware},
     cartMiddleware: {checkProductInCartValidityMiddleware, checkProductInCartValidityIfUpdateMiddleware},
-    productMiddleware: {checkIsProductExistMiddleware,}
+    productMiddleware: {checkIsProductExistMiddleware}
 } = require('./../../middleware');
 
 
 cartRouter.use('/',
-    getUserForPurchaseMiddleware);
+    getUserFromAccessTokenMiddleware
+);
 
 cartRouter.get('/',
     getCart);
+cartRouter.get('/getUnauthorizedCart',
+    getUnauthorizedCart);
+
 cartRouter.delete('/',
     deleteCartByUserId);
 

@@ -1,7 +1,10 @@
 const cron = require('node-cron');
 
-const calculateStatisticCron = require('./calculdate-statistic.cron');
-const clearOldTokens = require('./clearOldTokens.cron');
+const calculateStatisticCron = require('./calculdateStatistic.cron');
+const clearOldTokensCron = require('./clearOldTokens.cron');
+const deleteOldCardsCron = require('./deleteOldCards.cron');
+const deleteOldUsersCron = require('./deleteOldUsers.cron');
+const deleteOldHistoryEventsCron = require('./deleteOldHistoryEvents.cron');
 const {CRON_JOB_PERIOD} = require('../config');
 
 module.exports = () => {
@@ -10,9 +13,13 @@ module.exports = () => {
 
         try {
             await calculateStatisticCron();
-            await clearOldTokens();
+            await clearOldTokensCron();
+            await deleteOldCardsCron();
+            await deleteOldUsersCron();
+            await deleteOldHistoryEventsCron();
+
         } catch (e) {
-            console.log(`CRON JOB FINISHED AT ${new Date().toISOString()} \n ${JSON.stringify(e, null, 2)}`)
+            console.log(`CRON JOB FINISHED AT ${new Date().toISOString()} \n ${JSON.stringify(e, null, 2)}`);
         }
 
         console.log(`CRON JOB FINISHED AT ${new Date().toISOString()}`);

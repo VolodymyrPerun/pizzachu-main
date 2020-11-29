@@ -6,6 +6,7 @@ module.exports.oAuthController = require('./OAuthController');
 module.exports.productController = require('./ProductController');
 module.exports.productTypeController = require('./ProductTypeController');
 module.exports.productSectionController = require('./ProductSectionController');
+module.exports.purchaseController = require('./PurchaseController');
 module.exports.replyCommentController = require('./ReplyCommentController');
 module.exports.userController = require('./UserController');
 
