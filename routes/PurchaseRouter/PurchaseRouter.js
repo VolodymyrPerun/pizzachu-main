@@ -1,9 +1,6 @@
 const purchaseRouter = require('express').Router();
 
-const {
-    JWT_METHOD: {SELLER},
-    PURCHASE_STATUS:{ACCEPTED, CANCELLED, IN_PROGRESS}
-} = require('../../constants');
+const {JWT_METHOD: {CLIENT, SELLER}} = require('../../constants');
 const {
     purchaseController: {
         acceptPurchase,
@@ -21,17 +18,14 @@ const {
 } = require('./../../middleware');
 
 purchaseRouter.use('/',
-     getUserFromAccessTokenMiddleware
+    getUserFromAccessTokenMiddleware
 );
 
-purchaseRouter.get('/accepted',
-    getAllPurchases(ACCEPTED));
+purchaseRouter.get('/admin',
+    getAllPurchases(SELLER));
 
-purchaseRouter.get('/cancelled',
-    getAllPurchases(CANCELLED));
-
-purchaseRouter.get('/in-progress',
-    getAllPurchases(IN_PROGRESS));
+purchaseRouter.get('/client',
+    getAllPurchases(CLIENT));
 
 // purchaseRouter.get('/getUnauthorizedCart',
 //     getUnauthorizedCart);

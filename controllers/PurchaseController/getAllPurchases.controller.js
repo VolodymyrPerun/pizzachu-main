@@ -2,46 +2,50 @@ const {
     historyActionEnum: {getAllPurchasesHistory},
     responseStatusCodesEnum: {NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_GET},
-    PURCHASE_STATUS: {ACCEPTED, CANCELLED, IN_PROGRESS}
+    PURCHASE_STATUS: {ACCEPTED},
+    USER_ROLE: {SELLER, CLIENT}
 } = require('../../constants');
 const {ErrorHandler} = require("../../error");
 const {purchaseService: {getPurchaseService}} = require("../../service");
 const winston = require('../../logger/winston');
 const logger = winston(getAllPurchasesHistory);
 
-module.exports = purchaseStatus => async (req, res, next) => {
+module.exports = userRole => async (req, res, next) => {
     let purchaseData = {};
     let purchases = [];
-    let keyRole = '';
     try {
-        switch (purchaseStatus) {
-            case ACCEPTED:
-                keyRole = ACCEPTED;
+
+        let {
+            user: {userId},
+            query: {status_id, limit, page}
+        } = req;
+
+        if (+page === 0) page = 1;
+        page = page - 1;
+
+        switch (userRole) {
+            case CLIENT:
+                purchases = await getPurchaseService(
+                    {status_id: ACCEPTED, userId},
+                    +(limit),
+                    limit * page
+                );
                 break;
-            case CANCELLED:
-                keyRole = CANCELLED;
+
+            case SELLER:
+                purchases = await getPurchaseService(
+                    {status_id},
+                    +(limit),
+                    limit * page
+                );
                 break;
-            case IN_PROGRESS:
-                keyRole = IN_PROGRESS;
-                break;
+
             default:
                 return next(new ErrorHandler(
                     NOT_FOUND_CODE,
                     NOT_GET.message,
                     NOT_GET.customCode));
         }
-        let {
-            query: {limit, page},
-        } = req;
-
-        if (+page === 0) page = 1;
-        page = page - 1;
-
-        purchases = await getPurchaseService(
-            {status_id: keyRole},
-            +(limit),
-            limit * page
-        );
 
         if (!purchases) {
             logger.error({
@@ -55,11 +59,20 @@ module.exports = purchaseStatus => async (req, res, next) => {
                 NOT_GET.customCode));
         }
 
-        purchaseData.purchase = purchases;
-        purchaseData.lenght = purchases.length;
-        purchaseData.total = purchases[0].total;
+        if (purchases[0] !== undefined) {
 
-        await res.json(purchaseData);
+            purchaseData.purchase = purchases;
+            purchaseData.lenght = purchases.length;
+            purchaseData.total = purchases[0].total;
+
+            await res.json(purchaseData);
+
+        } else {
+            return next(new ErrorHandler(
+                NOT_FOUND_CODE,
+                NOT_GET.message,
+                NOT_GET.customCode));
+        }
 
     } catch (e) {
         next(new ErrorHandler(e.status, e.message, e.customCode));
