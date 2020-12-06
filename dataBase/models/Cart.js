@@ -10,12 +10,14 @@ module.exports = (sequelize, DataTypes) => {
         },
         userId: {
             type: DataTypes.INTEGER,
-            allowNull: false,
             foreignKey: true
         },
         productId: {
             type: DataTypes.INTEGER,
             foreignKey: true
+        },
+        tempId: {
+            type: DataTypes.INTEGER,
         },
         price: {
             type: DataTypes.INTEGER,

@@ -3,6 +3,7 @@ const cartRouter = require('express').Router();
 const {
     cartController: {
         addProductToCart,
+        addProductToUnauthorizedCart,
         deleteCartByUserId,
         deleteProductFromCartByParams,
         getCart,
@@ -29,14 +30,17 @@ cartRouter.get('/getUnauthorizedCart',
 cartRouter.delete('/',
     deleteCartByUserId);
 
-cartRouter.use('/:productId',
+cartRouter.use('/',
     checkIsProductExistMiddleware);
 
 cartRouter.delete('/:productId',
     deleteProductFromCartByParams);
-cartRouter.post('/:productId',
+cartRouter.post('/',
     checkProductInCartValidityMiddleware,
     addProductToCart);
+cartRouter.post('/unauthorized',
+    checkProductInCartValidityMiddleware,
+    addProductToUnauthorizedCart);
 cartRouter.put('/:productId',
     checkProductInCartValidityIfUpdateMiddleware,
     updateProductInCart);
