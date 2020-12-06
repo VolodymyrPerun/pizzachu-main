@@ -1,4 +1,5 @@
 const db = require('../../dataBase').getInstance();
+
 const {DB_TABLE_NAME: {CART, PURCHASE}, PURCHASE_STATUS: {ACCEPTED}} = require('../../constants');
 
 module.exports = async (purchaseId, userId, transaction) => {

@@ -45,7 +45,7 @@ module.exports = async (req, res, next) => {
             ));
         }
 
-        const userProceedPurchase = await findUserProceedPurchaseService({userId});
+        const userProceedPurchase = await findUserProceedPurchaseService({userId, status_id: IN_PROGRESS});
 
         if (userProceedPurchase) {
             return next(new ErrorHandler(
@@ -61,7 +61,7 @@ module.exports = async (req, res, next) => {
 
             const total = await calculateCartPriceHelper(cart);
 
-            await Promise.all(cart.map(async (product) => {
+            await Promise.all(cart.map(async product => {
 
                 await addPurchaseService({
                     purchaseId: userId + Date.now().toString().slice(8, 13),

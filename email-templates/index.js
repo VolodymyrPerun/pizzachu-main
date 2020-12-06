@@ -12,71 +12,71 @@ const {
 
 module.exports = {
     [ADMIN_REGISTER]: {
-        subject: '[PIZZACHU] АДМІНЕ ВІТАЄМО ВАС!',
+        subject: '🍕 PIZZACHU 🍕 АДМІНЕ ВІТАЄМО ВАС!',
         templateFileName: 'createAdmin'
     },
     [SELLER_REGISTER]: {
-        subject: '[PIZZACHU] НОВИЙ ПРОДАВЕЦЬ ВІТАЄМО ВАС!',
+        subject: '🍕 PIZZACHU 🍕 НОВИЙ ПРОДАВЕЦЬ ВІТАЄМО ВАС!',
         templateFileName: 'createSeller'
     },
     [USER_REGISTER]: {
-        subject: '[PIZZACHU] ВІТАЄМО!',
+        subject: '🍕 PIZZACHU 🍕 ВІТАЄМО!',
         templateFileName: 'createUser'
     },
     [USER_DELETE]: {
-        subject: '[PIZZACHU] АКАУНТ БУВ ВИДАЛЕНИЙ!',
+        subject: '🍕 PIZZACHU 🍕 АКАУНТ БУВ ВИДАЛЕНИЙ!',
         templateFileName: 'deleteUser'
     },
     [USER_UPDATE]: {
-        subject: '[PIZZACHU] АКАУНТ ОНОВЛЕНО!',
+        subject: '🍕 PIZZACHU 🍕 АКАУНТ ОНОВЛЕНО!',
         templateFileName: 'updateUser'
     },
     [PASSWORD_UPDATE]: {
-        subject: '[PIZZACHU] АКАУНТ ОНОВЛЕНО, ВАШ ПАРОЛЬ ЗМІНЕНО!',
+        subject: '🍕 PIZZACHU 🍕 АКАУНТ ОНОВЛЕНО, ВАШ ПАРОЛЬ ЗМІНЕНО!',
         templateFileName: 'changePassword'
     },
     [CREATE_PRODUCT]: {
-        subject: '[PIZZACHU] СТВОРЕНО НОВИЙ ПРОДУКТ!',
+        subject: '🍕 PIZZACHU 🍕 СТВОРЕНО НОВИЙ ПРОДУКТ!',
         templateFileName: 'createProduct'
     },
     [DELETE_PRODUCT]: {
-        subject: '[PIZZACHU] ПРОДУКТ ВИДАЛЕНО!',
+        subject: '🍕 PIZZACHU 🍕 ПРОДУКТ ВИДАЛЕНО!',
         templateFileName: 'deleteProduct'
     },
     [UPDATE_PRODUCT]: {
-        subject: '[PIZZACHU] ПРОДУКТ ОНОВЛЕНО!',
+        subject: '🍕 PIZZACHU 🍕 ПРОДУКТ ОНОВЛЕНО!',
         templateFileName: 'updateProduct'
     },
     [CREATE_PRODUCT_TYPE]: {
-        subject: '[PIZZACHU] СТВОРЕНО НОВИЙ ТИП ПРОДУКТУ!',
+        subject: '🍕 PIZZACHU 🍕 СТВОРЕНО НОВИЙ ТИП ПРОДУКТУ!',
         templateFileName: 'createProductType'
     },
     [UPDATE_PRODUCT_TYPE]: {
-        subject: '[PIZZACHU] ОНОВЛЕНО ТИП ПРОДУКТУ!',
+        subject: '🍕 PIZZACHU 🍕 ОНОВЛЕНО ТИП ПРОДУКТУ!',
         templateFileName: 'updateProductType'
     },
     [DELETE_PRODUCT_TYPE]: {
-        subject: '[PIZZACHU] ВИДАЛЕНО ТИП ПРОДУКТУ!',
+        subject: '🍕 PIZZACHU 🍕 ВИДАЛЕНО ТИП ПРОДУКТУ!',
         templateFileName: 'deleteProductType'
     },
     [CREATE_PRODUCT_SECTION]: {
-        subject: '[PIZZACHU] СТВОРЕНО НОВУ СЕКЦІЮ ПРОДУКТУ!',
+        subject: '🍕 PIZZACHU 🍕 СТВОРЕНО НОВУ СЕКЦІЮ ПРОДУКТУ!',
         templateFileName: 'createProductSection'
     },
     [UPDATE_PRODUCT_SECTION]: {
-        subject: '[PIZZACHU] ОНОВЛЕНО СЕКЦІЮ ПРОДУКТУ!',
+        subject: '🍕 PIZZACHU 🍕 ОНОВЛЕНО СЕКЦІЮ ПРОДУКТУ!',
         templateFileName: 'updateProductSection'
     },
     [DELETE_PRODUCT_SECTION]: {
-        subject: '[PIZZACHU] ВИДАЛЕНО СЕКЦІЮ ПРОДУКТУ!',
+        subject: '🍕 PIZZACHU 🍕 ВИДАЛЕНО СЕКЦІЮ ПРОДУКТУ!',
         templateFileName: 'deleteProductSection'
     },
     [ACCEPT_PURCHASE]: {
-        subject: '[PIZZACHU] ВІТАЄМО У ВАС НОВЕ ЗАМОВЛЕННЯ!',
+        subject: '🍕 PIZZACHU 🍕 ВІТАЄМО У ВАС НОВЕ ЗАМОВЛЕННЯ!',
         templateFileName: 'acceptPurchase'
     },
     [CANCEL_PURCHASE]: {
-        subject: '[PIZZACHU] ВАШЕ ЗАМОВЛЕННЯ СКАСОВАНО!',
+        subject: '🍕 PIZZACHU 🍕 ВАШЕ ЗАМОВЛЕННЯ СКАСОВАНО!',
         templateFileName: 'cancelPurchase'
     },
 };

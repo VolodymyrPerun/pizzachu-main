@@ -114,6 +114,11 @@ module.exports = {
         message: 'Purchase is already cancelled',
         customCode: 40023
     },
+    //+
+    BAD_REQUEST_PURCHASE_IS_ALREADY_DONE: {
+        message: 'Purchase is already done',
+        customCode: 40024
+    },
 
 
     //401 error code

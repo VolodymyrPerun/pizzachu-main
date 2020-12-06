@@ -2,7 +2,7 @@ const {
     historyActionEnum: {getAllPurchasesHistory},
     responseStatusCodesEnum: {NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_GET},
-    PURCHASE_STATUS: {ACCEPTED},
+    PURCHASE_STATUS: {DONE},
     USER_ROLE: {SELLER, CLIENT}
 } = require('../../constants');
 const {ErrorHandler} = require("../../error");
@@ -26,7 +26,10 @@ module.exports = userRole => async (req, res, next) => {
         switch (userRole) {
             case CLIENT:
                 purchases = await getPurchaseService(
-                    {status_id: ACCEPTED, userId},
+                    {
+                        status_id: DONE,
+                        userId
+                    },
                     +(limit),
                     limit * page
                 );

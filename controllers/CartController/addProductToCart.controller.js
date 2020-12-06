@@ -10,7 +10,7 @@ const {
 const {
     ErrorHandler,
     CustomErrorData: {BAD_REQUEST_PRODUCT_IS_ALREADY_PRESENT, BAD_REQUEST_USER_NOT_ACTIVE}
-} = require("../../error");
+} = require('../../error');
 const {
     cartService: {addProductToCart, findUserProceedCartService},
     historyService: {addEventService},
@@ -48,8 +48,6 @@ module.exports = async (req, res, next) => {
         const product = await getProductByIdService(productId);
 
         const userProceedCart = await findUserProceedCartService({userId, productId});
-
-        console.log(userProceedCart);
 
         if (userProceedCart) {
             return next(new ErrorHandler(

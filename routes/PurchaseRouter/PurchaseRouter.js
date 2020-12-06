@@ -6,15 +6,18 @@ const {
         acceptPurchase,
         addPurchase,
         cancelPurchase,
+        donePurchase,
+        editPurchase,
         getAllPurchases
 
     }
 } = require('../../controllers');
 const {
     authMiddleware: {checkAccessTokenMethodMiddleware, getUserFromAccessTokenMiddleware},
-    cartMiddleware: {checkProductInCartValidityMiddleware, checkProductInCartValidityIfUpdateMiddleware},
-    productMiddleware: {checkIsProductExistMiddleware},
-    purchaseMiddleware: {checkIsPurchaseExistMiddleware, checkUnauthorizedPurchaseValidityMiddleware}
+    purchaseMiddleware: {
+        checkIsPurchaseExistMiddleware,
+        checkUnauthorizedPurchaseValidityMiddleware,
+        checkPurchaseValidityIfEditMiddleware}
 } = require('./../../middleware');
 
 purchaseRouter.use('/',
@@ -30,24 +33,22 @@ purchaseRouter.get('/client',
 // purchaseRouter.get('/getUnauthorizedCart',
 //     getUnauthorizedCart);
 //
-// purchaseRouter.delete('/',
-//     deleteCartByUserId);
-
-// purchaseRouter.use('/:productId',
-//     checkIsProductExistMiddleware);
-
-// purchaseRouter.delete('/:productId',
-//     deleteProductFromCartByParams);
 purchaseRouter.post('/',
-    // checkProductInCartValidityMiddleware,
     addPurchase);
-purchaseRouter.post('/accept-purchase',
+
+purchaseRouter.use('/',
     checkAccessTokenMethodMiddleware(SELLER),
-    checkIsPurchaseExistMiddleware,
+    checkIsPurchaseExistMiddleware
+);
+
+purchaseRouter.put('/edit-purchase',
+    checkPurchaseValidityIfEditMiddleware,
+    editPurchase);
+purchaseRouter.post('/accept-purchase',
     acceptPurchase);
 purchaseRouter.post('/cancel-purchase',
-    checkAccessTokenMethodMiddleware(SELLER),
-    checkIsPurchaseExistMiddleware,
     cancelPurchase);
+purchaseRouter.post('/done-purchase',
+    donePurchase);
 
 module.exports = purchaseRouter;

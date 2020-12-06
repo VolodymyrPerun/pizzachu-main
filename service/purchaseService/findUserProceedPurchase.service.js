@@ -5,12 +5,12 @@ const {
     PURCHASE_STATUS: {IN_PROGRESS}
 } = require('../../constants');
 
-module.exports = async userId => {
+module.exports = async params => {
     const PurchaseToFindModel = await db.getModel(PURCHASE);
 
     return PurchaseToFindModel.findOne(
         {
-            where: userId
+            where: params
         }, {
             status_id: IN_PROGRESS,
             new: true,

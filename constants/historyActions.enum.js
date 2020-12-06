@@ -16,6 +16,8 @@ module.exports = {
     deleteProductSectionHistory: 'deleteProductSection',
     deleteProductTypeHistory: 'deleteProductType',
     deleteUserHistory: 'deleteUser',
+    donePurchaseHistory: 'donePurchase',
+    editPurchaseHistory: 'editPurchase',
     getAllProductTypesHistory: 'getAllProductTypes',
     getAllProductSectionsHistory: 'getAllProductSections',
     getAllPurchasesHistory: 'getAllPurchases',

@@ -36,7 +36,7 @@ module.exports = async (userMail, action, context) => {
     const html = await emailTemplates.render(template.templateFileName, {...context, SITE});
 
     const mailOptions = {
-        from: ROOT_EMAIL_LOGIN,
+        from: `PIZZACHU 🍕 <${ROOT_EMAIL_LOGIN}>`,
         to: userMail,
         subject: template.subject,
         html
