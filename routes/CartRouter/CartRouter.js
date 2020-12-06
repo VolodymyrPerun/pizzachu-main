@@ -6,9 +6,12 @@ const {
         addProductToUnauthorizedCart,
         deleteCartByUserId,
         deleteProductFromCartByParams,
+        deleteProductFromUnauthorizedCartByParams,
+        deleteUnauthorizedCartByTempId,
         getCart,
         getUnauthorizedCart,
-        updateProductInCart
+        updateProductInCart,
+        updateProductInUnauthorizedCart
     }
 } = require('../../controllers');
 const {
@@ -18,30 +21,44 @@ const {
 } = require('./../../middleware');
 
 
+cartRouter.get('/unauthorized',
+    getUnauthorizedCart);
+
+cartRouter.delete('/unauthorized',
+    deleteUnauthorizedCartByTempId);
+
+
+cartRouter.delete('/',
+    checkIsProductExistMiddleware,
+    deleteProductFromUnauthorizedCartByParams);
+cartRouter.post('/unauthorized',
+    checkIsProductExistMiddleware,
+    checkProductInCartValidityMiddleware,
+    addProductToUnauthorizedCart);
+cartRouter.put('/unauthorized',
+    checkIsProductExistMiddleware,
+    checkProductInCartValidityIfUpdateMiddleware,
+    updateProductInUnauthorizedCart);
+
+
 cartRouter.use('/',
     getUserFromAccessTokenMiddleware
 );
 
 cartRouter.get('/',
     getCart);
-cartRouter.get('/getUnauthorizedCart',
-    getUnauthorizedCart);
-
 cartRouter.delete('/',
     deleteCartByUserId);
 
 cartRouter.use('/',
     checkIsProductExistMiddleware);
 
-cartRouter.delete('/:productId',
+cartRouter.delete('/',
     deleteProductFromCartByParams);
 cartRouter.post('/',
     checkProductInCartValidityMiddleware,
     addProductToCart);
-cartRouter.post('/unauthorized',
-    checkProductInCartValidityMiddleware,
-    addProductToUnauthorizedCart);
-cartRouter.put('/:productId',
+cartRouter.put('/',
     checkProductInCartValidityIfUpdateMiddleware,
     updateProductInCart);
 

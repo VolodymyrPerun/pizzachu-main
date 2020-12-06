@@ -12,6 +12,7 @@ const logger = winston(getAllProductTypesHistory);
 module.exports = async (req, res, next) => {
     let cartData = {};
     try {
+
         const {
             user: {userId}
         } = req;

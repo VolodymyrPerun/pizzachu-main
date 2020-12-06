@@ -1,37 +1,40 @@
-const {calculateCartPriceHelper} = require("../../helpers");
 const {ErrorHandler} = require("../../error");
-const {productService: {getProductByIdService}} = require("../../service");
+const {cartService: {getCartService}} = require("../../service");
+const {
+    historyActionEnum: {getAllProductTypesHistory},
+    responseStatusCodesEnum: {NOT_FOUND: NOT_FOUND_CODE},
+    responseCustomErrorEnum: {NOT_GET}
+} = require('../../constants');
+const winston = require('../../logger/winston');
+const {calculateCartPriceHelper} = require("../../helpers");
+const logger = winston(getAllProductTypesHistory);
 
 module.exports = async (req, res, next) => {
     let cartData = {};
     try {
-        let products = [];
+
         let {
-            query: {productId}
+            query: {tempId}
         } = req;
 
-        console.log(productId);
+        const cart = await getCartService({tempId});
 
-        productId = productId.split(',');
+        if (!cart) {
+            logger.error({
+                message: NOT_GET.message,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
+            return next(new ErrorHandler(
+                NOT_FOUND_CODE,
+                NOT_GET.message,
+                NOT_GET.customCode));
+        }
 
-        await Promise.all(productId.map(async productId => {
-            let product = await getProductByIdService(productId);
+        const total = await calculateCartPriceHelper(cart);
 
-            products.push(product);
-
-            // return product
-        }));
-
-        // console.log(y);
-
-        // const total = await calculateCartPriceHelper(products);
-        //
-
-        //
-        cartData.products = products;
-        // cartData.total = total;
-
-        console.log(products);
+        cartData.cart = cart;
+        cartData.total = total;
 
         await res.json(cartData);
 
