@@ -11,9 +11,9 @@ const logger = winston(NOT_VALID.message);
 
 module.exports = async (req, res, next) => {
     try {
-        const purchase = req.body;
+        const purchaseData = req.body;
 
-        const {error} = Joi.validate(purchase, purchaseValidationSchema);
+        const {error} = Joi.validate(purchaseData, purchaseValidationSchema);
 
         if (error) {
             logger.error({
@@ -27,7 +27,7 @@ module.exports = async (req, res, next) => {
                 NOT_VALID.customCode));
         }
 
-        req.purchase = purchase;
+        req.purchaseData = purchaseData;
 
         next();
     } catch (e) {

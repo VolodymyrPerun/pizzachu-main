@@ -14,13 +14,15 @@ module.exports = (sequelize, DataTypes) => {
             },
             userId: {
                 type: DataTypes.INTEGER,
-                foreignKey: true,
-                allowNull: false
+                foreignKey: true
             },
             productId: {
                 type: DataTypes.INTEGER,
                 foreignKey: true,
                 allowNull: false
+            },
+            tempId: {
+                type: DataTypes.INTEGER,
             },
             email: {
                 type: DataTypes.STRING,

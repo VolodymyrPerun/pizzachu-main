@@ -35,7 +35,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.set('views', path.join(__dirname, 'public'));
 
-
 const {
     AdminRouter,
     AuthRouter,
@@ -62,8 +61,6 @@ app.use('/product-sections', ProductSectionRouter);
 app.use('/purchase',  PurchaseRouter);
 app.use('/users', UserRouter);
 
-
-
 app.use((err, req, res, next) => {
     res
         .status(err.status || SERVER_ERROR)
@@ -73,7 +70,6 @@ app.use((err, req, res, next) => {
             code: err.customCode
         })
 });
-
 
 app.listen(PORT || 5000, (err) => {
     if (err) {

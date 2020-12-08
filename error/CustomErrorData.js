@@ -119,6 +119,11 @@ module.exports = {
         message: 'Purchase is already done',
         customCode: 40024
     },
+    //+
+    BAD_REQUEST_CART_IS_NOT_PRESENT: {
+        message: 'Cart is not present',
+        customCode: 40025
+    },
 
 
     //401 error code
@@ -146,12 +151,6 @@ module.exports = {
     //403 error code
 
     //+
-    FORBIDDEN_MEDICAL_SERVICE_IS_NOT_PRESENT: {
-        message: 'Medical service is not present',
-        customCode: 4031
-    },
-
-    //+
     FORBIDDEN_USER_IS_BLOCKED: {
         message: 'User is blocked',
         customCode: 4032
@@ -165,11 +164,6 @@ module.exports = {
     FORBIDDEN_WRONG_ACTION_TOKEN: {
         message: 'Wrong action token',
         customCode: 4034
-    },
-    //+
-    FORBIDDEN_NO_SPECIALITIES: {
-        message: 'No specialities',
-        customCode: 4035
     },
     //+
     FORBIDDEN_RECORD_NOT_PRESENT: {

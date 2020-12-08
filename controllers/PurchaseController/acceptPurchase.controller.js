@@ -44,21 +44,36 @@ module.exports = async (req, res, next) => {
 
                 await acceptPurchaseService(
                     {purchaseId},
-                    {userId},
+                    {userId},//todo only purchaseId and router fix
                     transaction);
             }));
 
-            logger.info({
-                info: acceptPurchaseHistory,
-                date: new Date().toLocaleDateString(),
-                time: new Date().toLocaleTimeString(),
-                sellerId: userId,
-                userId: purchaseData.userId,
-                purchaseId: purchaseData.purchaseId
-            });
+            if (purchaseData.userId !== null) {
+                logger.info({
+                    info: acceptPurchaseHistory,
+                    date: new Date().toLocaleDateString(),
+                    time: new Date().toLocaleTimeString(),
+                    sellerId: userId,
+                    userId: purchaseData.userId,
+                    purchaseId: purchaseData.purchaseId
+                });
 
-            await addEventService({event: acceptPurchaseHistory, userId: purchaseData.userId}, transaction);
-            await sendMail(purchaseData.email, ACCEPT_PURCHASE, {purchaseData, purchase});
+                await addEventService({event: acceptPurchaseHistory, userId: purchaseData.userId}, transaction);
+                await sendMail(purchaseData.email, ACCEPT_PURCHASE, {purchaseData, purchase});
+            } else {
+                logger.info({
+                    info: acceptPurchaseHistory,
+                    date: new Date().toLocaleDateString(),
+                    time: new Date().toLocaleTimeString(),
+                    sellerId: userId,
+                    phoneNumber: purchaseData.number,
+                    purchaseId: purchaseData.purchaseId
+                });
+
+                await sendMail(purchaseData.email, ACCEPT_PURCHASE, {purchaseData, purchase});
+            }
+
+
             await transaction.commit();
             console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
         }

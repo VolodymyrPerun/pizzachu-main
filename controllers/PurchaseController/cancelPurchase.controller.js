@@ -48,14 +48,30 @@ module.exports = async (req, res, next) => {
                     transaction);
             }));
 
-            logger.info({
-                info: cancelPurchaseHistory,
-                date: new Date().toLocaleDateString(),
-                time: new Date().toLocaleTimeString(),
-                sellerId: userId,
-                userId: purchaseData.userId,
-                purchaseId: purchaseData.purchaseId
-            });
+            if (purchaseData.userId !== null) {
+                logger.info({
+                    info: cancelPurchaseHistory,
+                    date: new Date().toLocaleDateString(),
+                    time: new Date().toLocaleTimeString(),
+                    sellerId: userId,
+                    userId: purchaseData.userId,
+                    purchaseId: purchaseData.purchaseId
+                });
+
+                await addEventService({event: cancelPurchaseHistory, userId: purchaseData.userId}, transaction);
+                await sendMail(purchaseData.email, CANCEL_PURCHASE, {purchaseData});
+            } else {
+                logger.info({
+                    info: cancelPurchaseHistory,
+                    date: new Date().toLocaleDateString(),
+                    time: new Date().toLocaleTimeString(),
+                    sellerId: userId,
+                    phoneNumber: purchaseData.number,
+                    purchaseId: purchaseData.purchaseId
+                });
+
+                await sendMail(purchaseData.email, CANCEL_PURCHASE, {purchaseData, purchase});
+            }
 
             await addEventService({event: cancelPurchaseHistory, userId: purchaseData.userId}, transaction);
             await sendMail(purchaseData.email, CANCEL_PURCHASE, {purchaseData});

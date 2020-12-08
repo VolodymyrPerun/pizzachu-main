@@ -16,7 +16,7 @@ module.exports = Joi.object().keys({
     apartment: Joi.string(),
     entrance: Joi.string(),
     floor: Joi.string(),
-    status_id: Joi.number().integer().required(),
+    status_id: Joi.number().integer(),
     created_at: Joi.date(),
     updated_at: Joi.date(),
 });

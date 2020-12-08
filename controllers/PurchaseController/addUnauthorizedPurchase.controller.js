@@ -5,18 +5,15 @@ const {
     historyActionEnum: {addPurchaseHistory},
     responseStatusCodesEnum: {BAD_REQUEST},
     transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK},
-    PURCHASE_STATUS: {IN_PROGRESS},
-    USER_STATUS: {ACTIVE}
+    PURCHASE_STATUS: {IN_PROGRESS}
 } = require('../../constants');
 const {
     ErrorHandler,
-    CustomErrorData: {BAD_REQUEST_PURCHASE_IS_ALREADY_PRESENT, BAD_REQUEST_USER_NOT_ACTIVE}
+    CustomErrorData: {BAD_REQUEST_PURCHASE_IS_ALREADY_PRESENT}
 } = require("../../error");
 const {
     cartService: {getCartService},
-    historyService: {addEventService},
-    purchaseService: {addPurchaseService, findUserProceedPurchaseService},
-    userService: {getUserByIdService},
+    purchaseService: {addPurchaseService, findUserProceedPurchaseService}
 } = require("../../service");
 
 const winston = require('../../logger/winston');
@@ -27,27 +24,13 @@ module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
         const {
-            user: {userId}
+            purchaseData: purchaseData,
+            query: {tempId}
         } = req;
 
-        const userFromDB = await getUserByIdService(userId);
+        const unauthorizedUserProceedPurchase = await findUserProceedPurchaseService({tempId, status_id: IN_PROGRESS});
 
-        if (userFromDB.status_id !== ACTIVE) {
-            logger.error({
-                message: BAD_REQUEST_USER_NOT_ACTIVE.message,
-                date: new Date().toLocaleDateString(),
-                time: new Date().toLocaleTimeString()
-            });
-            return next(new ErrorHandler(
-                BAD_REQUEST,
-                BAD_REQUEST_USER_NOT_ACTIVE.message,
-                BAD_REQUEST_USER_NOT_ACTIVE.customCode
-            ));
-        }
-
-        const userProceedPurchase = await findUserProceedPurchaseService({userId, status_id: IN_PROGRESS});
-
-        if (userProceedPurchase) {
+        if (unauthorizedUserProceedPurchase) {
             return next(new ErrorHandler(
                 BAD_REQUEST,
                 BAD_REQUEST_PURCHASE_IS_ALREADY_PRESENT.message,
@@ -55,28 +38,28 @@ module.exports = async (req, res, next) => {
             ));
         }
 
-        if (!userProceedPurchase) {
+        if (!unauthorizedUserProceedPurchase) {
 
-            const cart = await getCartService({userId});
+            const unauthorizedCart = await getCartService({tempId});
 
-            const total = await calculateCartPriceHelper(cart);
+            const total = await calculateCartPriceHelper(unauthorizedCart);
 
-            await Promise.all(cart.map(async product => {
+            await Promise.all(unauthorizedCart.map(async product => {
 
                 await addPurchaseService({
-                    purchaseId: userId + Date.now().toString().slice(8, 13),
-                    userId,
+                    tempId,
+                    purchaseId: tempId + Date.now().toString().slice(8, 13),
                     productId: product.productId,
-                    email: userFromDB.email,
-                    phone: userFromDB.phone,
-                    name: userFromDB.name,
-                    surname: userFromDB.surname,
-                    city: userFromDB.city,
-                    street: userFromDB.street,
-                    house: userFromDB.house,
-                    apartment: userFromDB.apartment,
-                    entrance: userFromDB.entrance,
-                    floor: userFromDB.floor,
+                    email: purchaseData.email,
+                    phone: purchaseData.phone,
+                    name: purchaseData.name,
+                    surname: purchaseData.surname,
+                    city: purchaseData.city,
+                    street: purchaseData.street,
+                    house: purchaseData.house,
+                    apartment: purchaseData.apartment,
+                    entrance: purchaseData.entrance,
+                    floor: purchaseData.floor,
                     status_id: IN_PROGRESS,
                     price: product.price,
                     count: product.count,
@@ -91,10 +74,10 @@ module.exports = async (req, res, next) => {
             info: addPurchaseHistory,
             date: new Date().toLocaleDateString(),
             time: new Date().toLocaleTimeString(),
-            userId
+            name: purchaseData.name,
+            phone: purchaseData.phone
         });
 
-        await addEventService({event: addPurchaseHistory, userId}, transaction);
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

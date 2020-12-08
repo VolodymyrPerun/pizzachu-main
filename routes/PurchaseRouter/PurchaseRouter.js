@@ -5,6 +5,7 @@ const {
     purchaseController: {
         acceptPurchase,
         addPurchase,
+        addUnauthorizedPurchase,
         cancelPurchase,
         donePurchase,
         editPurchase,
@@ -20,6 +21,10 @@ const {
         checkPurchaseValidityIfEditMiddleware}
 } = require('./../../middleware');
 
+purchaseRouter.post('/unauthorized',
+    checkUnauthorizedPurchaseValidityMiddleware,
+    addUnauthorizedPurchase);
+
 purchaseRouter.use('/',
     getUserFromAccessTokenMiddleware
 );
@@ -30,9 +35,6 @@ purchaseRouter.get('/admin',
 purchaseRouter.get('/client',
     getAllPurchases(CLIENT));
 
-// purchaseRouter.get('/getUnauthorizedCart',
-//     getUnauthorizedCart);
-//
 purchaseRouter.post('/',
     addPurchase);
 

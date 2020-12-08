@@ -1,5 +1,6 @@
 module.exports.acceptPurchase = require('./acceptPurchase.controller');
 module.exports.addPurchase = require('./addPurchase.controller');
+module.exports.addUnauthorizedPurchase = require('./addUnauthorizedPurchase.controller');
 module.exports.cancelPurchase = require('./cancelPurchase.controller');
 module.exports.donePurchase = require('./donePurchase.controller');
 module.exports.getAllPurchases = require('./getAllPurchases.controller');
