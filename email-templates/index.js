@@ -7,6 +7,7 @@ const {
         CREATE_PRODUCT, DELETE_PRODUCT, UPDATE_PRODUCT,
         CREATE_PRODUCT_TYPE, UPDATE_PRODUCT_TYPE, DELETE_PRODUCT_TYPE,
         CREATE_PRODUCT_SECTION, UPDATE_PRODUCT_SECTION, DELETE_PRODUCT_SECTION,
+        PASSWORD_RESTORE
     }
 } = require('../constants');
 
@@ -78,5 +79,9 @@ module.exports = {
     [CANCEL_PURCHASE]: {
         subject: '🍕 PIZZACHU 🍕 ВАШЕ ЗАМОВЛЕННЯ СКАСОВАНО!',
         templateFileName: 'cancelPurchase'
+    },
+    [PASSWORD_RESTORE]: {
+        subject: '🍕 PIZZACHU 🍕 АКАУНТ ОНОВЛЕНО, ВАШ ПАРОЛЬ ЗМІНЕНО!',
+        templateFileName: 'restorePassword'
     },
 };

@@ -14,8 +14,9 @@ const {
     authController:
         {
             authUser,
+            changePassword,
             logoutUser,
-            changePassword
+            restorePassword
         },
     oAuthController:
         {
@@ -24,6 +25,8 @@ const {
         }
 } = require('../../controllers');
 
+
+router.put('/restore-password', restorePassword);
 router.post('/admin', authUser(ADMIN));
 router.post('/client', authUser(CLIENT));
 router.post('/seller', authUser(SELLER));

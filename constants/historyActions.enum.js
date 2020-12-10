@@ -27,6 +27,7 @@ module.exports = {
     postCommentHistory: 'postComment',
     refreshTokenHistory: 'refreshToken',
     registerUserHistory: 'registerUser',
+    restorePasswordHistory: 'restorePassword',
     unlockUserHistory: 'unlockUser',
     updateCommentHistory: 'updateComment',
     updateProductHistory: 'updateProduct',

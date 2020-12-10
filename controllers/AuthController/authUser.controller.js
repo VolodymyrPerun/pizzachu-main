@@ -79,7 +79,7 @@ module.exports = userRole => async (req, res, next) => {
                 NOT_VALID.customCode));
         }
 
-        const user = await getUserByParamsService({email, role_id: [keyRole]}, transaction);
+        const user = await getUserByParamsService({email, role_id: [keyRole]});
 
         if (!user) {
             logger.error({
