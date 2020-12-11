@@ -3,23 +3,23 @@ const chalk = require('chalk');
 
 const {transactionInstance} = require('../../dataBase').getInstance();
 const {
+    ErrorHandler,
     CustomErrorData: {
         FORBIDDEN_USER_IS_BLOCKED,
         BAD_REQUEST_USER_NOT_PRESENT,
         FORBIDDEN_PASSWORDS_NOT_MATCH
     }
 } = require("../../error");
-const {USER_STATUS: {BLOCKED, DELETED}, responseStatusCodesEnum: {BAD_REQUEST, CREATED}} = require("../../constants");
 const {authValidator: {changePasswordValidationSchema}} = require("../../validators");
 const {
     emailActionEnum: {PASSWORD_UPDATE},
     historyActionEnum: {changePasswordHistory},
-    responseStatusCodesEnum: {FORBIDDEN},
+    responseStatusCodesEnum: {BAD_REQUEST, CREATED, FORBIDDEN},
     responseCustomErrorEnum: {NOT_VALID},
-    transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK}
+    transactionEnum: {TRANSACTION_COMMIT, TRANSACTION_ROLLBACK},
+    USER_STATUS: {BLOCKED, DELETED}
 } = require('../../constants');
 const {HashPasswordHelper, HashPasswordCheckHelper} = require('../../helpers');
-const {ErrorHandler} = require('../../error');
 const {
     emailService: {sendMail},
     historyService: {addEventService},
