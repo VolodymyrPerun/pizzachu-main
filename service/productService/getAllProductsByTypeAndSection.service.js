@@ -34,9 +34,7 @@ module.exports = async (type_id, section_id, limit, offset) => {
         raw: true,
         order: [
             ['productId', 'DESC']
-        ],
-        limit,
-        offset,
+        ]
     });
 };
 
