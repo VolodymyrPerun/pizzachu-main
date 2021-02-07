@@ -4,7 +4,7 @@ const {
 } = require("../constants");
 const {
     userService: {getUsersService},
-    productService: {getAllProductsByTypeOnly}
+    productService: {getAllProductsByTypeOnlyWithPageLimit}
 } = require('../service');
 
 module.exports = async () => {
@@ -12,15 +12,15 @@ module.exports = async () => {
     let clientsCounter = await getUsersService(CLIENT);
     let sellersCounter = await getUsersService(SELLER);
 
-    let CHAINSCounter = await getAllProductsByTypeOnly(CHAINS);
-    let DESSERTSCounter = await getAllProductsByTypeOnly(DESSERTS);
-    let DRINKSCounter = await getAllProductsByTypeOnly(DRINKS);
-    let SUPPLEMENTSCounter = await getAllProductsByTypeOnly(SUPPLEMENTS);
-    let MISO_SOUPSCounter = await getAllProductsByTypeOnly(MISO_SOUPS);
-    let PIZZACounter = await getAllProductsByTypeOnly(PIZZA);
-    let ROLESCounter = await getAllProductsByTypeOnly(ROLES);
-    let SALADSCounter = await getAllProductsByTypeOnly(SALADS);
-    let SUSHICounter = await getAllProductsByTypeOnly(SUSHI);
+    let CHAINSCounter = await getAllProductsByTypeOnlyWithPageLimit(CHAINS);
+    let DESSERTSCounter = await getAllProductsByTypeOnlyWithPageLimit(DESSERTS);
+    let DRINKSCounter = await getAllProductsByTypeOnlyWithPageLimit(DRINKS);
+    let SUPPLEMENTSCounter = await getAllProductsByTypeOnlyWithPageLimit(SUPPLEMENTS);
+    let MISO_SOUPSCounter = await getAllProductsByTypeOnlyWithPageLimit(MISO_SOUPS);
+    let PIZZACounter = await getAllProductsByTypeOnlyWithPageLimit(PIZZA);
+    let ROLESCounter = await getAllProductsByTypeOnlyWithPageLimit(ROLES);
+    let SALADSCounter = await getAllProductsByTypeOnlyWithPageLimit(SALADS);
+    let SUSHICounter = await getAllProductsByTypeOnlyWithPageLimit(SUSHI);
 
     console.log('_________________________________________');
     console.log(`AS OF ${new Date().toLocaleString()} NUMBER OF ALL USERS WILL BE ` + (adminsCounter.length + clientsCounter.length + sellersCounter.length) + `, INCLUDING: `

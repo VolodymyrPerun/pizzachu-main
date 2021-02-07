@@ -3,10 +3,20 @@ const {
     responseCustomErrorEnum: {NOT_GET},
 } = require('../../constants');
 const {ErrorHandler} = require('../../error');
-const {productService: {getAllProductsByTypeAndSection, getAllProductsByTypeOnly}} = require('../../service');
+const {
+    productService:
+        {
+            getAllProductsByTypeOnly,
+            getAllProductsByTypeAndSection,
+            getAllProductsByTypeAndSectionWithPageLimit,
+            getAllProductsByTypeOnlyWithPageLimit
+        }
+} = require('../../service');
 
 module.exports = async (req, res, next) => {
+    let productsData = {};
     let products = [];
+    let noLimitsPageProducts = [];
     try {
         let {
             query: {type, section, limit, page},
@@ -16,17 +26,27 @@ module.exports = async (req, res, next) => {
         page = page - 1;
 
         if (!section) {
-            products = await getAllProductsByTypeOnly(
+            products = await getAllProductsByTypeOnlyWithPageLimit(
                 type,
                 +(limit),
-                limit * page
-            );
+                limit * page);
+
+            noLimitsPageProducts = await getAllProductsByTypeOnly(
+                type,
+                +(limit),
+                limit * page);
         } else {
-            products = await getAllProductsByTypeAndSection(
+            products = await getAllProductsByTypeAndSectionWithPageLimit(
                 type,
                 section,
                 +(limit),
                 limit * page);
+
+            noLimitsPageProducts = await getAllProductsByTypeAndSection(
+                type,
+                section);
+
+
         }
 
         if (!products) {
@@ -41,7 +61,12 @@ module.exports = async (req, res, next) => {
                 NOT_GET.customCode));
         }
 
-        await res.json(products);
+        let total = noLimitsPageProducts.length;
+
+        productsData.products = products;
+        productsData.total = total;
+
+        await res.json(productsData);
 
     } catch (e) {
         next(new ErrorHandler(e.status, e.message, e.customCode));
