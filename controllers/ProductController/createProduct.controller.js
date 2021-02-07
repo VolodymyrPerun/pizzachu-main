@@ -27,8 +27,7 @@ module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
         const {
-            product: product,
-            body: photos,
+            product: product, photos,
             user: {userId}
         } = req;
 
