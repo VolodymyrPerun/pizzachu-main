@@ -8,7 +8,8 @@ const {
         createProduct,
         deleteProductByParams,
         updateProduct,
-        getAllProductsByType
+        getAllProductsByType,
+        getProductById
     },
 } = require('../../controllers');
 const {
@@ -39,6 +40,7 @@ productRouter.delete('/:productId',
     getUserFromAccessTokenMiddleware,
     checkIsProductExistMiddleware,
     deleteProductByParams);
+productRouter.get('/:productId', getProductById);
 productRouter.get('/', getAllProductsByType);
 
 module.exports = productRouter;
