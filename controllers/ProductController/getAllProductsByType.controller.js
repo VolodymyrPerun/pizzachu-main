@@ -19,7 +19,7 @@ module.exports = async (req, res, next) => {
     let noLimitsPageProducts = [];
     try {
         let {
-            query: {type, section, limit, page},
+            query: {type, section, size_id, limit, page},
         } = req;
 
         if (+page === 0) page = 1;
@@ -28,24 +28,21 @@ module.exports = async (req, res, next) => {
         if (!section) {
             products = await getAllProductsByTypeOnlyWithPageLimit(
                 type,
+                size_id,
                 +(limit),
                 limit * page);
 
-            noLimitsPageProducts = await getAllProductsByTypeOnly(
-                type,
-                +(limit),
-                limit * page);
+            noLimitsPageProducts = await getAllProductsByTypeOnly(type, size_id);
+
         } else {
             products = await getAllProductsByTypeAndSectionWithPageLimit(
                 type,
                 section,
+                size_id,
                 +(limit),
                 limit * page);
 
-            noLimitsPageProducts = await getAllProductsByTypeAndSection(
-                type,
-                section);
-
+            noLimitsPageProducts = await getAllProductsByTypeAndSection(type, section, size_id);
 
         }
 
