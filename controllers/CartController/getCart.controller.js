@@ -34,7 +34,8 @@ module.exports = async (req, res, next) => {
         const total = await calculateCartPriceHelper(cart);
 
         cartData.cart = cart;
-        cartData.total = total;
+        cartData.totalCount = total;
+        cartData.productsCount = cart.length;
 
         await res.json(cartData);
 
