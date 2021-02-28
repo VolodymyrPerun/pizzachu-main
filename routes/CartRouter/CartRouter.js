@@ -28,7 +28,7 @@ cartRouter.delete('/unauthorized',
     deleteUnauthorizedCartByTempId);
 
 
-cartRouter.delete('/',
+cartRouter.delete('/unauthorized/product',
     checkIsProductExistMiddleware,
     deleteProductFromUnauthorizedCartByParams);
 cartRouter.post('/unauthorized',
@@ -53,7 +53,7 @@ cartRouter.delete('/',
 cartRouter.use('/',
     checkIsProductExistMiddleware);
 
-cartRouter.delete('/',
+cartRouter.delete('/product',
     deleteProductFromCartByParams);
 cartRouter.post('/',
     checkProductInCartValidityMiddleware,

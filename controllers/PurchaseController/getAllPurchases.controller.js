@@ -8,6 +8,7 @@ const {
 const {ErrorHandler} = require("../../error");
 const {purchaseService: {getPurchaseService}} = require("../../service");
 const winston = require('../../logger/winston');
+const {IN_PROGRESS} = require("../../constants/cartStatus.enum");
 const logger = winston(getAllPurchasesHistory);
 
 module.exports = userRole => async (req, res, next) => {
@@ -27,7 +28,7 @@ module.exports = userRole => async (req, res, next) => {
             case CLIENT:
                 purchases = await getPurchaseService(
                     {
-                        status_id: DONE,
+                        status_id: DONE && IN_PROGRESS,
                         userId
                     },
                     +(limit),

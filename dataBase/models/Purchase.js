@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
                 autoIncrement: true
             },
             purchaseId: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.STRING,
                 allowNull: false
             },
             userId: {
@@ -21,8 +21,14 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: true,
                 allowNull: false
             },
+            product_photo: {
+                type: DataTypes.STRING
+            },
+            productName: {
+                type: DataTypes.STRING
+            },
             tempId: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.STRING,
             },
             email: {
                 type: DataTypes.STRING,
@@ -31,9 +37,6 @@ module.exports = (sequelize, DataTypes) => {
             name: {
                 type: DataTypes.STRING,
                 allowNull: false
-            },
-            surname: {
-                type: DataTypes.STRING
             },
             phone: {
                 type: DataTypes.INTEGER,

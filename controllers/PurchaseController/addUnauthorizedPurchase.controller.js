@@ -1,5 +1,6 @@
 const chalk = require('chalk');
 const {transactionInstance} = require('../../dataBase').getInstance();
+const { v4: uuidv4 } = require('uuid');
 
 const {
     historyActionEnum: {addPurchaseHistory},
@@ -24,7 +25,17 @@ module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
         const {
-            purchaseData: purchaseData,
+            purchaseData: {
+                email,
+                phone,
+                name,
+                city,
+                street,
+                house,
+                apartment,
+                entrance,
+                floor
+            },
             query: {tempId}
         } = req;
 
@@ -48,18 +59,19 @@ module.exports = async (req, res, next) => {
 
                 await addPurchaseService({
                     tempId,
-                    purchaseId: tempId + Date.now().toString().slice(8, 13),
-                    productId: product.productId,
-                    email: purchaseData.email,
-                    phone: purchaseData.phone,
-                    name: purchaseData.name,
-                    surname: purchaseData.surname,
-                    city: purchaseData.city,
-                    street: purchaseData.street,
-                    house: purchaseData.house,
-                    apartment: purchaseData.apartment,
-                    entrance: purchaseData.entrance,
-                    floor: purchaseData.floor,
+                    purchaseId: uuidv4(),
+                    productId: 231,
+                    product_photo: product['Product.product_photo'],
+                    productName: product['Product.name'],
+                    email,
+                    phone,
+                    name,
+                    city,
+                    street,
+                    house,
+                    apartment,
+                    entrance,
+                    floor,
                     status_id: IN_PROGRESS,
                     price: product.price,
                     count: product.count,
@@ -74,8 +86,8 @@ module.exports = async (req, res, next) => {
             info: addPurchaseHistory,
             date: new Date().toLocaleDateString(),
             time: new Date().toLocaleTimeString(),
-            name: purchaseData.name,
-            phone: purchaseData.phone
+            name,
+            phone
         });
 
         await transaction.commit();

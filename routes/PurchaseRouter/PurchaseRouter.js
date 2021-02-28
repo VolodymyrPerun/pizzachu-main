@@ -1,3 +1,4 @@
+const {ADMIN} = require("../../constants/jwtMethod.enum");
 const purchaseRouter = require('express').Router();
 
 const {JWT_METHOD: {CLIENT, SELLER}} = require('../../constants');
@@ -18,7 +19,8 @@ const {
     purchaseMiddleware: {
         checkIsPurchaseExistMiddleware,
         checkUnauthorizedPurchaseValidityMiddleware,
-        checkPurchaseValidityIfEditMiddleware}
+        checkPurchaseValidityIfEditMiddleware
+    }
 } = require('./../../middleware');
 
 purchaseRouter.post('/unauthorized',
@@ -29,14 +31,23 @@ purchaseRouter.use('/',
     getUserFromAccessTokenMiddleware
 );
 
-purchaseRouter.get('/admin',
+purchaseRouter.post('/',
+    getUserFromAccessTokenMiddleware,
+    addPurchase);
+
+
+purchaseRouter.get('/seller',
+    getUserFromAccessTokenMiddleware,
     getAllPurchases(SELLER));
 
 purchaseRouter.get('/client',
+    getUserFromAccessTokenMiddleware,
     getAllPurchases(CLIENT));
 
-purchaseRouter.post('/',
-    addPurchase);
+purchaseRouter.get('/admin',
+    getUserFromAccessTokenMiddleware,
+    getAllPurchases(ADMIN));
+
 
 purchaseRouter.use('/',
     checkAccessTokenMethodMiddleware(SELLER),

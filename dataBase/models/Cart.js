@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: true
         },
         tempId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
         },
         price: {
             type: DataTypes.INTEGER,

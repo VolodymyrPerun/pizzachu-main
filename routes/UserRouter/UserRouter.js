@@ -1,3 +1,4 @@
+const {getUserByAT} = require("../../controllers/UserController");
 const router = require('express').Router();
 
 const {USER_STATUS: {ACTIVE, BLOCKED}, JWT_METHOD: {CLIENT}} = require("../../constants");
@@ -43,6 +44,10 @@ router.get('/:userId',
     getUserFromAccessTokenMiddleware,
     checkIsUserExistMiddleware,
     getUserById);
+router.get('/',
+    checkAccessTokenMethodMiddleware(CLIENT),
+    getUserFromAccessTokenMiddleware,
+    getUserByAT);
 router.put('/',
     checkAccessTokenMethodMiddleware(CLIENT),
     getUserFromAccessTokenMiddleware,

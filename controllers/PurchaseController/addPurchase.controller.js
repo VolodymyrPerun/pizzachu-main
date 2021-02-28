@@ -1,5 +1,6 @@
 const chalk = require('chalk');
 const {transactionInstance} = require('../../dataBase').getInstance();
+const { v4: uuidv4 } = require('uuid');
 
 const {
     historyActionEnum: {addPurchaseHistory},
@@ -24,7 +25,7 @@ const {calculateCartPriceHelper} = require("../../helpers");
 const logger = winston(addPurchaseHistory);
 
 module.exports = async (req, res, next) => {
-    const transaction = await transactionInstance();
+   const transaction = await transactionInstance();
     try {
         const {
             user: {userId}
@@ -64,13 +65,14 @@ module.exports = async (req, res, next) => {
             await Promise.all(cart.map(async product => {
 
                 await addPurchaseService({
-                    purchaseId: userId + Date.now().toString().slice(8, 13),
+                    purchaseId: uuidv4(),
                     userId,
                     productId: product.productId,
+                    product_photo: product['Product.product_photo'],
+                    productName: product['Product.name'],
                     email: userFromDB.email,
                     phone: userFromDB.phone,
                     name: userFromDB.name,
-                    surname: userFromDB.surname,
                     city: userFromDB.city,
                     street: userFromDB.street,
                     house: userFromDB.house,
@@ -86,6 +88,7 @@ module.exports = async (req, res, next) => {
                 }, transaction);
             }));
         }
+
 
         logger.info({
             info: addPurchaseHistory,
