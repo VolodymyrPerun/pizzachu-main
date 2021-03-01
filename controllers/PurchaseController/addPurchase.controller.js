@@ -28,6 +28,17 @@ module.exports = async (req, res, next) => {
    const transaction = await transactionInstance();
     try {
         const {
+            purchaseData: {
+                email,
+                phone,
+                name,
+                city,
+                street,
+                house,
+                apartment,
+                entrance,
+                floor
+            },
             user: {userId}
         } = req;
 
@@ -46,18 +57,6 @@ module.exports = async (req, res, next) => {
             ));
         }
 
-        const userProceedPurchase = await findUserProceedPurchaseService({userId, status_id: IN_PROGRESS});
-
-        if (userProceedPurchase) {
-            return next(new ErrorHandler(
-                BAD_REQUEST,
-                BAD_REQUEST_PURCHASE_IS_ALREADY_PRESENT.message,
-                BAD_REQUEST_PURCHASE_IS_ALREADY_PRESENT.customCode
-            ));
-        }
-
-        if (!userProceedPurchase) {
-
             const cart = await getCartService({userId});
 
             const total = await calculateCartPriceHelper(cart);
@@ -70,15 +69,15 @@ module.exports = async (req, res, next) => {
                     productId: product.productId,
                     product_photo: product['Product.product_photo'],
                     productName: product['Product.name'],
-                    email: userFromDB.email,
-                    phone: userFromDB.phone,
-                    name: userFromDB.name,
-                    city: userFromDB.city,
-                    street: userFromDB.street,
-                    house: userFromDB.house,
-                    apartment: userFromDB.apartment,
-                    entrance: userFromDB.entrance,
-                    floor: userFromDB.floor,
+                    email,
+                    phone,
+                    name,
+                    city,
+                    street,
+                    house,
+                    apartment,
+                    entrance,
+                    floor,
                     status_id: IN_PROGRESS,
                     price: product.price,
                     count: product.count,
@@ -87,7 +86,6 @@ module.exports = async (req, res, next) => {
                     created_at: Date.now()
                 }, transaction);
             }));
-        }
 
 
         logger.info({

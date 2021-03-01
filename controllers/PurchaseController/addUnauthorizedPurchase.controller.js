@@ -39,18 +39,6 @@ module.exports = async (req, res, next) => {
             query: {tempId}
         } = req;
 
-        const unauthorizedUserProceedPurchase = await findUserProceedPurchaseService({tempId, status_id: IN_PROGRESS});
-
-        if (unauthorizedUserProceedPurchase) {
-            return next(new ErrorHandler(
-                BAD_REQUEST,
-                BAD_REQUEST_PURCHASE_IS_ALREADY_PRESENT.message,
-                BAD_REQUEST_PURCHASE_IS_ALREADY_PRESENT.customCode
-            ));
-        }
-
-        if (!unauthorizedUserProceedPurchase) {
-
             const unauthorizedCart = await getCartService({tempId});
 
             const total = await calculateCartPriceHelper(unauthorizedCart);
@@ -80,7 +68,6 @@ module.exports = async (req, res, next) => {
                     created_at: Date.now()
                 }, transaction);
             }));
-        }
 
         logger.info({
             info: addPurchaseHistory,

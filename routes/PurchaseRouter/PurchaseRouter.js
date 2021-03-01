@@ -33,6 +33,7 @@ purchaseRouter.use('/',
 
 purchaseRouter.post('/',
     getUserFromAccessTokenMiddleware,
+    checkUnauthorizedPurchaseValidityMiddleware,
     addPurchase);
 
 
