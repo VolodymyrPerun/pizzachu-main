@@ -28,7 +28,6 @@ module.exports = userRole => async (req, res, next) => {
             case CLIENT:
                 purchases = await getPurchaseService(
                     {
-                        status_id: DONE && IN_PROGRESS,
                         userId
                     },
                     +(limit),
