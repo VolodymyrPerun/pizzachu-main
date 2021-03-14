@@ -6,14 +6,14 @@ const {
     USER_ROLE: {SELLER, CLIENT}
 } = require('../../constants');
 const {ErrorHandler} = require("../../error");
-const {purchaseService: {getPurchaseService}} = require("../../service");
+const {purchaseService: {getPurchaseService, getNoLimitsPurchaseService}} = require("../../service");
 const winston = require('../../logger/winston');
-const {IN_PROGRESS} = require("../../constants/cartStatus.enum");
 const logger = winston(getAllPurchasesHistory);
 
 module.exports = userRole => async (req, res, next) => {
     let purchaseData = {};
     let purchases = [];
+    let noLimitsPurchases = [];
     try {
 
         let {
@@ -33,6 +33,13 @@ module.exports = userRole => async (req, res, next) => {
                     +(limit),
                     limit * page
                 );
+                noLimitsPurchases = await getNoLimitsPurchaseService(
+                    {
+                        userId
+                    },
+                    +(limit),
+                    limit * page
+                );
                 break;
 
             case SELLER:
@@ -41,6 +48,7 @@ module.exports = userRole => async (req, res, next) => {
                     +(limit),
                     limit * page
                 );
+                noLimitsPurchases = await getNoLimitsPurchaseService({status_id});
                 break;
 
             default:
@@ -65,7 +73,7 @@ module.exports = userRole => async (req, res, next) => {
         if (purchases[0] !== undefined) {
 
             purchaseData.purchase = purchases;
-            purchaseData.lenght = purchases.length;
+            purchaseData.length = noLimitsPurchases.length;
             purchaseData.total = purchases[0].total;
 
             await res.json(purchaseData);

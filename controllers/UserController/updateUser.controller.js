@@ -28,7 +28,7 @@ module.exports = async (req, res, next) => {
 
         const userFromDB = await getUserByIdService(userId);
 
-        const isUpdated = await updateUserService(userId, user, transaction);
+        const isUpdated = await updateUserService(user, userId, transaction);
 
         if (!isUpdated) {
             logger.error({
@@ -50,7 +50,7 @@ module.exports = async (req, res, next) => {
         });
 
         await addEventService({event: updateUserHistory, userId: userFromDB.userId}, transaction);
-        await sendMail(userFromDB.email, USER_UPDATE, {user});
+       // await sendMail(userFromDB.email, USER_UPDATE, {user});
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

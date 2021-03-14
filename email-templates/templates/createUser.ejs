@@ -4,8 +4,8 @@
             src="https://preview.redd.it/3tov2at7f8n31.png?width=960&crop=smart&auto=webp&s=e7d4731a611be14d760c4e1771e6e1271db04fbb"
             alt="logo"
     />
-    <p class="green"> Дякуємо за реєстрацію💾: <%= user.name %> <%= user.surname %>!🙏</p>
-    <p class="pink"> Ваш емейл: <%= user.email %> 📧</p>
-    <p class="pink"> Ваш пароль: <span style="color: black"><%= password %></span> 🔠</p>
+    <p class="green"> Дякуємо за реєстрацію💾: <%= name %> <%= surname %>!🙏</p>
+    <p class="pink"> Ваш емейл: <%= email %> 📧</p>
+    <p class="pink"> Ваш пароль: <span style="color: black"><%= noHashPassword %></span> 🔠</p>
 </div>
 <%- include('../includes/footer.ejs', {SITE}) %>

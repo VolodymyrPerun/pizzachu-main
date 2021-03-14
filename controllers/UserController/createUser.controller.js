@@ -1,6 +1,3 @@
-const path = require('path');
-const uuid = require('uuid').v1();
-const fsep = require('fs-extra').promises;
 const chalk = require('chalk');
 
 const {transactionInstance} = require('../../dataBase').getInstance();
@@ -18,7 +15,7 @@ const {HashPasswordHelper} = require('../../helpers');
 const {
     emailService: {sendMail},
     historyService: {addEventService},
-    userService: {createUserService, updateUserService}
+    userService: {createUserService}
 } = require("../../service");
 const winston = require('../../logger/winston');
 const logger = winston(createUserHistory);
@@ -49,19 +46,25 @@ module.exports = userRole => async (req, res, next) => {
                     NOT_CREATED.customCode));
         }
 
-        const {
-            user: user, photos
+        let {
+            user: {
+                user_photo, email, phone, name, surname, age,
+                password: noHashPassword, gender_id, city, street, house,
+                apartment, entrance, floor, status_id, role_id
+            }
         } = req;
 
-        user.role_id = [keyRole];
-        user.status_id = ACTIVE;
 
-        const [profileImage] = photos;
-        const password = user.password;
+        role_id = [keyRole];
+        status_id = ACTIVE;
 
-        user.password = await HashPasswordHelper(user.password);
+        const password = await HashPasswordHelper(noHashPassword);
 
-        const isUserCreated = await createUserService(user, transaction);
+        const isUserCreated = await createUserService({
+            user_photo, email, phone, name, surname, age,
+            password, gender_id, city, street, house, apartment,
+            entrance, floor, status_id, role_id
+        }, transaction);
 
         if (!isUserCreated) {
             logger.error({
@@ -75,16 +78,6 @@ module.exports = userRole => async (req, res, next) => {
                 NOT_CREATED.customCode));
         }
 
-        if (profileImage) {
-            const photoDir = `users/${isUserCreated.userId}/photos/`;
-            const fileExtension = path.extname(profileImage.name);
-            const photoName = uuid + fileExtension;
-
-            await fsep.mkdir(path.resolve(process.cwd(), 'public', photoDir), {recursive: true});
-            await profileImage.mv(path.resolve(process.cwd(), 'public', photoDir, photoName));
-            await updateUserService(isUserCreated.userId, {user_photo: photoDir + photoName}, transaction);
-        }
-
         logger.info({
             info: createUserHistory,
             date: new Date().toLocaleDateString(),
@@ -93,7 +86,7 @@ module.exports = userRole => async (req, res, next) => {
         });
 
         await addEventService({event: createUserHistory, userId: isUserCreated.userId}, transaction);
-        await sendMail(user.email, [emailAction], {user, password});
+       // await sendMail(email, [emailAction], {name, surname, email, noHashPassword});
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

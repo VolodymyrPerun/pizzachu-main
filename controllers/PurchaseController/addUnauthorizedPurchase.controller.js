@@ -48,7 +48,7 @@ module.exports = async (req, res, next) => {
                 await addPurchaseService({
                     tempId,
                     purchaseId: uuidv4(),
-                    productId: 231,
+                    productId: product.productId,
                     product_photo: product['Product.product_photo'],
                     productName: product['Product.name'],
                     email,

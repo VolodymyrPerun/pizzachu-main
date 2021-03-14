@@ -16,7 +16,7 @@ module.exports = async (req, res, next) => {
         if (!authorizationToken) {
             return next(new ErrorHandler(
                 BAD_REQUEST,
-                NOT_VALID.message,
+                NOT_VALID.message + '' + 'wtf',
                 NOT_VALID.customCode));
         }
 
@@ -30,7 +30,7 @@ module.exports = async (req, res, next) => {
             });
             return next(new ErrorHandler(
                 UNAUTHORIZED,
-                NOT_VALID_TOKEN.message,
+                NOT_VALID_TOKEN.message  + '' + 'wtf2',
                 NOT_VALID_TOKEN.customCode));
         }
 

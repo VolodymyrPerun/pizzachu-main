@@ -4,6 +4,7 @@ module.exports.cancelPurchaseService = require('./cancelPurchase.service');
 module.exports.donePurchaseService = require('./donePurchase.service');
 module.exports.findUserProceedPurchaseService = require('./findUserProceedPurchase.service');
 module.exports.getPurchaseService = require('./getPurchase.service');
+module.exports.getNoLimitsPurchaseService = require('./getNoLimitsPurchase.service');
 module.exports.updatePurchaseService = require('./updatePurchase.service');
 module.exports.updateUserProceedPurchaseService = require('./updateUserProceedPurchase.service');
 

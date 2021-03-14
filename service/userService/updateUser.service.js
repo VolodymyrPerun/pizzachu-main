@@ -1,8 +1,8 @@
 const db = require('../../dataBase').getInstance();
 
-const {DB_TABLE_NAME: {USER}} = require('../../constants')
+const {DB_TABLE_NAME: {USER}} = require('../../constants');
 
-module.exports = async (userId, updatedUser, transaction) => {
+module.exports = async (updatedUser,userId, transaction) => {
     const UserModel = await db.getModel(USER);
 
     return  UserModel.update(updatedUser, {

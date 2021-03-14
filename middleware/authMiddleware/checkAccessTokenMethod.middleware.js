@@ -52,6 +52,7 @@ module.exports = jwtMethod => async (req, res, next) => {
                 BAD_REQUEST_USER_NOT_PRESENT.customCode));
     }
 
+
         if (!authorizationToken) {
             logger.error({
                 message: keyMethodErrorData.message,
@@ -73,7 +74,7 @@ module.exports = jwtMethod => async (req, res, next) => {
         }
     });
 
-    next();
+        next();
     } catch (e) {
         next(new ErrorHandler(e.status, e.message, e.customCode));
     }

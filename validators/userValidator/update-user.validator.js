@@ -12,8 +12,8 @@ module.exports = Joi.object().keys({
     city: Joi.string(),
     street: Joi.string(),
     house: Joi.string(),
-    apartment: Joi.string(),
-    entrance: Joi.string(),
-    floor: Joi.string(),
-    user_photo: Joi.string()
+    apartment: Joi.number().integer().min(1).max(10),
+    entrance: Joi.number().integer().min(1).max(10),
+    floor: Joi.number().integer().min(1).max(10),
+    gender_id: Joi.number().integer().min(1).max(1)
 });

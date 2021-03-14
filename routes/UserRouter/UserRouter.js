@@ -1,4 +1,4 @@
-const {getUserByAT} = require("../../controllers/UserController");
+const {getUserByAT, updateUserPhoto} = require("../../controllers/UserController");
 const router = require('express').Router();
 
 const {USER_STATUS: {ACTIVE, BLOCKED}, JWT_METHOD: {CLIENT}} = require("../../constants");
@@ -33,9 +33,14 @@ const {
 
 router.post('/',
     checkUserValidityMiddleware,
-    checkFilesMiddleware,
-    checkUserPhotoCountMiddleware,
     createUser(CLIENT));
+
+router.put('/update-user-photo',
+    checkAccessTokenMethodMiddleware(CLIENT),
+    getUserFromAccessTokenMiddleware,
+     checkFilesMiddleware,
+    checkUserPhotoCountMiddleware,
+    updateUserPhoto);
 
 router.get('/active', getAllUsers(ACTIVE));
 router.get('/blocked', getAllUsers(BLOCKED));
@@ -48,7 +53,7 @@ router.get('/',
     checkAccessTokenMethodMiddleware(CLIENT),
     getUserFromAccessTokenMiddleware,
     getUserByAT);
-router.put('/',
+router.put('/update-profile',
     checkAccessTokenMethodMiddleware(CLIENT),
     getUserFromAccessTokenMiddleware,
     checkUserValidityIfUpdateMiddleware,

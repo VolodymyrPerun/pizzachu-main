@@ -2,6 +2,7 @@ const chalk = require('chalk');
 const {transactionInstance} = require('../../dataBase').getInstance();
 const { v4: uuidv4 } = require('uuid');
 
+
 const {
     historyActionEnum: {addPurchaseHistory},
     responseStatusCodesEnum: {BAD_REQUEST},
@@ -11,12 +12,12 @@ const {
 } = require('../../constants');
 const {
     ErrorHandler,
-    CustomErrorData: {BAD_REQUEST_PURCHASE_IS_ALREADY_PRESENT, BAD_REQUEST_USER_NOT_ACTIVE}
+    CustomErrorData: {BAD_REQUEST_USER_NOT_ACTIVE}
 } = require("../../error");
 const {
     cartService: {getCartService},
     historyService: {addEventService},
-    purchaseService: {addPurchaseService, findUserProceedPurchaseService},
+    purchaseService: {addPurchaseService},
     userService: {getUserByIdService},
 } = require("../../service");
 
@@ -63,6 +64,9 @@ module.exports = async (req, res, next) => {
 
             await Promise.all(cart.map(async product => {
 
+                const created_at = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString() + 'Z';
+                const updated_at = new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString() + 'Z';
+
                 await addPurchaseService({
                     purchaseId: uuidv4(),
                     userId,
@@ -83,7 +87,8 @@ module.exports = async (req, res, next) => {
                     count: product.count,
                     sum: product.sum,
                     total,
-                    created_at: Date.now()
+                    created_at,
+                    updated_at
                 }, transaction);
             }));
 
