@@ -38,7 +38,7 @@ router.post('/',
 router.put('/update-user-photo',
     checkAccessTokenMethodMiddleware(CLIENT),
     getUserFromAccessTokenMiddleware,
-     checkFilesMiddleware,
+    checkFilesMiddleware,
     checkUserPhotoCountMiddleware,
     updateUserPhoto);
 
