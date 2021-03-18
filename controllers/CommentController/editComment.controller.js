@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
     try {
         const {
             comment: {id},
-            commentToUpdate: {text, rate},
+            commentToUpdate: {text},
             user: {userId}
         } = req;
 
@@ -43,7 +43,7 @@ module.exports = async (req, res, next) => {
 
         const isUpdated = await updateCommentService(
             id,
-            {text, rate, updated_at: Date.now()},
+            {text, updated_at: Date.now()},
             transaction);
 
         if (!isUpdated) {

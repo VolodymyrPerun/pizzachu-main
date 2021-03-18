@@ -10,11 +10,12 @@ module.exports = async (req, res, next) => {
     let commentsData = {};
     try {
         const {
-            comment: {id},
+            comment: {productId, id},
         } = req;
 
         let comments = await getAllRepliedComments(
             POSTED,
+            productId,
             id
         );
 

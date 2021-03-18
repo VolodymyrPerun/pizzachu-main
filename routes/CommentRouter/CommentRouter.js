@@ -18,22 +18,23 @@ const {
     productMiddleware: {checkIsProductExistMiddleware}
 } = require('./../../middleware');
 
+
 commentRouter.get('/', getAllComments);
 
 commentRouter.use('/',
     getUserFromAccessTokenMiddleware
 );
 
-commentRouter.post('/:productId',
+commentRouter.post('/',
     checkCommentValidityMiddleware,
     checkIsProductExistMiddleware,
     postComment);
 
-commentRouter.put('/:id',
-    checkIsCommentExistMiddleware,
+commentRouter.put('/',
     checkCommentValidityIfUpdateMiddleware,
+    checkIsCommentExistMiddleware,
     editComment);
-commentRouter.delete('/:id',
+commentRouter.delete('/',
     checkIsCommentExistMiddleware,
     deleteCommentById);
 

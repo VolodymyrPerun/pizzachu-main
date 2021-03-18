@@ -12,9 +12,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        rate: {
-            type: DataTypes.INTEGER,
-        },
         userId: {
             type: DataTypes.INTEGER,
             allowNull: false,

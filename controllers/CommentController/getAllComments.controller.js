@@ -1,4 +1,3 @@
-const {avgCountHelper} = require("../../helpers");
 const {
     responseStatusCodesEnum: {NOT_FOUND: NOT_FOUND_CODE},
     responseCustomErrorEnum: {NOT_GET},
@@ -11,20 +10,24 @@ module.exports = async (req, res, next) => {
     let commentsData = {};
     try {
         let {
-            query: {limit, page},
+            query: {productId, limit, page},
         } = req;
-
-        const commentsToRate = await getAllComments(POSTED);
-
-        let avg = await avgCountHelper(commentsToRate);
 
         if (+page === 0) page = 1;
         page = page - 1;
 
         let comments = await getAllComments(
             POSTED,
+            productId,
             +(limit),
             limit * page
+        );
+
+        let noLimitsComments = await getAllComments(
+            POSTED,
+            productId,
+            null,
+            null
         );
 
         if (!comments) {
@@ -40,8 +43,7 @@ module.exports = async (req, res, next) => {
         }
 
         commentsData.comments = comments;
-        commentsData.commentsCount = comments.length;
-        commentsData.averageRate = avg;
+        commentsData.commentsCount = noLimitsComments.length;
 
         await res.json(commentsData);
 

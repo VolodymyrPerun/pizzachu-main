@@ -5,7 +5,7 @@ const {responseStatusCodesEnum: {BAD_REQUEST}, PRODUCT_STATUS: {DELETED}} = requ
 module.exports = async (req, res, next) => {
     try {
         const {
-            params: {id}
+            query: {id}
         } = req;
 
         if (isNaN(id) || +id < 0) {
