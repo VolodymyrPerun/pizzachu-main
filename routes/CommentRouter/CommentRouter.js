@@ -34,6 +34,7 @@ commentRouter.put('/',
     checkCommentValidityIfUpdateMiddleware,
     checkIsCommentExistMiddleware,
     editComment);
+
 commentRouter.delete('/',
     checkIsCommentExistMiddleware,
     deleteCommentById);

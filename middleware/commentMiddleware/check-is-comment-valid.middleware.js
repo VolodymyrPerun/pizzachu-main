@@ -9,6 +9,7 @@ const {ErrorHandler} = require('../../error');
 const winston = require('../../logger/winston');
 const logger = winston(NOT_VALID.message);
 
+
 module.exports = (req, res, next) => {
     try {
         const {body: comment} = req;

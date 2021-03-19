@@ -18,25 +18,27 @@ const {
     },
 } = require('./../../middleware');
 
-replyCommentRouter.get('/:id',
+replyCommentRouter.get('/',
     checkIsCommentExistMiddleware,
     getAllRepliedComments);
 
-replyCommentRouter.use('/:id',
+replyCommentRouter.use('/',
     getUserFromAccessTokenMiddleware
 );
 
-replyCommentRouter.post('/:id',
+replyCommentRouter.post('/',
     checkIsCommentExistMiddleware,
     checkCommentValidityMiddleware,
-    postRepliedComment);
+    postRepliedComment
+);
 
-replyCommentRouter.put('/:id',
+replyCommentRouter.put('/',
     checkIsRepliedCommentExistMiddleware,
     checkCommentValidityIfUpdateMiddleware,
-    editRepliedComment);
+    editRepliedComment
+);
 
-replyCommentRouter.delete('/:id',
+replyCommentRouter.delete('/',
     checkIsRepliedCommentExistMiddleware,
     deleteRepliedCommentById);
 

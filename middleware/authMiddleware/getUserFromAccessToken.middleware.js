@@ -1,6 +1,5 @@
 const {ErrorHandler} = require('../../error');
 const {oauthService: {getTokensByParamsService}} = require('../../service');
-
 const {
     requestHeadersEnum: {AUTHORIZATION},
     responseStatusCodesEnum: {UNAUTHORIZED, BAD_REQUEST},
@@ -8,6 +7,7 @@ const {
 } = require('../../constants');
 const winston = require('../../logger/winston');
 const logger = winston(NOT_VALID_TOKEN.message);
+
 
 module.exports = async (req, res, next) => {
     try {

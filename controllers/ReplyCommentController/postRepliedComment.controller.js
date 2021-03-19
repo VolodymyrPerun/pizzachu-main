@@ -23,7 +23,7 @@ module.exports = async (req, res, next) => {
     try {
         const {
             comment: {text},
-            params: {id: commentId},
+            id: commentId,
             user: {userId},
         } = req;
 

@@ -2,10 +2,11 @@ const {ErrorHandler, CustomErrorData: {BAD_REQUEST_COMMENT_NOT_PRESENT}} = requi
 const {repliedCommentService: {getRepliedCommentByIdService}} = require("../../service");
 const {responseStatusCodesEnum: {BAD_REQUEST}, PRODUCT_STATUS: {DELETED}} = require("../../constants");
 
+
 module.exports = async (req, res, next) => {
     try {
         const {
-            params: {id}
+            query: {id}
         } = req;
 
         if (isNaN(id) || +id < 0) {
@@ -26,7 +27,7 @@ module.exports = async (req, res, next) => {
             ));
         }
 
-        req.comment = comment;
+        req.id = id;
 
         next();
     } catch (e) {

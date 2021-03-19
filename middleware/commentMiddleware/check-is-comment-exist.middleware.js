@@ -2,6 +2,7 @@ const {ErrorHandler, CustomErrorData: {BAD_REQUEST_COMMENT_NOT_PRESENT}} = requi
 const {commentService: {getCommentByIdService}} = require("../../service");
 const {responseStatusCodesEnum: {BAD_REQUEST}, PRODUCT_STATUS: {DELETED}} = require("../../constants");
 
+
 module.exports = async (req, res, next) => {
     try {
         const {
@@ -26,7 +27,7 @@ module.exports = async (req, res, next) => {
             ));
         }
 
-        req.comment = comment;
+        req.id = id;
 
         next();
     } catch (e) {
