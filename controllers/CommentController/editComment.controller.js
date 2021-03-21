@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
         const {
-            comment: {id},
+            id,
             commentToUpdate: {text},
             user: {userId}
         } = req;

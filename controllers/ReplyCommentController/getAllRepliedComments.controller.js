@@ -6,17 +6,29 @@ const {
 const {ErrorHandler} = require('../../error');
 const {repliedCommentService: {getAllRepliedComments}} = require('../../service');
 
+
 module.exports = async (req, res, next) => {
     let commentsData = {};
     try {
-        const {
-            comment: {productId, id},
+        let {
+            query: {id, limit, page},
         } = req;
+
+        if (+page === 0) page = 1;
+        page = page - 1;
 
         let comments = await getAllRepliedComments(
             POSTED,
-            productId,
-            id
+            id,
+            +(limit),
+            limit * page
+        );
+
+        let noLimitsComments = await getAllRepliedComments(
+            POSTED,
+            id,
+            null,
+            null
         );
 
         if (!comments) {
@@ -32,7 +44,7 @@ module.exports = async (req, res, next) => {
         }
 
         commentsData.comments = comments;
-        commentsData.commentsCount = comments.length;
+        commentsData.commentsCount = noLimitsComments.length;
 
         await res.json(commentsData);
 

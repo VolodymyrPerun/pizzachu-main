@@ -3,13 +3,14 @@ const {
     DB_TABLE_NAME: {COMMENT_STATUS, REPLY_COMMENT, USER},
 } = require('../../constants');
 
-module.exports = async (status_id, productId, commentId) => {
+
+module.exports = async (status_id, commentId, limit, offset) => {
     const CommentModel = await db.getModel(REPLY_COMMENT);
     const CommentStatusModel = await db.getModel(COMMENT_STATUS);
     const UserModel = await db.getModel(USER);
 
     return CommentModel.findAll({
-        where: {status_id, productId, commentId},
+        where: {status_id, commentId},
         raw: true,
         include: [
             {
@@ -24,7 +25,9 @@ module.exports = async (status_id, productId, commentId) => {
         ],
         order: [
             ['id', 'DESC']
-        ]
+        ],
+        limit,
+        offset
     });
 };
 

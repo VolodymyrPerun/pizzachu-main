@@ -18,8 +18,8 @@ const {
     },
 } = require('./../../middleware');
 
+
 replyCommentRouter.get('/',
-    checkIsCommentExistMiddleware,
     getAllRepliedComments);
 
 replyCommentRouter.use('/',
