@@ -86,7 +86,7 @@ module.exports = userRole => async (req, res, next) => {
         });
 
         await addEventService({event: createUserHistory, userId: isUserCreated.userId}, transaction);
-       // await sendMail(email, [emailAction], {name, surname, email, noHashPassword});
+        await sendMail(email, [emailAction], {name, surname, email, noHashPassword});
         await transaction.commit();
         console.log(chalk.bgYellow.bold.cyan(TRANSACTION_COMMIT));
 

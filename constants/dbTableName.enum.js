@@ -19,4 +19,5 @@ module.exports = {
     USER: 'User',
     USER_ROLE: 'UserRole',
     USER_STATUS: 'UserStatus',
+    PRODUCT_RATING: 'ProductRating'
 };

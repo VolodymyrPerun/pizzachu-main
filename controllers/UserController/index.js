@@ -5,3 +5,6 @@ module.exports.getUserById = require('./getUserById.controller');
 module.exports.getUserByAT = require('./getUserByAT.controller');
 module.exports.updateUser = require('./updateUser.controller');
 module.exports.updateUserPhoto = require('./updateUserPhoto.controller');
+module.exports.evaluateProduct = require('./evaluateProduct.controller');
+module.exports.getIsEvaluateForUser = require('./getIsEvaluateForUser.controller');
+module.exports.getAverageMark = require('./getAverageMark.controller');
