@@ -1,6 +1,3 @@
-const {getAverageMark} = require("../../controllers/UserController");
-const {getIsEvaluateForUser} = require("../../controllers/UserController");
-const {evaluateProduct} = require("../../controllers/UserController");
 const {getUserByAT, updateUserPhoto} = require("../../controllers/UserController");
 const router = require('express').Router();
 
@@ -46,23 +43,6 @@ router.put('/update-user-photo',
     checkUserPhotoCountMiddleware,
     updateUserPhoto);
 
-
-router.post(
-    '/evaluate-product',
-    checkAccessTokenMethodMiddleware(CLIENT),
-    getUserFromAccessTokenMiddleware,
-    evaluateProduct
-);
-router.get(
-    '/is-evaluated',
-    checkAccessTokenMethodMiddleware(CLIENT),
-    getUserFromAccessTokenMiddleware,
-    getIsEvaluateForUser
-);
-router.get(
-    '/average-mark',
-    getAverageMark
-);
 router.get('/active', getAllUsers(ACTIVE));
 router.get('/blocked', getAllUsers(BLOCKED));
 router.get('/:userId',

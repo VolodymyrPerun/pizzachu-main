@@ -1,7 +1,7 @@
 const productRouter = require('express').Router();
 
 const {
-    JWT_METHOD: {ADMIN}
+    JWT_METHOD: {ADMIN, CLIENT}
 } = require('../../constants');
 const {
     productController: {
@@ -11,6 +11,11 @@ const {
         getAllProductsByType,
         getProductById
     },
+    userController: {
+        getAverageMark,
+        evaluateProduct,
+        getIsEvaluateForUser
+    }
 } = require('../../controllers');
 const {
     authMiddleware: {checkAccessTokenMethodMiddleware, getUserFromAccessTokenMiddleware},
@@ -22,6 +27,23 @@ const {
     }
 } = require('./../../middleware');
 
+
+productRouter.post(
+    '/evaluate-product',
+    checkAccessTokenMethodMiddleware(CLIENT),
+    getUserFromAccessTokenMiddleware,
+    evaluateProduct
+);
+productRouter.get(
+    '/is-evaluated',
+    checkAccessTokenMethodMiddleware(CLIENT),
+    getUserFromAccessTokenMiddleware,
+    getIsEvaluateForUser
+);
+productRouter.get(
+    '/average-mark',
+    getAverageMark
+);
 productRouter.post('/',
     checkAccessTokenMethodMiddleware(ADMIN),
     getUserFromAccessTokenMiddleware,
