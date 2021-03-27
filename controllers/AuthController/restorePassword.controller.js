@@ -27,6 +27,7 @@ const {
 const winston = require('../../logger/winston');
 const logger = winston(restorePasswordHistory);
 
+
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
@@ -78,7 +79,7 @@ module.exports = async (req, res, next) => {
 
         const hashedPassword = await HashPasswordHelper(password);
 
-        await restorePasswordService(email, hashedPassword)
+        await restorePasswordService(email, hashedPassword);
 
         logger.info({
             info: restorePasswordHistory,

@@ -28,11 +28,12 @@ const {
 const winston = require('../../logger/winston');
 const logger = winston(changePasswordHistory);
 
+
 module.exports = async (req, res, next) => {
     const transaction = await transactionInstance();
     try {
         const {
-            body: {password, newPassword, repeatNewPassword, email},
+            body: {email, password, newPassword, repeatNewPassword},
             user: {userId}
         } = req;
 
@@ -92,7 +93,7 @@ module.exports = async (req, res, next) => {
 
         const hashPassword = await HashPasswordHelper(newPassword);
 
-        await updateUserService(userId, {password: hashPassword}, transaction);
+        await updateUserService({password: hashPassword}, userId, transaction);
 
         logger.info({
             info: changePasswordHistory,
