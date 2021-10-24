@@ -26,8 +26,8 @@ module.exports = {
     DB_DIALECT: process.env.DB_DIALECT || 'mysql',
 
     ROOT_EMAIL_SERVICE: process.env.ROOT_EMAIL_SERVICE || 'gmail',
-    ROOT_EMAIL_LOGIN: process.env.ROOT_EMAIL_LOGIN || 'misterbin700007@gmail.com',
-    ROOT_EMAIL_PASSWORD: process.env.ROOT_EMAIL_PASSWORD || '700007misterbin700007',
+    ROOT_EMAIL_LOGIN: process.env.ROOT_EMAIL_LOGIN || 'sorokivskyimarian@gmail.com',
+    ROOT_EMAIL_PASSWORD: process.env.ROOT_EMAIL_PASSWORD || 'mariansorokivskyi',
 
     SITE: process.env.SITE || 'https://volodymyrperun.github.io/upqode-task-master/',
 

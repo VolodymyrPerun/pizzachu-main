@@ -54,8 +54,7 @@ module.exports = userRole => async (req, res, next) => {
             }
         } = req;
 
-
-        role_id = [keyRole];
+        role_id = keyRole;
         status_id = ACTIVE;
 
         const password = await HashPasswordHelper(noHashPassword);
